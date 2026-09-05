@@ -225,9 +225,13 @@ router.get("/diagnostics/system", async (_req, res) => {
   const steps: Step[] = [];
 
   steps.push(
-    await run("Environment: DATABASE_URL present", async () => {
-      if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is not set");
-      return "ok";
+    await run("Environment: active database connection present", async () => {
+      if (!process.env.NEON_DATABASE_URL && !process.env.DATABASE_URL) {
+        throw new Error("NEON_DATABASE_URL or DATABASE_URL is not set");
+      }
+      return process.env.NEON_DATABASE_URL
+        ? "Neon configured"
+        : "platform database configured";
     }),
   );
 
