@@ -4,14 +4,22 @@ import * as schema from "./schema";
 
 const { Pool } = pg;
 
-const connectionString =
-  process.env.NEON_DATABASE_URL ?? process.env.DATABASE_URL;
+const configuredConnectionString =
+  process.env.NEONCLASSICAL_DATABASE_URL ??
+  process.env.NEON_DATABASE_URL ??
+  process.env.DATABASE_URL;
 
-if (!connectionString) {
+if (!configuredConnectionString) {
   throw new Error(
-    "NEON_DATABASE_URL or DATABASE_URL must be set.",
+    "NEONCLASSICAL_DATABASE_URL, NEON_DATABASE_URL, or DATABASE_URL must be set.",
   );
 }
+
+const connectionUrl = new URL(configuredConnectionString);
+if (process.env.NEONCLASSICAL_DATABASE_URL) {
+  connectionUrl.pathname = "/neondb";
+}
+const connectionString = connectionUrl.toString();
 
 // Enable SSL for managed providers (Neon, Render, Supabase, etc.).
 // Local URLs (localhost / 127.0.0.1) keep SSL off.

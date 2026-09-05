@@ -35,7 +35,9 @@ type Step = {
 
 router.get("/diagnostics/database-evidence", async (_req, res) => {
   const connectionString =
-    process.env.NEON_DATABASE_URL ?? process.env.DATABASE_URL;
+    process.env.NEONCLASSICAL_DATABASE_URL ??
+    process.env.NEON_DATABASE_URL ??
+    process.env.DATABASE_URL;
   if (!connectionString) {
     res.status(503).json({
       ok: false,
@@ -69,9 +71,11 @@ router.get("/diagnostics/database-evidence", async (_req, res) => {
     res.json({
       ok: true,
       provider: endpoint.endsWith(".neon.tech") ? "Neon" : "PostgreSQL",
-      connectionSource: process.env.NEON_DATABASE_URL
-        ? "NEON_DATABASE_URL"
-        : "DATABASE_URL",
+      connectionSource: process.env.NEONCLASSICAL_DATABASE_URL
+        ? "NEONCLASSICAL_DATABASE_URL"
+        : process.env.NEON_DATABASE_URL
+          ? "NEON_DATABASE_URL"
+          : "DATABASE_URL",
       endpoint,
       ...row,
     });
@@ -276,10 +280,17 @@ router.get("/diagnostics/system", async (_req, res) => {
 
   steps.push(
     await run("Environment: active database connection present", async () => {
-      if (!process.env.NEON_DATABASE_URL && !process.env.DATABASE_URL) {
-        throw new Error("NEON_DATABASE_URL or DATABASE_URL is not set");
+      if (
+        !process.env.NEONCLASSICAL_DATABASE_URL &&
+        !process.env.NEON_DATABASE_URL &&
+        !process.env.DATABASE_URL
+      ) {
+        throw new Error(
+          "NEONCLASSICAL_DATABASE_URL, NEON_DATABASE_URL, or DATABASE_URL is not set",
+        );
       }
-      return process.env.NEON_DATABASE_URL
+      return process.env.NEONCLASSICAL_DATABASE_URL ||
+        process.env.NEON_DATABASE_URL
         ? "Neon configured"
         : "platform database configured";
     }),
