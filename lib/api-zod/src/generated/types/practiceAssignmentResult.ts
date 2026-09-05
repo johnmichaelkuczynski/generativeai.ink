@@ -10,6 +10,11 @@ export interface PracticeAssignmentResult {
   problemId: number;
   prompt: string;
   correct: boolean;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  scorePercent: number;
   userAnswer?: string;
   correctAnswer: string;
   feedback: string;

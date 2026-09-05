@@ -482,6 +482,7 @@ export const GradePracticeAssignmentBody = zod.object({
   "answers": zod.array(zod.object({
   "problemId": zod.number(),
   "answer": zod.string(),
+  "prompt": zod.string().optional().describe('Included so an in-progress browser answer can be recovered if its temporary practice session expires or is removed.'),
   "trace": zod.object({
   "keystrokeCount": zod.number(),
   "eraseCount": zod.number(),
@@ -493,6 +494,11 @@ export const GradePracticeAssignmentBody = zod.object({
 }))
 })
 
+export const gradePracticeAssignmentResponseResultsItemScorePercentMin = 0;
+export const gradePracticeAssignmentResponseResultsItemScorePercentMax = 100;
+
+
+
 export const GradePracticeAssignmentResponse = zod.object({
   "score": zod.number(),
   "total": zod.number(),
@@ -501,6 +507,7 @@ export const GradePracticeAssignmentResponse = zod.object({
   "problemId": zod.number(),
   "prompt": zod.string(),
   "correct": zod.boolean(),
+  "scorePercent": zod.number().min(gradePracticeAssignmentResponseResultsItemScorePercentMin).max(gradePracticeAssignmentResponseResultsItemScorePercentMax),
   "userAnswer": zod.string().optional(),
   "correctAnswer": zod.string(),
   "feedback": zod.string()

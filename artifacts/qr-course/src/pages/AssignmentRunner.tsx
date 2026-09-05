@@ -242,6 +242,7 @@ export default function AssignmentRunner() {
                   key={currentProblem.id}
                   options={multipleChoice.options}
                   value={answers[currentProblem.id] || ""}
+                  name={`assignment-problem-${currentProblem.id}`}
                   onChange={(val, trace) =>
                     handleAnswerChange(currentProblem.id, val, trace)
                   }
@@ -254,6 +255,9 @@ export default function AssignmentRunner() {
                     handleAnswerChange(currentProblem.id, val, trace)
                   }
                   initialTrace={tracesRef.current[currentProblem.id]}
+                  compact={/(answer in one sentence|answer in 1[–-]3 sentences)/i.test(
+                    currentProblem.prompt,
+                  )}
                 />
               )}
             </div>

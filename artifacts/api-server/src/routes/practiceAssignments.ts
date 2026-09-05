@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import {
   db,
   assignmentsTable,
@@ -15,7 +15,17 @@ import {
   GradePracticeAssignmentResponse,
 } from "@workspace/api-zod";
 import { chatJson } from "../lib/ai";
-import { gradePracticeEssay } from "../lib/grading";
+import {
+  gradePracticeEssay,
+  gradeRecoveredPracticeEssay,
+} from "../lib/grading";
+import {
+  type QuestionFormat,
+  fallbackQuestion,
+  questionMatchesFormat,
+  questionFormatForOrdinal,
+  questionFormatInstruction,
+} from "../lib/questionFormats";
 
 const router: IRouter = Router();
 
@@ -27,14 +37,13 @@ function parseIdParam(raw: unknown): number {
 function isValidReasoningProblem(problem: {
   prompt: string;
   correctAnswer: string;
-}): boolean {
+}, format: QuestionFormat): boolean {
   const prompt = problem.prompt.trim();
   const answer = problem.correctAnswer.trim();
-  const sentenceCount = answer.split(/[.!?]+(?:\s|$)/).filter(Boolean).length;
   return (
     prompt.length >= 80 &&
-    answer.length >= 100 &&
-    sentenceCount >= 2 &&
+    answer.length >= 30 &&
+    questionMatchesFormat(prompt, answer, format) &&
     !/\b(define|what (?:is|are) .+ called|what does .+ mean|difference between)\b/i.test(
       prompt,
     )
@@ -85,6 +94,14 @@ router.post(
     // Cap how many we generate per set to keep generation snappy; mirror the
     // real assignment's length up to the cap.
     const templates = sourceProblems.slice(0, 10);
+    const [sequence] = await db
+      .select({
+        maxId: sql<number>`coalesce(max(${practiceProblemsTable.id}), 0)::int`,
+      })
+      .from(practiceProblemsTable);
+    const formats = templates.map((_, index) =>
+      questionFormatForOrdinal((sequence?.maxId ?? 0) + index),
+    );
 
     let generated: Array<{
       prompt: string;
@@ -99,7 +116,7 @@ router.post(
           explanation: string;
         }>;
       }>(
-        `You write a PRACTICE version of a Nano Evolutionary Psychology ${assignment.kind} titled "${assignment.title}". Produce EXACTLY ${templates.length} new scenario problems, one per template in order, testing the same concept with a different named behavioral, developmental, or research case. Require evidence-based reasoning, not definitions. Preserve multiple-choice format when the template has options; otherwise require only 1-3 sentences. Distinguish hypotheses from evidence, include plausible alternatives, and avoid deterministic or justificatory claims. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string}, ...]}.`,
+        `You write a PRACTICE version of a Nano Evolutionary Psychology ${assignment.kind} titled "${assignment.title}". Produce EXACTLY ${templates.length} new scenario problems, one per template in order, testing the same concept with a different named behavioral, developmental, or research case. Require evidence-based reasoning, not definitions. Obey each template's requiredFormat exactly. Across the rolling question bank the formats are fixed at 60% multiple choice, 30% one-sentence, 8% 1–3 sentences, and 2% one paragraph of 5–7 sentences. Distinguish hypotheses from evidence, include plausible alternatives, and avoid deterministic or justificatory claims. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string}, ...]}.`,
         JSON.stringify({
           assignmentKind: assignment.kind,
           assignmentTitle: assignment.title,
@@ -108,6 +125,7 @@ router.post(
             topic: t.topicTitle ?? "evolutionary psychology",
             promptStyleExample: t.prompt,
             modelAnswerExample: t.correctAnswer,
+            requiredFormat: questionFormatInstruction(formats[i]!),
           })),
         }),
       );
@@ -125,7 +143,7 @@ router.post(
         g.prompt.trim() &&
         typeof g.correctAnswer === "string" &&
         g.correctAnswer.trim() &&
-        isValidReasoningProblem(g)
+        isValidReasoningProblem(g, formats[i]!)
       ) {
         return {
           topicId: t.topicId,
@@ -138,10 +156,10 @@ router.post(
       }
       return {
         topicId: t.topicId,
-        prompt: t.prompt,
-        correctAnswer: t.correctAnswer,
-        explanation:
-          "Apply the relevant integration concept to the specific facts in the scenario and justify the operational conclusion in multiple sentences.",
+        ...fallbackQuestion(
+          formats[i]!,
+          t.topicTitle ?? "evolutionary psychology",
+        ),
       };
     });
 
@@ -220,7 +238,47 @@ router.post(
       .from(practiceSessionsTable)
       .where(eq(practiceSessionsTable.id, sessionId));
     if (!session) {
-      res.status(404).json({ error: "session not found" });
+      const recoverable = parsed.data.answers.every(
+        (answer) => typeof answer.prompt === "string" && answer.prompt.trim(),
+      );
+      if (!recoverable) {
+        res.status(409).json({
+          error:
+            "This temporary practice session is no longer available. Your answers remain on this page; submit again after the app updates.",
+        });
+        return;
+      }
+
+      const recoveredResults = await Promise.all(
+        parsed.data.answers.map(async (answer) => {
+          const prompt = answer.prompt!.trim();
+          const graded = await gradeRecoveredPracticeEssay({
+            prompt,
+            userAnswer: answer.answer,
+          });
+          return {
+            problemId: answer.problemId,
+            prompt,
+            correct: graded.correct,
+            scorePercent: graded.scorePercent,
+            userAnswer: answer.answer,
+            correctAnswer: graded.modelAnswer,
+            feedback: graded.feedback,
+          };
+        }),
+      );
+      const score = recoveredResults.filter((result) => result.correct).length;
+      res.json(
+        GradePracticeAssignmentResponse.parse({
+          score,
+          total: recoveredResults.length,
+          percent:
+            recoveredResults.length > 0
+              ? Math.round((score / recoveredResults.length) * 100)
+              : 0,
+          results: recoveredResults,
+        }),
+      );
       return;
     }
     if (session.mode !== "assignment") {
@@ -240,8 +298,11 @@ router.post(
       parsed.data.answers.map((a) => [a.problemId, a]),
     );
 
+    const submittedProblems = problems.filter((problem) =>
+      answerByProblem.has(problem.id),
+    );
     const results = await Promise.all(
-      problems.map(async (problem) => {
+      submittedProblems.map(async (problem) => {
         const submitted = answerByProblem.get(problem.id);
         const answer = submitted?.answer ?? "";
         const graded = await gradePracticeEssay({
@@ -264,6 +325,7 @@ router.post(
           problemId: problem.id,
           prompt: problem.prompt,
           correct: graded.correct,
+          scorePercent: graded.scorePercent,
           userAnswer: answer,
           correctAnswer: problem.correctAnswer,
           feedback: graded.feedback,

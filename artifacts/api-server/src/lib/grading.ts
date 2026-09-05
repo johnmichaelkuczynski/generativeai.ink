@@ -106,13 +106,14 @@ export async function gradePracticeEssay(opts: {
   prompt: string;
   correctAnswer: string;
   userAnswer: string;
-}): Promise<{ correct: boolean; feedback: string }> {
+}): Promise<{ correct: boolean; scorePercent: number; feedback: string }> {
   const user = (opts.userAnswer ?? "").trim();
   const correct = opts.correctAnswer ?? "";
 
   if (!user) {
     return {
       correct: false,
+      scorePercent: 0,
       feedback: `You left this one blank. Give it a real attempt — even a rough draft — and resubmit for feedback.\n\n**Model answer:** ${correct}`,
     };
   }
@@ -120,6 +121,7 @@ export async function gradePracticeEssay(opts: {
   try {
     const out = await chatJson<{
       correct: boolean;
+      scorePercent: number;
       feedback: string;
     }>(
       [
@@ -133,7 +135,9 @@ export async function gradePracticeEssay(opts: {
         "",
         "Then write `feedback` as encouraging Markdown with these sections: **What you got right** (be specific, cite their wording), **What's missing or off** (only genuine errors or gaps that make the answer actually wrong — never nitpick form, grammar, or divergence from the reference when the student is correct), and **How to strengthen it** (1-2 concrete next steps). 4-8 sentences total, neutral and supportive in tone — never snippy.",
         "",
-        'Output strict JSON {"correct": boolean, "feedback": string}.',
+        "Assign a precise integer scorePercent from 0 to 100 based only on substantive correctness and completeness. Do not deduct for writing style or formatting.",
+        "",
+        'Output strict JSON {"correct": boolean, "scorePercent": number, "feedback": string}.',
       ].join("\n"),
       JSON.stringify({
         question_asked: opts.prompt,
@@ -143,6 +147,10 @@ export async function gradePracticeEssay(opts: {
     );
     return {
       correct: !!out.correct,
+      scorePercent: Math.max(
+        0,
+        Math.min(100, Math.round(Number(out.scorePercent) || (out.correct ? 100 : 0))),
+      ),
       feedback:
         out.feedback ||
         `Here's the model answer to compare against:\n\n${correct}`,
@@ -150,7 +158,67 @@ export async function gradePracticeEssay(opts: {
   } catch {
     return {
       correct: false,
+      scorePercent: 0,
       feedback: `I couldn't reach the grader just now. Compare your answer against the model answer and try again:\n\n**Model answer:** ${correct}`,
+    };
+  }
+}
+
+export async function gradeRecoveredPracticeEssay(opts: {
+  prompt: string;
+  userAnswer: string;
+}): Promise<{
+  correct: boolean;
+  scorePercent: number;
+  feedback: string;
+  modelAnswer: string;
+}> {
+  const user = (opts.userAnswer ?? "").trim();
+  if (!user) {
+    return {
+      correct: false,
+      scorePercent: 0,
+      feedback:
+        "You left this one blank. Give it a real attempt before requesting feedback.",
+      modelAnswer: "No answer was submitted.",
+    };
+  }
+
+  try {
+    const out = await chatJson<{
+      correct: boolean;
+      scorePercent: number;
+      feedback: string;
+      modelAnswer: string;
+    }>(
+      [
+        "You are recovering and grading a Nano Evolutionary Psychology practice answer after its temporary database session became unavailable.",
+        "Judge the student's answer on its actual merits using cautious scientific inference. Do not penalize grammar, capitalization, fragments, formatting, or divergence from any presumed wording.",
+        "Write an accurate concise model answer. Then give warm, specific feedback in 4-8 sentences using Markdown sections **What you got right**, **What's missing or off**, and **How to strengthen it**.",
+        "Assign a precise integer scorePercent from 0 to 100 based only on substantive correctness and completeness.",
+        'Output strict JSON {"correct": boolean, "scorePercent": number, "feedback": string, "modelAnswer": string}.',
+      ].join("\n"),
+      JSON.stringify({
+        question_asked: opts.prompt,
+        student_answer: user,
+      }),
+    );
+    return {
+      correct: !!out.correct,
+      scorePercent: Math.max(
+        0,
+        Math.min(100, Math.round(Number(out.scorePercent) || (out.correct ? 100 : 0))),
+      ),
+      feedback: out.feedback || "Your answer was recovered and evaluated.",
+      modelAnswer: out.modelAnswer || "A model answer could not be generated.",
+    };
+  } catch {
+    return {
+      correct: false,
+      scorePercent: 0,
+      feedback:
+        "Your answer was preserved, but the feedback service could not be reached. Please submit it again.",
+      modelAnswer: "Feedback is temporarily unavailable.",
     };
   }
 }

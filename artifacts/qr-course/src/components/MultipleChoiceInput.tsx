@@ -39,6 +39,7 @@ interface MultipleChoiceInputProps {
   value: string;
   onChange: (value: string, trace: KeystrokeTrace) => void;
   disabled?: boolean;
+  name?: string;
 }
 
 export function MultipleChoiceInput({
@@ -46,6 +47,7 @@ export function MultipleChoiceInput({
   value,
   onChange,
   disabled,
+  name = "multiple-choice-answer",
 }: MultipleChoiceInputProps) {
   const choose = (option: MultipleChoiceOption) => {
     onChange(option.value, {
@@ -74,7 +76,7 @@ export function MultipleChoiceInput({
           >
             <input
               type="radio"
-              name="multiple-choice-answer"
+              name={name}
               value={option.value}
               checked={selected}
               onChange={() => choose(option)}

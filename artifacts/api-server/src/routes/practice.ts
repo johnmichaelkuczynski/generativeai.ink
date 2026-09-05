@@ -17,6 +17,12 @@ import {
 } from "@workspace/api-zod";
 import { chatJson } from "../lib/ai";
 import { gradeAnswer } from "../lib/grading";
+import {
+  fallbackQuestion,
+  questionMatchesFormat,
+  questionFormatForOrdinal,
+  questionFormatInstruction,
+} from "../lib/questionFormats";
 
 const router: IRouter = Router();
 
@@ -29,7 +35,7 @@ function isValidReasoningProblem(problem: {
   prompt: string;
   correctAnswer: string;
   explanation: string;
-}): boolean {
+}, format: ReturnType<typeof questionFormatForOrdinal>): boolean {
   const prompt = problem.prompt.trim();
   const answer = problem.correctAnswer.trim();
   const sentenceCount = answer.split(/[.!?]+(?:\s|$)/).filter(Boolean).length;
@@ -37,6 +43,7 @@ function isValidReasoningProblem(problem: {
     prompt.length >= 80 &&
     answer.length >= 60 &&
     sentenceCount >= 1 &&
+    questionMatchesFormat(prompt, answer, format) &&
     !/\b(define|what (?:is|are) .+ called|what does .+ mean|difference between)\b/i.test(
       prompt,
     )
@@ -166,6 +173,13 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
       : "challenging";
 
   const userRequest = parsed.data.request?.trim() || "";
+  const [sequence] = await db
+    .select({
+      maxId: sql<number>`coalesce(max(${practiceProblemsTable.id}), 0)::int`,
+    })
+    .from(practiceProblemsTable);
+  const requiredFormat = questionFormatForOrdinal(sequence?.maxId ?? 0);
+  const formatInstruction = questionFormatInstruction(requiredFormat);
   let generated: { prompt: string; correctAnswer: string; explanation: string };
   try {
     generated = await chatJson<{
@@ -175,22 +189,16 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
     }>(
       `You generate a single practice problem for Nano Evolutionary Psychology. The problem MUST be on the topic "${topic.title}" and at difficulty "${difficultyLabel}" (${difficulty.toFixed(
         1,
-      )}/5). Test applied scientific reasoning, not recall. The question MUST be fully self-contained.\n\nSTRICT QUESTION RULES:\n- Present a specific named behavioral, developmental, or research scenario and ask the student to evaluate an evolutionary hypothesis against evidence and alternatives.\n- Never ask for a definition, terminology recall, or bare yes/no. Require a 1-3 sentence answer tied to the scenario.\n- Distinguish hypotheses from evidence; never imply genetic determinism, universality from an average, or moral justification from evolutionary origins.\n- The correctAnswer must be 1-3 sentences. The explanation briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
+      )}/5). Test applied scientific reasoning, not recall. The question MUST be fully self-contained.\n\nREQUIRED FORMAT:\n${formatInstruction}\n\nThe rolling bank uses exactly 60% multiple choice, 30% one-sentence answers, 8% 1–3 sentence answers, and 2% one-paragraph answers of 5–7 sentences.\n\nSTRICT QUESTION RULES:\n- Present a specific named behavioral, developmental, or research scenario and ask the student to evaluate an evolutionary hypothesis against evidence and alternatives.\n- Never ask for a definition, terminology recall, or bare yes/no.\n- Distinguish hypotheses from evidence; never imply genetic determinism, universality from an average, or moral justification from evolutionary origins.\n- The explanation briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
         lastProblems.map((p) => p.prompt),
       )}.`,
       userRequest || `Generate a new ${difficultyLabel} problem on ${topic.title}.`,
     );
-    if (!isValidReasoningProblem(generated)) {
+    if (!isValidReasoningProblem(generated, requiredFormat)) {
       throw new Error("generated problem did not meet scenario-reasoning requirements");
     }
   } catch {
-    generated = {
-      prompt: `At Northstar University, Maya observes a behavioral pattern and proposes an explanation from "${topic.title}". Identify what the observation supports and one alternative or test that would discriminate the hypothesis. Answer in 1-3 sentences.`,
-      correctAnswer:
-        `A strong answer applies "${topic.title}" to the evidence, explains what the observation does and does not establish, and identifies a competing explanation or discriminating test. It avoids deterministic or justificatory claims.`,
-      explanation:
-        "Full credit reasons about the specific situation and shows operational understanding; restating a definition does not earn credit.",
-    };
+    generated = fallbackQuestion(requiredFormat, topic.title);
   }
 
   const [stored] = await db

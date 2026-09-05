@@ -10,5 +10,7 @@ import type { KeystrokeTrace } from './keystrokeTrace';
 export interface PracticeAssignmentAnswer {
   problemId: number;
   answer: string;
+  /** Included so an in-progress browser answer can be recovered if its temporary practice session expires or is removed. */
+  prompt?: string;
   trace?: KeystrokeTrace;
 }

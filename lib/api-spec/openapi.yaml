@@ -1043,6 +1043,9 @@ components:
       properties:
         problemId: { type: integer }
         answer: { type: string }
+        prompt:
+          type: string
+          description: Included so an in-progress browser answer can be recovered if its temporary practice session expires or is removed.
         trace:
           $ref: "#/components/schemas/KeystrokeTrace"
 
@@ -1060,11 +1063,15 @@ components:
 
     PracticeAssignmentResult:
       type: object
-      required: [problemId, prompt, correct, correctAnswer, feedback]
+      required: [problemId, prompt, correct, scorePercent, correctAnswer, feedback]
       properties:
         problemId: { type: integer }
         prompt: { type: string }
         correct: { type: boolean }
+        scorePercent:
+          type: integer
+          minimum: 0
+          maximum: 100
         userAnswer: { type: string }
         correctAnswer: { type: string }
         feedback: { type: string }

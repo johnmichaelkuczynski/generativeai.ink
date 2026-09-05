@@ -236,7 +236,7 @@ const ASSIGNMENTS: SeedAssignment[] = [
     isTimed: false,
     timeLimitMinutes: null,
     instructions:
-      "Untimed Session 1 practice. Select one answer for multiple choice; answer the short item in 1–2 sentences. Every item requires reasoning from a scenario.",
+      "Untimed Session 1 practice. Select one answer for multiple choice; answer the short item in one sentence. Every item requires reasoning from a scenario.",
     problems: [
       {
         topicSlug: "evolutionary-foundations",
@@ -250,9 +250,9 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "evolutionary-foundations",
         prompt:
-          "In a fishing community, siblings share food more often than strangers, but unrelated partners also exchange food repeatedly and stop helping defectors. Explain how inclusive fitness and reciprocal altruism generate distinct predictions for this pattern. (Answer in 1–2 sentences.)",
+          "In a fishing community, siblings share food more often than strangers, but unrelated partners also exchange food repeatedly and stop helping defectors. Explain how inclusive fitness and reciprocal altruism generate distinct predictions for this pattern. (Answer in one sentence.)",
         correctAnswer:
-          "Inclusive fitness predicts more costly help toward relatives when relatedness-weighted benefits exceed costs under Hamilton's rule. Reciprocal altruism predicts help among non-kin when interaction repeats and defectors can be detected or excluded.",
+          "Inclusive fitness predicts help according to relatedness-weighted benefits, whereas reciprocal altruism predicts conditional help among repeatedly interacting non-kin who can detect or exclude defectors.",
         explanation:
           "Full credit distinguishes kin-selected effects from contingent repeated exchange without implying conscious calculation.",
         hint: "Ask what relatedness predicts separately from what repeated interaction predicts.",
@@ -295,7 +295,7 @@ const ASSIGNMENTS: SeedAssignment[] = [
     isTimed: true,
     timeLimitMinutes: 15,
     instructions:
-      "Timed. 15 minutes. Select one answer for multiple choice; answer the short item in 1–3 sentences. Keystrokes are screened for AI use.",
+      "Timed. 15 minutes. Select one answer for multiple choice; answer the short item in one sentence. Keystrokes are screened for AI use.",
     problems: [
       {
         topicSlug: "evolutionary-foundations",
@@ -318,9 +318,9 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "After growing up under unpredictable hardship, a teenager shows earlier risk-taking. Explain how to frame a life-history hypothesis without treating the outcome as inevitable or the hardship as beneficial. (Answer in 1–3 sentences.)",
+          "After growing up under unpredictable hardship, a teenager shows earlier risk-taking. Explain how to frame a life-history hypothesis without treating the outcome as inevitable or the hardship as beneficial. (Answer in one sentence.)",
         correctAnswer:
-          "The hypothesis predicts probabilistic developmental calibration to independently measured unpredictability, but deprivation, institutions, learning, and individual differences are alternatives or moderators. Longitudinal evidence is needed, and a possibly adaptive response to danger can still carry costs and does not make hardship good.",
+          "Frame earlier risk-taking as a probabilistic calibration hypothesis requiring longitudinal tests against deprivation, learning, institutions, and individual differences, while recognizing that an adaptive response can still be costly and does not make hardship beneficial.",
         explanation:
           "Full credit states a conditional hypothesis, alternatives, and the distinction between adaptive history and welfare.",
       },
@@ -333,7 +333,7 @@ const ASSIGNMENTS: SeedAssignment[] = [
     isTimed: true,
     timeLimitMinutes: 25,
     instructions:
-      "Timed cumulative final. 25 minutes. Select one answer for multiple choice; answer the short item in 1–3 sentences. Keystrokes are screened for AI use.",
+      "Timed cumulative final. 25 minutes. Select one answer for multiple choice; answer the short item in one sentence. Keystrokes are screened for AI use.",
     problems: [
       {
         topicSlug: "minds-development-mismatch",
@@ -347,9 +347,9 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A clinic observes anxiety after constant alert notifications and claims: “Ancestral threat detection is mismatched, therefore the patients' disorder is an adaptation and notifications are the sole cause.” Evaluate the reasoning and name evidence that would discriminate the claims. (Answer in 1–3 sentences.)",
+          "A clinic observes anxiety after constant alert notifications and claims: “Ancestral threat detection is mismatched, therefore the patients' disorder is an adaptation and notifications are the sole cause.” Evaluate the reasoning and name evidence that would discriminate the claims. (Answer in one sentence.)",
         correctAnswer:
-          "Mismatch of an ordinarily useful threat system could contribute to symptoms without making the disorder itself adaptive or proving one cause. Longitudinal or experimental notification changes, dose-response evidence, mechanism measures, clinical impairment, and controls for prior anxiety and social stress would discriminate causation from correlation and alternatives.",
+          "A mismatch hypothesis could explain symptoms without making the disorder adaptive or proving one cause, so longitudinal or experimental notification changes with dose-response, impairment, and prior-anxiety controls are needed.",
         explanation:
           "Full credit separates mechanism, mismatch, disorder, and causation while proposing discriminating evidence.",
       },

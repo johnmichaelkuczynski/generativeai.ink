@@ -22,8 +22,9 @@ trace, or legitimate symbol use false-flags the AI-authorship detector.
 ## Questions must require operational reasoning, never recitation
 ALL questions — homeworks, unit test, final, practice assignments, AND the adaptive
 topic drill — must pose a specific concrete scenario and require reasoning. Freeform
-answers must be multi-sentence rather than one-word/single-term/"yes-no" responses.
-Never ask learners to define or recite an abstract formulation.
+answers may be one sentence when the format distribution calls for it, but never a
+one-word/single-term/"yes-no" response. Never ask learners to define or recite an
+abstract formulation.
 
 **Why:** Repeated, emphatic user mandate — answers must be "hard to share" and prove
 operational understanding, not memorization. The adaptive drill previously generated
@@ -42,6 +43,17 @@ creates unnecessary confusion about how the learner should respond.
 **How to apply:** Keep the scenario and options visually separate, save the selected
 option in the answer snapshot, and preserve text inputs only for genuinely freeform
 questions. Apply the same behavior to graded and practice versions.
+
+## Practice answers follow the exact format mix and are graded one at a time
+Across each rolling 50-question bank: 60% are multiple choice, 30% require exactly
+one sentence, 8% require 1–3 sentences, and 2% require one paragraph of 5–7
+sentences. Never require the learner to finish an entire set before receiving a result.
+
+**Why:** The owner explicitly requires this exact 60/30/8/2 distribution, very few
+long answers, and immediate question-level grading rather than a submit-all workflow.
+**How to apply:** Put a Submit button on every practice question. After that click,
+show that question's integer percentage and specific feedback directly beneath it;
+leave every unsubmitted question editable and independently submittable.
 
 ## Answer-length diagnostics must match the active course
 Operator and synthetic diagnostics are part of the course format, not exempt test fixtures. If the course caps answers at one paragraph, no diagnostic may generate, require, or advertise a multi-paragraph proof.

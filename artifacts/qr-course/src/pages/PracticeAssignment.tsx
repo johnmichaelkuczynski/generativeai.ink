@@ -42,7 +42,10 @@ export default function PracticeAssignment() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [traces, setTraces] = useState<Record<number, KeystrokeTrace>>({});
   const [results, setResults] = useState<PracticeAssignmentResult[] | null>(null);
-  const [percent, setPercent] = useState<number | null>(null);
+  const [submittingProblemId, setSubmittingProblemId] = useState<number | null>(
+    null,
+  );
+  const [submitError, setSubmitError] = useState<Record<number, string>>({});
 
   // Lifted tutor state so per-problem "Discuss this feedback" buttons can seed
   // the conversation while the tutor stays on-screen the whole time.
@@ -51,7 +54,8 @@ export default function PracticeAssignment() {
 
   function newSet() {
     setResults(null);
-    setPercent(null);
+    setSubmittingProblemId(null);
+    setSubmitError({});
     setAnswers({});
     setTraces({});
     setSet(null);
@@ -67,19 +71,50 @@ export default function PracticeAssignment() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assignmentId]);
 
-  function submitForFeedback() {
+  function submitForFeedback(problem: PracticeAssignmentSet["problems"][number]) {
     if (!set) return;
-    const payload = set.problems.map((p) => ({
-      problemId: p.id,
-      answer: answers[p.id] ?? "",
-      trace: traces[p.id],
-    }));
+    setSubmittingProblemId(problem.id);
+    setSubmitError((current) => {
+      const next = { ...current };
+      delete next[problem.id];
+      return next;
+    });
     grader.mutate(
-      { sessionId: set.sessionId, data: { answers: payload } },
+      {
+        sessionId: set.sessionId,
+        data: {
+          answers: [
+            {
+              problemId: problem.id,
+              prompt: problem.prompt,
+              answer: answers[problem.id] ?? "",
+              trace: traces[problem.id],
+            },
+          ],
+        },
+      },
       {
         onSuccess: (data) => {
-          setResults(data.results);
-          setPercent(data.percent);
+          const result = data.results[0];
+          if (result) {
+            setResults((current) => [
+              ...(current ?? []).filter(
+                (item) => item.problemId !== result.problemId,
+              ),
+              result,
+            ]);
+          }
+          setSubmittingProblemId(null);
+        },
+        onError: (error) => {
+          setSubmittingProblemId(null);
+          setSubmitError((current) => ({
+            ...current,
+            [problem.id]:
+              error instanceof Error
+                ? error.message
+                : "This answer could not be submitted. It remains on this page.",
+          }));
         },
       },
     );
@@ -215,11 +250,12 @@ export default function PracticeAssignment() {
                       <MultipleChoiceInput
                         options={multipleChoice.options}
                         value={answers[p.id] ?? ""}
+                        name={`practice-problem-${p.id}`}
                         onChange={(val, trace) => {
                           setAnswers((prev) => ({ ...prev, [p.id]: val }));
                           setTraces((prev) => ({ ...prev, [p.id]: trace }));
                         }}
-                        disabled={!!results}
+                        disabled={!!r}
                       />
                     ) : (
                       <AnswerInput
@@ -228,8 +264,37 @@ export default function PracticeAssignment() {
                           setAnswers((prev) => ({ ...prev, [p.id]: val }));
                           setTraces((prev) => ({ ...prev, [p.id]: trace }));
                         }}
-                        disabled={!!results}
+                        disabled={!!r}
+                        compact={/(answer in one sentence|answer in 1[–-]3 sentences)/i.test(
+                          p.prompt,
+                        )}
                       />
+                    )}
+
+                    {!r && (
+                      <div className="flex flex-col items-end gap-2">
+                        {submitError[p.id] && (
+                          <div
+                            role="alert"
+                            className="w-full rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+                          >
+                            <strong>Submission did not go through.</strong>{" "}
+                            {submitError[p.id]} Your answer is still here—do not
+                            refresh the page.
+                          </div>
+                        )}
+                        <Button
+                          onClick={() => submitForFeedback(p)}
+                          disabled={
+                            grader.isPending || !(answers[p.id] ?? "").trim()
+                          }
+                          className="bg-chart-2 hover:bg-chart-2/90 text-white"
+                        >
+                          {submittingProblemId === p.id
+                            ? "Grading this answer…"
+                            : "Submit this answer"}
+                        </Button>
+                      </div>
                     )}
 
                     {r && (
@@ -241,7 +306,7 @@ export default function PracticeAssignment() {
                         }`}
                       >
                         <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                          Feedback
+                          Grade: {r.scorePercent}% · Feedback
                         </div>
                         <div className="text-sm prose prose-sm max-w-none">
                           <MarkdownRenderer content={r.feedback} />
@@ -281,26 +346,11 @@ export default function PracticeAssignment() {
                   Generate another practice set
                 </Button>
 
-                {!results ? (
-                  <Button
-                    onClick={submitForFeedback}
-                    disabled={grader.isPending}
-                    className="bg-chart-2 hover:bg-chart-2/90 text-white"
-                  >
-                    {grader.isPending ? "Getting feedback…" : "Submit for feedback"}
+                {results && results.length === set.problems.length && (
+                  <Button onClick={newSet} disabled={generate.isPending}>
+                    <Sparkles className="w-4 h-4 mr-2" />
+                    Practice again
                   </Button>
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-muted-foreground">
-                      Practice score:{" "}
-                      <strong className="text-foreground">{percent}%</strong>{" "}
-                      (not graded)
-                    </span>
-                    <Button onClick={newSet} disabled={generate.isPending}>
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      Practice again
-                    </Button>
-                  </div>
                 )}
               </div>
             </div>

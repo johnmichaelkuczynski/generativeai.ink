@@ -14,6 +14,10 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { AnswerInput } from "@/components/AnswerInput";
+import {
+  MultipleChoiceInput,
+  parseMultipleChoicePrompt,
+} from "@/components/MultipleChoiceInput";
 import { ArrowLeft, CheckCircle2, XCircle, RefreshCw } from "lucide-react";
 
 function difficultyFromAccuracy(attempts: number, accuracy: number): {
@@ -148,6 +152,12 @@ export default function TopicPractice() {
   }
 
   const sessionCorrect = history.filter((h) => h.correct).length;
+  const multipleChoice = problem
+    ? parseMultipleChoicePrompt(problem.prompt)
+    : null;
+  const compactAnswer =
+    !!problem &&
+    /(answer in one sentence|answer in 1[–-]3 sentences)/i.test(problem.prompt);
 
   return (
     <Layout>
@@ -217,19 +227,33 @@ export default function TopicPractice() {
               <Skeleton className="h-4 w-1/2" />
             </div>
           ) : (
-            <MarkdownRenderer content={problem.prompt} />
+            <MarkdownRenderer content={multipleChoice?.stem ?? problem.prompt} />
           )}
         </div>
 
         <div className="flex flex-col gap-2">
-          <AnswerInput
-            value={answer}
-            onChange={(val, t) => {
-              setAnswer(val);
-              setTrace(t);
-            }}
-            disabled={!!grade || !problem}
-          />
+          {multipleChoice ? (
+            <MultipleChoiceInput
+              options={multipleChoice.options}
+              value={answer}
+              name={`topic-practice-${problem?.id ?? "current"}`}
+              onChange={(val, t) => {
+                setAnswer(val);
+                setTrace(t);
+              }}
+              disabled={!!grade || !problem}
+            />
+          ) : (
+            <AnswerInput
+              value={answer}
+              onChange={(val, t) => {
+                setAnswer(val);
+                setTrace(t);
+              }}
+              disabled={!!grade || !problem}
+              compact={compactAnswer}
+            />
+          )}
         </div>
 
         {grade ? (
