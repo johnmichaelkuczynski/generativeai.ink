@@ -15,7 +15,13 @@ import {
 import { getUncachableStripeClient } from "../stripeClient";
 
 const router: IRouter = Router();
-const MONTHLY_PRICE_ID = "price_1UCOQLRu18Yf1TJE2uYPUviw";
+function monthlyPriceId(): string {
+  const priceId = process.env.STRIPE_PRICE_ID;
+  if (!priceId?.startsWith("price_")) {
+    throw new Error("STRIPE_PRICE_ID is not configured.");
+  }
+  return priceId;
+}
 
 function appOrigin(req: Request): string {
   const host = (
@@ -83,8 +89,9 @@ router.post("/access/checkout", async (req, res): Promise<void> => {
     return;
   }
   const stripe = await getUncachableStripeClient();
+  const priceId = monthlyPriceId();
   try {
-    const price = await stripe.prices.retrieve(MONTHLY_PRICE_ID);
+    const price = await stripe.prices.retrieve(priceId);
     if (
       !price.livemode ||
       !price.active ||
@@ -92,16 +99,14 @@ router.post("/access/checkout", async (req, res): Promise<void> => {
       price.recurring?.interval !== "month"
     ) {
       res.status(503).json({
-        error:
-          "Live monthly billing is not connected in this environment. No sandbox checkout was opened.",
+        error: "Live monthly billing is not available in this environment.",
       });
       return;
     }
   } catch (error) {
     req.log.warn({ error }, "Live Stripe price verification failed");
     res.status(503).json({
-      error:
-        "Live monthly billing is not connected in this environment. No sandbox checkout was opened.",
+      error: "Live monthly billing is not available in this environment.",
     });
     return;
   }
@@ -130,7 +135,7 @@ router.post("/access/checkout", async (req, res): Promise<void> => {
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: "subscription",
-    line_items: [{ price: MONTHLY_PRICE_ID, quantity: 1 }],
+    line_items: [{ price: priceId, quantity: 1 }],
     success_url: `${origin}/dashboard?checkout=success`,
     cancel_url: `${origin}/dashboard?checkout=cancelled`,
     subscription_data: {
