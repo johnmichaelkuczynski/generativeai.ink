@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { AttemptStateStatus } from './attemptStateStatus';
+import type { Problem } from './problem';
 import type { SavedAnswer } from './savedAnswer';
 
 export interface AttemptState {
@@ -17,5 +18,7 @@ export interface AttemptState {
   submittedAt?: Date | null;
   /** @nullable */
   deadlineAt?: Date | null;
+  /** Fresh question set generated for this attempt and kept stable until submission. */
+  problems: Problem[];
   answers: SavedAnswer[];
 }

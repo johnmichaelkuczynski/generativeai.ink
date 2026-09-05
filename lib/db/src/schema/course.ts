@@ -86,6 +86,23 @@ export const attemptsTable = pgTable("attempts", {
   scorePercent: doublePrecision("score_percent"),
 });
 
+export const attemptProblemVariantsTable = pgTable("attempt_problem_variants", {
+  id: serial("id").primaryKey(),
+  attemptId: integer("attempt_id")
+    .notNull()
+    .references(() => attemptsTable.id, { onDelete: "cascade" }),
+  sourceProblemId: integer("source_problem_id")
+    .notNull()
+    .references(() => problemsTable.id, { onDelete: "cascade" }),
+  topicId: integer("topic_id")
+    .notNull()
+    .references(() => topicsTable.id),
+  position: integer("position").notNull(),
+  prompt: text("prompt").notNull(),
+  correctAnswer: text("correct_answer").notNull(),
+  explanation: text("explanation").notNull(),
+});
+
 export const answersTable = pgTable("answers", {
   id: serial("id").primaryKey(),
   attemptId: integer("attempt_id")
@@ -96,6 +113,7 @@ export const answersTable = pgTable("answers", {
     .references(() => problemsTable.id, { onDelete: "cascade" }),
   answer: text("answer").notNull().default(""),
   correct: boolean("correct"),
+  scorePercent: doublePrecision("score_percent"),
   keystrokeCount: integer("keystroke_count").notNull().default(0),
   eraseCount: integer("erase_count").notNull().default(0),
   bulkInsertCount: integer("bulk_insert_count").notNull().default(0),

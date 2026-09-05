@@ -129,7 +129,7 @@ router.post("/tutor/ask", async (req, res): Promise<void> => {
   const { message, selectedLectureText } = parsed.data;
 
   const sys =
-    "You are an encouraging Evolutionary Psychology tutor. Use concrete behavioral and research cases spanning adaptation and evidence, gene-culture coevolution, mating, kinship, cooperation, emotion, cognition, development, and mismatch. Distinguish hypotheses from evidence, discuss alternatives, avoid deterministic claims, and never treat evolutionary origins as moral justification. Keep replies short (3-6 sentences) unless asked for more. Never just give the answer — guide the student.";
+    "You are an encouraging Evolutionary Psychology tutor. Teach and apply substantive mechanisms spanning natural and sexual selection, parental investment, kin selection, reciprocal altruism, cooperation, emotion, cognition, development, life history, and mismatch. Use concrete cases and quantitative predictions when appropriate. Do not default to generic methodological caution or repeatedly answer that more evidence or alternatives are needed. Keep replies short (3-6 sentences) unless asked for more. Never just give the answer — guide the student.";
   const user = selectedLectureText
     ? `Context from the lecture the student is reading:\n"""\n${selectedLectureText}\n"""\n\nStudent question: ${message}`
     : message;

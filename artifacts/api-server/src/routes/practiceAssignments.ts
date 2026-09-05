@@ -21,7 +21,6 @@ import {
 } from "../lib/grading";
 import {
   type QuestionFormat,
-  fallbackQuestion,
   questionMatchesFormat,
   questionFormatForOrdinal,
   questionFormatInstruction,
@@ -116,7 +115,7 @@ router.post(
           explanation: string;
         }>;
       }>(
-        `You write a PRACTICE version of a Nano Evolutionary Psychology ${assignment.kind} titled "${assignment.title}". Produce EXACTLY ${templates.length} new scenario problems, one per template in order, testing the same concept with a different named behavioral, developmental, or research case. Require evidence-based reasoning, not definitions. Obey each template's requiredFormat exactly. Across the rolling question bank the formats are fixed at 60% multiple choice, 30% one-sentence, 8% 1–3 sentences, and 2% one paragraph of 5–7 sentences. Distinguish hypotheses from evidence, include plausible alternatives, and avoid deterministic or justificatory claims. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string}, ...]}.`,
+        `You write a PRACTICE version of a Nano Evolutionary Psychology ${assignment.kind} titled "${assignment.title}". Produce EXACTLY ${templates.length} genuinely new scenario problems, one per template in order. Each must require applying a substantive mechanism or prediction such as Hamilton's rule, reciprocal altruism, parental investment, sexual selection, life-history allocation, error-management theory, pathogen avoidance, coalitional psychology, theory of mind, mismatch, or supernormal stimuli. FORBIDDEN: a correct answer that merely says more evidence is needed, alternatives should be considered, certainty is unwarranted, or conclusions should be avoided. Changing only names or surface details is not fresh. Require reasoning, not definitions. Obey each template's requiredFormat exactly. Across the rolling question bank the formats are fixed at 60% multiple choice, 30% one-sentence, 8% 1–3 sentences, and 2% one paragraph of 5–7 sentences. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string}, ...]}.`,
         JSON.stringify({
           assignmentKind: assignment.kind,
           assignmentTitle: assignment.title,
@@ -134,32 +133,37 @@ router.post(
       generated = [];
     }
 
-    // Fall back to the grounded source item if generation failed/short.
+    const allGeneratedProblemsAreValid = templates.every((_, i) => {
+      const g = generated[i];
+      return Boolean(
+        g &&
+          typeof g.prompt === "string" &&
+          g.prompt.trim() &&
+          typeof g.correctAnswer === "string" &&
+          g.correctAnswer.trim() &&
+          isValidReasoningProblem(g, formats[i]!) &&
+          !/\b(?:more evidence|consider alternatives|cannot conclude|avoid (?:a )?conclusion|not enough evidence|before (?:concluding|inferring))\b/i.test(
+            g.correctAnswer,
+          ),
+      );
+    });
+    if (!allGeneratedProblemsAreValid || generated.length !== templates.length) {
+      res.status(503).json({
+        error:
+          "Could not generate a fresh substantive question set. No canned questions were substituted.",
+      });
+      return;
+    }
+
     const finalProblems = templates.map((t, i) => {
       const g = generated[i];
-      if (
-        g &&
-        typeof g.prompt === "string" &&
-        g.prompt.trim() &&
-        typeof g.correctAnswer === "string" &&
-        g.correctAnswer.trim() &&
-        isValidReasoningProblem(g, formats[i]!)
-      ) {
-        return {
-          topicId: t.topicId,
-          prompt: g.prompt.trim(),
-          correctAnswer: g.correctAnswer.trim(),
-          explanation:
-            (g.explanation ?? "").trim() ||
-            "Explain your reasoning using the core concept this problem targets.",
-        };
-      }
       return {
         topicId: t.topicId,
-        ...fallbackQuestion(
-          formats[i]!,
-          t.topicTitle ?? "evolutionary psychology",
-        ),
+        prompt: g!.prompt.trim(),
+        correctAnswer: g!.correctAnswer.trim(),
+        explanation:
+          (g!.explanation ?? "").trim() ||
+          "Explain your reasoning using the core mechanism this problem targets.",
       };
     });
 

@@ -570,7 +570,7 @@ router.post("/diagnostics/synthetic-run", async (_req, res) => {
           correctAnswer: string;
           explanation: string;
         }>(
-          `You generate a single Nano Evolutionary Psychology practice problem on "${topic.title}" at easy difficulty. Use a specific named behavioral or research scenario and require a reasoned 1-3 sentence answer that evaluates evidence and alternatives. Never ask for definitions or terminology recall. Avoid deterministic or justificatory claims. Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}.`,
+          `You generate a single Nano Evolutionary Psychology practice problem on "${topic.title}" at easy difficulty. Use a specific behavioral or research scenario that requires applying one substantive course mechanism or prediction in 1-3 sentences. Never ask for definitions, terminology recall, or a generic answer about needing more evidence or considering alternatives. Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}.`,
           `New problem on ${topic.title}.`,
         );
         const [stored] = await db

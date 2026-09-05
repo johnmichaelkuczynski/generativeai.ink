@@ -207,6 +207,8 @@ export interface AttemptState {
   submittedAt?: string | null;
   /** @nullable */
   deadlineAt?: string | null;
+  /** Fresh question set generated for this attempt and kept stable until submission. */
+  problems: Problem[];
   answers: SavedAnswer[];
 }
 
@@ -227,6 +229,25 @@ export interface AnswerInput {
 
 export interface AnswerSaved {
   ok: boolean;
+}
+
+export interface GradeAssignmentAnswerInput {
+  problemId: number;
+  answer: string;
+  trace: KeystrokeTrace;
+  skipDetection?: boolean;
+}
+
+export interface AssignmentAnswerGrade {
+  problemId: number;
+  correct: boolean;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  scorePercent: number;
+  feedback: string;
+  correctAnswer?: string;
 }
 
 export interface SubmitAttemptInput {

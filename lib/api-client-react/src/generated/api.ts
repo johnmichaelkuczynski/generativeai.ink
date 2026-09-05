@@ -26,6 +26,7 @@ import type {
   AnswerInput,
   AnswerSaved,
   Assignment,
+  AssignmentAnswerGrade,
   AssignmentSummary,
   AttemptResult,
   AttemptState,
@@ -33,6 +34,7 @@ import type {
   DetectionResult,
   DetectionScanInput,
   GenerateLectureExamplesInput,
+  GradeAssignmentAnswerInput,
   Gradebook,
   GraderLabInput,
   GraderLabResult,
@@ -1190,6 +1192,78 @@ export const useSaveAnswer = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getSaveAnswerMutationOptions(options));
+    }
+
+export const getGradeAssignmentAnswerUrl = (attemptId: number,) => {
+
+
+
+
+  return `/api/assignments/attempts/${attemptId}/answer/grade`
+}
+
+/**
+ * @summary Save and immediately grade one answer without closing the attempt
+ */
+export const gradeAssignmentAnswer = async (attemptId: number,
+    gradeAssignmentAnswerInput: GradeAssignmentAnswerInput, options?: RequestInit): Promise<AssignmentAnswerGrade> => {
+
+  return customFetch<AssignmentAnswerGrade>(getGradeAssignmentAnswerUrl(attemptId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      gradeAssignmentAnswerInput,)
+  }
+);}
+
+
+
+
+export const getGradeAssignmentAnswerMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof gradeAssignmentAnswer>>, TError,{attemptId: number;data: BodyType<GradeAssignmentAnswerInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof gradeAssignmentAnswer>>, TError,{attemptId: number;data: BodyType<GradeAssignmentAnswerInput>}, TContext> => {
+
+const mutationKey = ['gradeAssignmentAnswer'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof gradeAssignmentAnswer>>, {attemptId: number;data: BodyType<GradeAssignmentAnswerInput>}> = (props) => {
+          const {attemptId,data} = props ?? {};
+
+          return  gradeAssignmentAnswer(attemptId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GradeAssignmentAnswerMutationResult = NonNullable<Awaited<ReturnType<typeof gradeAssignmentAnswer>>>
+    export type GradeAssignmentAnswerMutationBody = BodyType<GradeAssignmentAnswerInput>
+    export type GradeAssignmentAnswerMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Save and immediately grade one answer without closing the attempt
+ */
+export const useGradeAssignmentAnswer = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof gradeAssignmentAnswer>>, TError,{attemptId: number;data: BodyType<GradeAssignmentAnswerInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof gradeAssignmentAnswer>>,
+        TError,
+        {attemptId: number;data: BodyType<GradeAssignmentAnswerInput>},
+        TContext
+      > => {
+      return useMutation(getGradeAssignmentAnswerMutationOptions(options));
     }
 
 export const getSubmitAttemptUrl = (attemptId: number,) => {

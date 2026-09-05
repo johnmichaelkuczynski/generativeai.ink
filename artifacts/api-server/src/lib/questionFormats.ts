@@ -17,7 +17,7 @@ export function questionFormatForOrdinal(ordinal: number): QuestionFormat {
 export function questionFormatInstruction(format: QuestionFormat): string {
   switch (format) {
     case "multiple_choice":
-      return "MULTIPLE CHOICE: provide exactly four options labeled A) through D), with one best answer. The correctAnswer must repeat the complete correct option, including its letter.";
+      return "MULTIPLE CHOICE: provide exactly two or three options labeled A) and B), with C) optional. Prefer three unless a genuinely binary distinction makes two clearer. Include one best answer and only plausible alternatives. Never include D). The correctAnswer must repeat the complete correct option, including its letter.";
     case "one_sentence":
       return "ONE-SENTENCE ANSWER: explicitly say “Answer in one sentence.” The model answer must be exactly one sentence.";
     case "one_to_three_sentences":
@@ -37,9 +37,14 @@ export function questionMatchesFormat(
     .split(/[.!?]+(?:\s|$)/)
     .filter(Boolean).length;
   if (format === "multiple_choice") {
+    const labels = [...prompt.matchAll(/(?:^|\s)([A-C])\)\s+/g)].map(
+      (match) => match[1],
+    );
     return (
-      /\bA\).+\bB\).+\bC\).+\bD\)/s.test(prompt) &&
-      /^[A-D]\)\s+\S/.test(answer.trim())
+      (labels.length === 2 || labels.length === 3) &&
+      labels.every((label, index) => label === String.fromCharCode(65 + index)) &&
+      !/(?:^|\s)D\)\s+/.test(prompt) &&
+      /^[A-C]\)\s+\S/.test(answer.trim())
     );
   }
   if (format === "one_sentence") {

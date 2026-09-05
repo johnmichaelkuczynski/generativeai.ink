@@ -6,7 +6,9 @@ import {
   useStartAssignmentAttempt, 
   useGetAttempt, 
   useSaveAnswer, 
+  useGradeAssignmentAnswer,
   useSubmitAttempt,
+  AssignmentAnswerGrade,
   AttemptResult,
   KeystrokeTrace
 } from "@workspace/api-client-react";
@@ -27,10 +29,11 @@ export default function AssignmentRunner() {
   const { data: assignment, isLoading: isLoadingAssignment } = useGetAssignment(assignmentId);
   const startAttempt = useStartAssignmentAttempt();
   const submitAttempt = useSubmitAttempt();
+  const gradeAssignmentAnswer = useGradeAssignmentAnswer();
   
   const [attemptId, setAttemptId] = useState<number | null>(null);
-  const { data: attempt } = useGetAttempt(attemptId || 0, {
-    query: { enabled: !!attemptId, queryKey: ['attempt', attemptId] }
+  const { data: attempt, isError: isAttemptError } = useGetAttempt(attemptId || 0, {
+    query: { enabled: !!attemptId, queryKey: ['attempt', attemptId], retry: false }
   });
   
   const saveAnswer = useSaveAnswer();
@@ -40,7 +43,15 @@ export default function AssignmentRunner() {
   const answersRef = useRef<Record<number, string>>({});
   const tracesRef = useRef<Record<number, KeystrokeTrace>>({});
   const [result, setResult] = useState<AttemptResult | null>(null);
+  const [gradedAnswers, setGradedAnswers] = useState<
+    Record<number, AssignmentAnswerGrade>
+  >({});
+  const [attemptProblems, setAttemptProblems] = useState<
+    NonNullable<typeof assignment>["problems"]
+  >([]);
   const [actionError, setActionError] = useState<string | null>(null);
+  const activeProblems =
+    attemptProblems.length > 0 ? attemptProblems : (assignment?.problems ?? []);
 
   const emptyTrace = (): KeystrokeTrace => ({
     keystrokeCount: 0,
@@ -61,6 +72,7 @@ export default function AssignmentRunner() {
       startAttempt.mutate({ assignmentId }, {
         onSuccess: (data) => {
           setAttemptId(data.id);
+          setAttemptProblems(data.problems);
           const initialAnswers: Record<number, string> = {};
           data.answers.forEach(a => {
             initialAnswers[a.problemId] = a.answer;
@@ -76,6 +88,22 @@ export default function AssignmentRunner() {
       });
     }
   }, [assignmentId, attemptId, startAttempt, result]);
+
+  useEffect(() => {
+    if (attempt?.problems?.length) setAttemptProblems(attempt.problems);
+  }, [attempt?.problems]);
+
+  useEffect(() => {
+    if (!attemptId || !isAttemptError) return;
+    setAttemptId(null);
+    setAttemptProblems([]);
+    answersRef.current = {};
+    tracesRef.current = {};
+    setAnswers({});
+    setGradedAnswers({});
+    setCurrentProblemIdx(0);
+    setActionError(null);
+  }, [attemptId, isAttemptError]);
 
   const handleAnswerChange = (problemId: number, val: string, trace: KeystrokeTrace) => {
     answersRef.current[problemId] = val;
@@ -104,7 +132,7 @@ export default function AssignmentRunner() {
   };
 
   const handleNavigate = async (nextIndex: number) => {
-    const currentProblem = assignment?.problems[currentProblemIdx];
+    const currentProblem = activeProblems[currentProblemIdx];
     if (!currentProblem) return;
     const saved = await saveProblem(currentProblem.id);
     if (saved) setCurrentProblemIdx(nextIndex);
@@ -113,7 +141,7 @@ export default function AssignmentRunner() {
   const handleSubmit = async () => {
     if (!attemptId || !assignment) return;
     setActionError(null);
-    const finalAnswers = assignment.problems.map((problem) => ({
+    const finalAnswers = activeProblems.map((problem) => ({
       problemId: problem.id,
       answer: answersRef.current[problem.id] ?? "",
       trace: tracesRef.current[problem.id] ?? emptyTrace(),
@@ -130,6 +158,35 @@ export default function AssignmentRunner() {
     } catch (error) {
       setActionError(
         `Your complete assignment could not be submitted: ${errorMessage(error)}`,
+      );
+    }
+  };
+
+  const handleGradeCurrent = async () => {
+    if (!attemptId || !currentProblem) return;
+    const answer = answersRef.current[currentProblem.id] ?? "";
+    if (!answer.trim()) {
+      setActionError("Select or enter an answer before submitting it.");
+      return;
+    }
+    setActionError(null);
+    try {
+      const grade = await gradeAssignmentAnswer.mutateAsync({
+        attemptId,
+        data: {
+          problemId: currentProblem.id,
+          answer,
+          trace: tracesRef.current[currentProblem.id] ?? emptyTrace(),
+          skipDetection: isAdminMode(),
+        },
+      });
+      setGradedAnswers((previous) => ({
+        ...previous,
+        [currentProblem.id]: grade,
+      }));
+    } catch (error) {
+      setActionError(
+        `This answer could not be graded: ${errorMessage(error)}`,
       );
     }
   };
@@ -195,10 +252,13 @@ export default function AssignmentRunner() {
     );
   }
 
-  const currentProblem = assignment.problems[currentProblemIdx];
+  const currentProblem = activeProblems[currentProblemIdx];
   const multipleChoice = currentProblem
     ? parseMultipleChoicePrompt(currentProblem.prompt)
     : null;
+  const currentGrade = currentProblem
+    ? gradedAnswers[currentProblem.id]
+    : undefined;
 
   return (
     <Layout>
@@ -206,7 +266,7 @@ export default function AssignmentRunner() {
         <div className="flex justify-between items-center border-b pb-4">
           <div>
             <h1 className="text-2xl font-serif font-bold text-primary">{assignment.title}</h1>
-            <p className="text-sm text-muted-foreground">Problem {currentProblemIdx + 1} of {assignment.problems.length}</p>
+            <p className="text-sm text-muted-foreground">Problem {currentProblemIdx + 1} of {activeProblems.length}</p>
           </div>
           {attempt?.deadlineAt && (
             <div className="text-destructive font-mono font-bold px-3 py-1 rounded bg-destructive/10 border border-destructive/20">
@@ -243,6 +303,7 @@ export default function AssignmentRunner() {
                   options={multipleChoice.options}
                   value={answers[currentProblem.id] || ""}
                   name={`assignment-problem-${currentProblem.id}`}
+                  disabled={!!currentGrade}
                   onChange={(val, trace) =>
                     handleAnswerChange(currentProblem.id, val, trace)
                   }
@@ -255,12 +316,40 @@ export default function AssignmentRunner() {
                     handleAnswerChange(currentProblem.id, val, trace)
                   }
                   initialTrace={tracesRef.current[currentProblem.id]}
+                  disabled={!!currentGrade}
                   compact={/(answer in one sentence|answer in 1[–-]3 sentences)/i.test(
                     currentProblem.prompt,
                   )}
                 />
               )}
             </div>
+
+            {currentGrade && (
+              <div
+                className={`rounded-lg border p-5 ${
+                  currentGrade.correct
+                    ? "border-green-300 bg-green-50/60"
+                    : "border-amber-300 bg-amber-50/60"
+                }`}
+                data-testid={`result-assignment-answer-${currentProblem.id}`}
+              >
+                <div
+                  className="text-2xl font-bold tabular-nums"
+                  data-testid={`text-assignment-score-${currentProblem.id}`}
+                >
+                  {Math.round(currentGrade.scorePercent)}%
+                </div>
+                <div className="mt-2 text-sm">
+                  <MarkdownRenderer content={currentGrade.feedback} />
+                </div>
+                {!currentGrade.correct && currentGrade.correctAnswer && (
+                  <div className="mt-3 border-t border-amber-300 pt-3 text-sm">
+                    <span className="font-semibold">Model answer:</span>{" "}
+                    {currentGrade.correctAnswer}
+                  </div>
+                )}
+              </div>
+            )}
 
             {actionError && (
               <div
@@ -275,29 +364,55 @@ export default function AssignmentRunner() {
               <Button 
                 variant="outline" 
                 onClick={() => void handleNavigate(Math.max(0, currentProblemIdx - 1))}
-                disabled={currentProblemIdx === 0 || saveAnswer.isPending || submitAttempt.isPending}
+                disabled={
+                  currentProblemIdx === 0 ||
+                  saveAnswer.isPending ||
+                  gradeAssignmentAnswer.isPending ||
+                  submitAttempt.isPending
+                }
               >
                 {saveAnswer.isPending ? "Saving..." : "Previous"}
               </Button>
               
-              {currentProblemIdx < assignment.problems.length - 1 ? (
+              {!currentGrade ? (
+                <Button
+                  onClick={() => void handleGradeCurrent()}
+                  disabled={
+                    !answers[currentProblem.id]?.trim() ||
+                    gradeAssignmentAnswer.isPending ||
+                    saveAnswer.isPending
+                  }
+                  data-testid={`button-submit-answer-${currentProblem.id}`}
+                >
+                  {gradeAssignmentAnswer.isPending
+                    ? "Grading…"
+                    : "Submit answer"}
+                </Button>
+              ) : currentProblemIdx < activeProblems.length - 1 ? (
                 <Button 
                   onClick={() =>
-                    void handleNavigate(
-                      Math.min(assignment.problems.length - 1, currentProblemIdx + 1),
+                    setCurrentProblemIdx(
+                      Math.min(activeProblems.length - 1, currentProblemIdx + 1),
                     )
                   }
-                  disabled={saveAnswer.isPending || submitAttempt.isPending}
+                  disabled={gradeAssignmentAnswer.isPending || submitAttempt.isPending}
+                  data-testid="button-next-problem"
                 >
-                  {saveAnswer.isPending ? "Saving..." : "Next"}
+                  Next
                 </Button>
               ) : (
                 <Button 
                   onClick={() => void handleSubmit()}
                   className="bg-chart-2 hover:bg-chart-2/90 text-white"
-                  disabled={saveAnswer.isPending || submitAttempt.isPending}
+                  disabled={
+                    saveAnswer.isPending ||
+                    gradeAssignmentAnswer.isPending ||
+                    submitAttempt.isPending ||
+                    Object.keys(gradedAnswers).length !== activeProblems.length
+                  }
+                  data-testid="button-finish-assignment"
                 >
-                  {submitAttempt.isPending ? "Submitting..." : "Submit Assignment"}
+                  {submitAttempt.isPending ? "Finishing..." : "Finish Assignment"}
                 </Button>
               )}
             </div>

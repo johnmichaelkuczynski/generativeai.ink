@@ -37,15 +37,23 @@ already handles reasoned answers, so longer answers are safe to grade.
 Multiple-choice questions must display their options as radio-style selections. Never
 show a freeform text box or tell a learner to copy, paste, type, or "enter the full
 option." Never run GPTZero or any other authorship detector on a multiple-choice
-selection.
+selection. Each multiple-choice question must have exactly two or three options,
+never four; prefer three unless the distinction is genuinely binary.
 
 **Why:** Requiring transcription makes a familiar question format idiosyncratic and
 creates unnecessary confusion; detector scoring is categorically invalid because the
-selected text was supplied by the course rather than authored by the learner.
+selected text was supplied by the course rather than authored by the learner. Four
+options create needless reading load and reward test-gaming over learning the material.
 **How to apply:** Keep the scenario and options visually separate, save the selected
 option in the answer snapshot, exclude it from detection results, clear any detector
 fields, and preserve text inputs/detection only for genuinely freeform questions.
 Apply the same behavior to graded and practice versions.
+
+## Every graded attempt uses fresh questions
+Homework, tests, and finals must generate a new scenario-reasoning question set for each new attempt; seeded questions are concept templates only and must never be shown as the graded set.
+
+**Why:** Repeating the fixed seed bank makes retries predictable and defeats the course's requirement for fresh assessment.
+**How to apply:** Persist generated variants per attempt so refresh keeps work stable, exclude all prior/source prompts from generation, and fail visibly rather than falling back to a canned item.
 
 ## Practice answers follow the exact format mix and are graded one at a time
 Across each rolling 50-question bank: 60% are multiple choice, 30% require exactly

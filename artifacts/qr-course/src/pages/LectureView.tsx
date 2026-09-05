@@ -28,8 +28,8 @@ type ChatMsg = { role: "user" | "tutor"; text: string };
 
 const HIGHLIGHTS_BY_SECTION: Record<string, string[]> = {
   "1. Foundations": [
-    "Evolutionary hypotheses explain how selection may have shaped psychological mechanisms; they do not claim that every behavior is adaptive, fixed, universal, or morally justified.",
-    "A credible adaptation claim needs discriminating evidence, such as design specificity, developmental patterns, cross-cultural comparisons, or predictions that defeat learning and by-product explanations.",
+    "Evolutionary hypotheses explain how selection shaped mechanisms that detect recurring cues and regulate behavior toward reproductive tradeoffs.",
+    "An evolutionary mechanism links a recurrent adaptive problem to the cues it detects, the decision rule it uses, and the fitness tradeoff it regulates.",
     "The environment of evolutionary adaptedness describes recurring selection pressures, while gene–culture coevolution describes feedback between inherited capacities and cultural practices.",
   ],
   "2. Mate selection and sexual strategies": [
@@ -50,11 +50,11 @@ const HIGHLIGHTS_BY_SECTION: Record<string, string[]> = {
   "5. Emotion and motivation": [
     "Emotions coordinate attention, physiology, memory, and action around recurring problems; they are response systems rather than infallible instructions.",
     "Fear, anger, disgust, jealousy, and status motives may prioritize different threats or opportunities, but context and learning shape how they are expressed.",
-    "An evolutionary account of an emotion must make testable predictions and cannot excuse harmful behavior or establish what people ought to do.",
+    "Error-management theory predicts that emotional thresholds shift toward the less costly mistake, such as fear systems accepting false alarms when missed threats are costlier.",
   ],
   "6. Cognitive adaptations": [
     "Domain-specific accounts propose mechanisms tuned to recurring information patterns, whereas domain-general accounts emphasize flexible learning, memory, and executive control.",
-    "Specialized and general processes can operate together, so a task advantage alone does not prove a dedicated mental module.",
+    "Specialized systems process recurring information structures, while working memory and executive control coordinate behavior across domains.",
     "Useful evidence compares rival predictions and identifies the information-processing design, rather than relying only on a brain location or a plausible ancestral story.",
   ],
   "7. Evolutionary developmental psychology": [
@@ -69,11 +69,11 @@ const HIGHLIGHTS_BY_SECTION: Record<string, string[]> = {
   ],
   "It tests application, not memorization": [
     "Success requires applying evolutionary concepts to a concrete case rather than reciting definitions.",
-    "A strong answer identifies the claim, specifies what evidence would distinguish it, and keeps plausible alternatives in view.",
+    "A strong answer identifies the operative mechanism, uses the scenario's decisive cue, and derives the predicted behavioral tradeoff.",
   ],
   "What the questions reward": [
     "Rewarded answers separate ultimate explanations from proximate mechanisms and developmental causes.",
-    "They state conclusions proportionally, avoid deterministic claims, and test adaptations against learning, culture, drift, and by-product explanations.",
+    "They use course mechanisms to predict when mating, cooperation, threat, status, parenting, and life-history strategies should shift.",
   ],
   "How to do this activity well": [
     "Read for the decision the scenario requires, then answer that decision directly.",
@@ -82,10 +82,10 @@ const HIGHLIGHTS_BY_SECTION: Record<string, string[]> = {
   "The five skills": [
     "Identify the evolutionary claim precisely instead of accepting a broad story.",
     "Connect the proposed mechanism to observable predictions and discriminating evidence.",
-    "Compare alternatives, reason about conditional variation, and avoid turning descriptive claims into moral conclusions.",
+    "Track how ecological inputs change the expected payoff of mating effort, parental investment, cooperation, status seeking, and future-oriented effort.",
   ],
   "A recurring trap: things that move together": [
-    "Correlation alone cannot establish that one variable caused another or that either variable is an adaptation.",
+    "Use the course's mechanism maps to connect recurrent problems, information cues, decision rules, and predicted outcomes.",
     "A strong analysis looks for confounds, reverse causation, measurement problems, and predictions that separate competing explanations.",
   ],
 };

@@ -335,12 +335,38 @@ function rotateOptions(options: string[]): { options: string[]; correctIndex: nu
 }
 
 function templateContent(items: DiagnosticItemRow[]): GeneratedItemContent[] {
-  return items.map((it) => ({
-    type: it.type,
-    prompt: it.prompt,
-    payload: it.payload,
-    scoring: it.scoring,
-  }));
+  return items.map((it) => {
+    const options = itemOptions(it);
+    if (options.length <= 3) {
+      return {
+        type: it.type,
+        prompt: it.prompt,
+        payload: it.payload,
+        scoring: it.scoring,
+      };
+    }
+
+    const scoring = itemScoring(it);
+    const correct = options[scoring.correctIndex]!;
+    const distractors = options.filter(
+      (_, index) => index !== scoring.correctIndex,
+    );
+    const optionCount = it.id % 2 === 0 ? 2 : 3;
+    const compact = [correct, ...distractors.slice(0, optionCount - 1)];
+    const rotated = rotateOptions(compact);
+    return {
+      type: it.type,
+      prompt: it.prompt,
+      payload: {
+        ...(it.payload as Record<string, unknown>),
+        options: rotated.options,
+      },
+      scoring: {
+        ...(it.scoring as Record<string, unknown>),
+        correctIndex: rotated.correctIndex,
+      },
+    };
+  });
 }
 
 async function generateGeneralVariant(
@@ -360,8 +386,8 @@ async function generateGeneralVariant(
   const spec = genSpecFor("general", phase);
   const system =
     "You are an assessment author writing ORIGINAL general-reasoning multiple-choice questions. " +
-    "Each question must measure genuine reasoning (not recall, and NOT mere agreement with authority), have exactly four answer options with one unambiguously best answer, and target the requested skill area. " +
-    "List the CORRECT option FIRST, followed by three plausible but wrong distractors. " +
+    "Each question must measure genuine reasoning (not recall, and NOT mere agreement with authority), have exactly two or three answer options with one unambiguously best answer, and target the requested skill area. Prefer three options unless a binary distinction makes two clearer. " +
+    "List the CORRECT option FIRST, followed by one or two plausible but wrong distractors. " +
     "Write fresh questions on varied, neutral everyday topics — do NOT reuse the example wording. " +
     `Difficulty: ${spec.level} ` +
     'Respond ONLY as JSON of the form {"items":[{"prompt":"...","options":["correct","wrong","wrong","wrong"],"skillArea":"analysis"}]}.';
@@ -385,7 +411,7 @@ async function generateGeneralVariant(
     }
     if (
       !Array.isArray(options) ||
-      options.length !== 4 ||
+      (options.length !== 2 && options.length !== 3) ||
       !options.every((o) => typeof o === "string" && o.trim().length > 0)
     ) {
       throw new Error("general variant: bad options");
@@ -413,11 +439,11 @@ async function generateSubjectVariant(
   const spec = genSpecFor("subject", phase);
   const system =
     "You are an assessment author writing ORIGINAL questions for Nano Evolutionary Psychology. " +
-    "Every question must be a brief, realistic behavioral, developmental, or research CASE that rewards reasoning from decisive evidence, never definition recall. Keep it answerable with one or two sentences. " +
-    "Each has exactly four answer options with one clearly best, well-supported answer. " +
-    "List the CORRECT option FIRST, followed by three plausible but worse distractors (an over-simple single-cause claim, an 'obvious'/sensational answer, or an irrelevant one). " +
+    "Every question must be a brief, realistic behavioral, developmental, or research CASE requiring application of an evolutionary-psychology mechanism or prediction, never definition recall. Keep it answerable with one or two sentences. " +
+    "Each has exactly two or three answer options with one clearly best, well-supported answer. Prefer three options unless a binary distinction makes two clearer. " +
+    "List the CORRECT option FIRST, followed by one or two plausible but wrong applications of the course's mechanisms. " +
     "Also write a one-sentence model answer explaining why the first option is best. " +
-    "Distinguish hypotheses from evidence, include plausible alternatives, and avoid deterministic or justificatory claims. Keep the subject matter tasteful and age-appropriate. " +
+    "Prioritize Hamilton's rule, reciprocal altruism, parental investment, sexual selection, error management, pathogen avoidance, coalitional psychology, life-history tradeoffs, theory of mind, mismatch, and supernormal stimuli. Never make generic methodological caution ('more evidence is needed,' 'consider alternatives,' or 'do not conclude') the correct answer. Keep the subject matter tasteful and age-appropriate. " +
     `Difficulty: ${spec.level} ` +
     `Stay strictly within this scope: ${spec.topicFocus} ` +
     'Respond ONLY as JSON of the form {"items":[{"prompt":"short case ending in a question","options":["best","worse","worse","worse"],"modelAnswer":"why the first option is best"}]}.';
@@ -440,7 +466,7 @@ async function generateSubjectVariant(
     }
     if (
       !Array.isArray(options) ||
-      options.length !== 4 ||
+      (options.length !== 2 && options.length !== 3) ||
       !options.every((o) => typeof o === "string" && o.trim().length > 0)
     ) {
       throw new Error("subject variant: bad options");

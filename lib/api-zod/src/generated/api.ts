@@ -309,6 +309,14 @@ export const StartAssignmentAttemptResponse = zod.object({
   "startedAt": zod.coerce.date(),
   "submittedAt": zod.coerce.date().nullish(),
   "deadlineAt": zod.coerce.date().nullish(),
+  "problems": zod.array(zod.object({
+  "id": zod.number(),
+  "position": zod.number(),
+  "prompt": zod.string(),
+  "topicId": zod.number(),
+  "topicTitle": zod.string().nullish(),
+  "hint": zod.string().nullish()
+})).describe('Fresh question set generated for this attempt and kept stable until submission.'),
   "answers": zod.array(zod.object({
   "problemId": zod.number(),
   "answer": zod.string(),
@@ -332,6 +340,14 @@ export const GetAttemptResponse = zod.object({
   "startedAt": zod.coerce.date(),
   "submittedAt": zod.coerce.date().nullish(),
   "deadlineAt": zod.coerce.date().nullish(),
+  "problems": zod.array(zod.object({
+  "id": zod.number(),
+  "position": zod.number(),
+  "prompt": zod.string(),
+  "topicId": zod.number(),
+  "topicTitle": zod.string().nullish(),
+  "hint": zod.string().nullish()
+})).describe('Fresh question set generated for this attempt and kept stable until submission.'),
   "answers": zod.array(zod.object({
   "problemId": zod.number(),
   "answer": zod.string(),
@@ -367,6 +383,46 @@ export const SaveAnswerBody = zod.object({
 
 export const SaveAnswerResponse = zod.object({
   "ok": zod.boolean()
+})
+
+
+/**
+ * @summary Save and immediately grade one answer without closing the attempt
+ */
+export const GradeAssignmentAnswerParams = zod.object({
+  "attemptId": zod.coerce.number()
+})
+
+export const gradeAssignmentAnswerBodyTraceBulkInsertCountDefault = 0;
+export const gradeAssignmentAnswerBodyTraceLongestBulkInsertCharsDefault = 0;
+export const gradeAssignmentAnswerBodyTraceRewriteSegmentsDefault = 0;
+export const gradeAssignmentAnswerBodySkipDetectionDefault = false;
+
+export const GradeAssignmentAnswerBody = zod.object({
+  "problemId": zod.number(),
+  "answer": zod.string(),
+  "trace": zod.object({
+  "keystrokeCount": zod.number(),
+  "eraseCount": zod.number(),
+  "bulkInsertCount": zod.number().default(gradeAssignmentAnswerBodyTraceBulkInsertCountDefault),
+  "longestBulkInsertChars": zod.number().default(gradeAssignmentAnswerBodyTraceLongestBulkInsertCharsDefault),
+  "rewriteSegments": zod.number().default(gradeAssignmentAnswerBodyTraceRewriteSegmentsDefault),
+  "durationMs": zod.number()
+}),
+  "skipDetection": zod.boolean().default(gradeAssignmentAnswerBodySkipDetectionDefault)
+})
+
+export const gradeAssignmentAnswerResponseScorePercentMin = 0;
+export const gradeAssignmentAnswerResponseScorePercentMax = 100;
+
+
+
+export const GradeAssignmentAnswerResponse = zod.object({
+  "problemId": zod.number(),
+  "correct": zod.boolean(),
+  "scorePercent": zod.number().min(gradeAssignmentAnswerResponseScorePercentMin).max(gradeAssignmentAnswerResponseScorePercentMax),
+  "feedback": zod.string(),
+  "correctAnswer": zod.string().optional()
 })
 
 

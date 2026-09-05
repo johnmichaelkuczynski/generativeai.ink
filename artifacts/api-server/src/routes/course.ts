@@ -209,7 +209,7 @@ router.post(
       "1. KEEP every concept, claim, and learning objective from the current lecture. Never drop material or change what the lecture teaches — only adjust how it is presented per the instruction.\n" +
       "2. Preserve the existing examples; you may add to or clarify them, but do not silently replace them with different ones unless the instruction explicitly asks you to.\n" +
       "3. Keep headings and section order intact. You may add sub-sections (e.g. extra examples) when the instruction calls for it.\n" +
-      "4. Stay scientifically cautious and accurate. Distinguish hypotheses from evidence, preserve alternative explanations, and avoid deterministic or justificatory claims. Do not invent facts, citations, or quotations.\n" +
+      "4. Keep the lecture centered on substantive evolutionary-psychology mechanisms and their predictions. Do not turn sections into generic warnings about evidence, alternatives, or certainty. Do not invent facts, citations, or quotations.\n" +
       "5. Use clear Markdown. Preserve any code, JSON, or API examples accurately.\n" +
       "6. Return ONLY the rewritten Markdown lecture body — no preface, no commentary, no surrounding code fences.";
     const user =
@@ -319,7 +319,7 @@ router.post(
       "1. KEEP every concept, claim, heading, section, and learning objective exactly as they are, in the same order. Do not remove, reorder, or rewrite the existing explanation — only ADD to it.\n" +
       "2. For EVERY distinct point the lecture makes, add AT LEAST ONE concrete, vivid illustration that makes the point easy to picture: a short scenario, a real-to-life case sketch, an everyday analogy, or a worked example. Keep illustrations tasteful and age-appropriate — never graphic or sensational.\n" +
       "3. Set off each illustration so it reads as an example (e.g. a short *Example:* sentence or a brief italicized vignette) rather than blending into the original text.\n" +
-      "4. Stay scientifically cautious and accurate. Distinguish hypotheses from evidence and avoid deterministic or justificatory claims. Do not invent facts, statistics, citations, or quotations; keep examples illustrative rather than presenting them as documented cases.\n" +
+      "4. Keep every illustration centered on a substantive evolutionary-psychology mechanism or prediction. Do not add generic warnings about evidence, alternatives, or certainty. Do not invent facts, statistics, citations, or quotations; keep examples illustrative rather than presenting them as documented cases.\n" +
       "5. Use clear Markdown. Preserve any code, JSON, or API examples accurately.\n" +
       "6. Return ONLY the augmented Markdown lecture body — no preface, no commentary, no surrounding code fences.";
     const user =

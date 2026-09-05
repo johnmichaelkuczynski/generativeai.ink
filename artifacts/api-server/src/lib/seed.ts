@@ -14,7 +14,7 @@ import { logger } from "./logger";
 // the value stored in seed_meta; a mismatch forces a full re-seed, so content
 // edits self-heal in every environment (including a republished production)
 // without a manual database wipe.
-const SEED_CONTENT_VERSION = "2026-09-05-nano-evolutionary-psychology-v2";
+const SEED_CONTENT_VERSION = "2026-09-05-nano-evolutionary-psychology-v3";
 
 type SeedTopic = {
   slug: string;
@@ -33,19 +33,19 @@ const TOPICS: SeedTopic[] = [
     title: "Evolution, mating, kinship, and cooperation",
     weekNumber: 1,
     blurb:
-      "Build a cautious evidence-based framework for evolutionary hypotheses, then apply it to mating, kin relationships, altruism, social cognition, and cooperation.",
+      "Learn the core evolutionary mechanisms behind mating, kin relationships, altruism, social cognition, and cooperation, then apply their predictions to concrete cases.",
     lectureTitle: "Evolution, mating, kinship, and cooperation",
     body: `# Evolution, mating, kinship, and cooperation
 
-Evolutionary psychology asks whether recurrent selection pressures helped shape psychological mechanisms. It does not imply that every behavior is adaptive, fixed, universal, morally good, or explained by genes alone. Good analysis separates an **evolutionary hypothesis** from evidence and competing developmental, cultural, learning, and by-product explanations.
+Evolutionary psychology explains how recurrent survival and reproductive problems could shape information-processing mechanisms. The central task is to connect a selection pressure to the cues a mechanism detects, the decisions it regulates, and the behavioral tradeoffs it produces.
 
 ## 1. Foundations
 
-**Natural selection** changes inherited variants when they reliably affect reproductive success. An **adaptation** is a reliably developing feature shaped by selection because of past effects; current usefulness alone is not enough. Evidence may include cross-cultural patterns, comparative data, development, design specificity, and experimental predictions. The **environment of evolutionary adaptedness (EEA)** is not one place or a claim that humans stopped evolving: it refers to statistically recurrent ancestral conditions relevant to a mechanism. **Gene-culture coevolution** recognizes feedback: cultural practices alter selection pressures, while evolved learning capacities shape which practices spread.
+**Natural selection** changes inherited variants when they reliably affect reproductive success. An **adaptation** is a reliably developing feature shaped by selection because of its effects in past environments. The **environment of evolutionary adaptedness (EEA)** refers to statistically recurrent ancestral conditions relevant to a mechanism. **Gene-culture coevolution** captures the feedback loop in which cultural practices alter selection pressures while evolved learning capacities shape which practices spread.
 
 ## 2. Mate selection and sexual strategies
 
-**Sexual selection** concerns traits affecting mating competition or choice. **Parental investment theory** predicts that the sex investing more in offspring will often be choosier, while the other may compete more, but ecology, individual condition, sex ratios, institutions, and culture can alter or reverse average patterns. Sexual dimorphism can provide comparative clues, not a complete behavioral script. Humans can pursue short- or long-term strategies conditionally; observed sex differences are distributions with overlap, not rules for individuals.
+**Sexual selection** concerns traits affecting mating competition or choice. **Parental investment theory** predicts that the sex facing greater obligatory reproductive costs tends to be more selective, while the lower-investing sex competes more intensely for access to mates. Operational sex ratio, resource control, mortality, and the value of biparental care shift these tradeoffs. Humans conditionally allocate effort between short-term mating, long-term bonding, parenting, and kin support.
 
 ## 3. Kinship and altruism
 
@@ -53,24 +53,24 @@ Evolutionary psychology asks whether recurrent selection pressures helped shape 
 
 ## 4. Social cognition and cooperation
 
-**Theory of mind** supports inferences about others' beliefs and intentions, though its development depends on maturation and social experience. Conditional-reasoning studies, including Wason tasks framed as social contracts, have been used to argue for specialized **cheater detection**; alternative accounts invoke familiarity, pragmatics, or general reasoning, so task contrasts matter. Coalition psychology may support alliance tracking and rapid “us/them” categorization, but group boundaries are flexible and culturally supplied. Describing such tendencies neither excuses prejudice nor makes conflict inevitable.`,
+**Theory of mind** supports inferences about others' beliefs, knowledge, intentions, and likely actions. Social-contract reasoning tracks whether someone accepted a benefit without paying the required cost, supporting **cheater detection** and partner choice. Coalition psychology tracks alliances, loyalty, status, and threat; group markers can change quickly because the underlying problem is identifying who is aligned with whom, not memorizing one permanent set of groups.`,
     bodyMedium: `# Evolution, mating, kinship, and cooperation
 
-## Scientific framing
+## Core evolutionary framework
 
-Evolutionary explanations concern why information-processing tendencies may have been selected; proximate explanations concern hormones, learning, development, and immediate goals. Both can be true. Adaptation claims should make risky predictions and be compared with by-product, drift, general-learning, and cultural explanations. Present behavior does not reveal ancestral function by itself, and “evolved” never means immutable or justified.
+Evolutionary explanations ask what recurrent problem a mechanism helped solve; proximate explanations describe how hormones, learning, development, and immediate goals implement it. A complete account identifies the ancestral problem, the relevant cue, the mechanism's decision rule, and the predicted cost-benefit tradeoff.
 
 ## 1. Foundations
 
 Natural selection requires heritable variation and systematic differences in reproductive outcomes. Adaptations show evidence of functional design for recurrent past problems; exaptations were selected for another role, and by-products accompany other features. The EEA is a distribution of relevant ancestral conditions, varying by mechanism rather than a mythical single savanna. Gene-culture coevolution is illustrated by dairying: a cultural practice changed selection on adult lactose digestion, while social learning enabled the practice to persist.
 
-When evaluating a claim such as “people prefer calorie-rich food because it was advantageous ancestrally,” ask for specific predictions, comparisons, developmental evidence, and alternatives. A modern preference could reflect an evolved bias, learning, current scarcity, marketing, or their interaction.
+A calorie-seeking mechanism illustrates the framework: energy-dense taste cues once predicted scarce nutritional value, learning calibrates which foods carry those cues, and modern marketing can amplify them in environments of abundance.
 
 ## 2. Mate selection and sexual strategies
 
 Parental investment includes resources that increase one offspring's prospects at a cost to other reproductive opportunities. Where minimum investment differs, average choice and competition may differ, but human biparental care, cooperative breeding, ecology, autonomy, and norms complicate simple predictions. Sexual selection includes both mate choice and competition within a sex; dimorphism offers one imperfect historical clue.
 
-Short- and long-term strategies are conditional allocations, not personality boxes. A strong study measures actual tradeoffs, distinguishes stated preference from behavior, samples beyond affluent populations, and reports overlap and context. Evolutionary hypotheses cannot justify coercion, infidelity, or unequal institutions.
+Short- and long-term strategies are conditional allocations rather than fixed personality boxes. Expected relationship duration, mate availability, personal condition, parental opportunities, and ecological risk can shift the payoff from immediate mating effort toward durable bonding and investment.
 
 ## 3. Kinship and altruism
 
@@ -82,14 +82,12 @@ Reciprocal altruism is favored by repeated interaction, memory, partner choice, 
 
 Theory of mind permits prediction from another person's false belief rather than from reality. Performance varies with language, executive demands, age, and social experience. In social-contract Wason tasks, people often detect a benefit-taker who failed to pay a cost more readily than an abstract rule violation. That pattern is consistent with specialized cheater detection, but controls for familiarity and pragmatic clarity are needed.
 
-Humans form coalitions, track loyalty, and categorize groups quickly. Minimal-group experiments show how little can trigger favoritism, while cross-cutting identities and institutions show boundaries can change. Evolutionary accounts are probabilistic hypotheses about cognition, not claims that tribalism is desirable or unavoidable.`,
+Humans form coalitions, track loyalty, and categorize groups quickly. Minimal-group experiments show how easily alliance markers can be assigned, while cross-cutting identities show that the mind can update which coalition is currently relevant.`,
     bodyLong: `# Evolution, mating, kinship, and cooperation
 
-## How to reason scientifically
+## Mapping evolutionary mechanisms
 
-Evolutionary psychology links ultimate questions about selection history with proximate questions about mechanism and development. These are complementary levels, not rivals. A proposed adaptation should identify the recurrent problem, the information available, the mechanism's design features, and predictions that distinguish it from learning, culture, drift, or a by-product. Cross-cultural recurrence can support a claim but does not alone prove genetic adaptation; cultural diffusion can also recur. Likewise, variation does not refute an evolved mechanism if the hypothesis predicts conditional responses.
-
-Avoid three errors. The naturalistic fallacy treats what evolved as morally right. Genetic determinism treats development as independent of environments. Just-so storytelling accepts a plausible ancestral tale without discriminating evidence. Responsible conclusions use terms such as “consistent with,” state uncertainty, and identify alternatives.
+Evolutionary psychology links ultimate questions about selection history with proximate questions about mechanism and development. For any mechanism, map five elements: the recurrent adaptive problem, the cues available to the organism, the decision rule, the regulated behavior, and the fitness tradeoff. Conditional mechanisms can produce different behavior across environments because they are designed to use local information.
 
 ## 1. Foundations
 
@@ -105,7 +103,7 @@ Sexual selection arises from competition for mating opportunities and mate choic
 
 Sexual dimorphism in size or ornamentation can suggest historical mating competition when interpreted comparatively, but it cannot identify one modern preference. Short-term strategies may prioritize immediate mating opportunities; long-term strategies may prioritize compatibility, investment, and reliability. Individuals can shift with age, condition, opportunity, risk, and goals. Means do not diagnose a person: distributions overlap substantially, and within-sex variation may exceed an average between-sex difference.
 
-Evidence is stronger when preregistered predictions distinguish strategies, behavior is measured rather than inferred from stereotypes, representative cultures are sampled, and alternative economic or norm-based explanations are tested. No evolutionary explanation turns a preference into entitlement or excuses harm.
+Mate-choice mechanisms should track variables that changed ancestral reproductive payoffs: fertility cues, health, status, resource prospects, genetic quality, compatibility, fidelity, and willingness to invest. The weight placed on each cue changes with mating strategy, local ecology, and the chooser's own condition.
 
 ## 3. Kinship and altruism
 
@@ -174,9 +172,9 @@ Mismatch hypotheses specify an ancestral input, a changed modern input, a mechan
 For disorders, alternatives include defense dysregulation, mutation load, tradeoffs, developmental injury, infection, social conditions, and mismatch. Some low mood or anxiety may have functional components without major depression or panic disorder being adaptive. Evolutionary formulation may generate research questions; it neither blames patients nor substitutes for evidence-based care.`,
     bodyLong: `# Emotion, cognition, development, and mismatch
 
-## A method for evaluating claims
+## A map of the mind's recurrent problems
 
-For each claim, identify the proposed ancestral problem, cue, response, benefit, cost, and modern prediction. Then ask whether a developmental, cultural, or general-process model predicts the same result. Prefer preregistered, cross-cultural, longitudinal, clinical, and experimental evidence over retrospective stories. Mechanisms are probabilistic and context sensitive; an explanation of origins is not moral approval.
+Emotion and cognition coordinate responses to recurring problems: avoiding predators and pathogens, protecting relationships, bargaining over costs, acquiring status, learning social information, allocating effort across the life course, and responding when modern inputs exceed ancestral ranges.
 
 ## 5. Emotion and motivation
 
@@ -241,11 +239,11 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "evolutionary-foundations",
         prompt:
-          "A researcher finds that people in one city prefer sweet foods and concludes, “This preference is an adaptation, so culture and learning are irrelevant.” Which response is best? A) Current usefulness proves adaptation. B) The pattern fits several hypotheses; test design specificity, development, cultures, and learning before inferring adaptation. C) Any cultural effect disproves evolution. D) The EEA was one fixed place that determines every modern choice.",
+          "A woman can spend one afternoon helping either her full sister raise two additional surviving children or an unrelated neighbor raise three. The personal cost is equivalent to one expected child. Using Hamilton's rule, which choice has the larger inclusive-fitness benefit? A) Help the sister, because 0.5 × 2 exceeds the cost while 0 × 3 does not. B) Help the neighbor, because three is greater than two regardless of relatedness. C) Both choices have identical inclusive-fitness effects. D) Hamilton's rule predicts never helping anyone.",
         correctAnswer:
-          "B) The pattern fits several hypotheses; test design specificity, development, cultures, and learning before inferring adaptation.",
+          "A) Help the sister, because 0.5 × 2 exceeds the cost while 0 × 3 does not.",
         explanation:
-          "A contemporary pattern does not establish an adaptation or exclude gene-culture and learning effects.",
+          "Hamilton's rule weights the recipient's reproductive benefit by relatedness, so the sister's benefit contributes to inclusive fitness while the unrelated neighbor's does not through kin selection.",
       },
       {
         topicSlug: "evolutionary-foundations",
@@ -271,20 +269,20 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A child performs poorly on a verbally complex false-belief task, and a commentator concludes that the child has no theory of mind. Which evaluation is best? A) One task proves the entire capacity is absent. B) Theory of mind is only cultural. C) Compare simpler tasks and control language and executive demands before drawing that conclusion. D) False-belief performance is unrelated to development.",
+          "Nora watches Liam hide fruit in a blue box. After Liam leaves, Maya moves it to a red box. Where should Nora predict Liam will search first if she represents his false belief? A) The blue box. B) The red box. C) Whichever box Nora personally prefers. D) She cannot predict an action from another person's belief.",
         correctAnswer:
-          "C) Compare simpler tasks and control language and executive demands before drawing that conclusion.",
+          "A) The blue box.",
         explanation:
-          "Task failure can reflect language or executive load, so converging measures are needed.",
+          "Theory of mind allows Nora to predict Liam's action from what Liam believes, even though Nora knows the fruit is now elsewhere.",
       },
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A social-media app supplies unpredictable likes and endless novel clips. A writer calls it a supernormal stimulus and says that label proves it causes a mental disorder. Which response is best? A) The label proves diagnosis. B) Exaggerated reward cues support a mismatch hypothesis, but causal effects, impairment, dose, and alternatives still require evidence. C) Modern stimuli cannot engage evolved systems. D) Any strong preference is a disorder.",
+          "A social-media app supplies unpredictable likes and an endless stream of novel clips. Which mechanism best explains why this design can hold attention far longer than ordinary face-to-face feedback? A) Variable rewards and exaggerated novelty act as supernormal social-information cues. B) Humans evolved specifically to use smartphones. C) The behavior follows Hamilton's rule. D) The app eliminates all reward learning.",
         correctAnswer:
-          "B) Exaggerated reward cues support a mismatch hypothesis, but causal effects, impairment, dose, and alternatives still require evidence.",
+          "A) Variable rewards and exaggerated novelty act as supernormal social-information cues.",
         explanation:
-          "A supernormal-stimulus label is a mechanistic hypothesis, not evidence of causation or clinical disorder by itself.",
+          "Modern platforms can magnify novelty and social-reward cues beyond the intensity and frequency typical of ancestral interaction.",
       },
     ],
   },
@@ -300,11 +298,11 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "evolutionary-foundations",
         prompt:
-          "In a society where both parents provide intensive infant care and women control substantial resources, a student predicts all men will seek only short-term mates because males always invest less. Which answer best evaluates the prediction? A) It follows inevitably from sex. B) Parental investment predicts context-sensitive average tradeoffs; biparental care, ecology, institutions, and overlapping strategies make the absolute prediction unsupported. C) Sexual selection cannot apply to humans. D) Culture erases every evolved influence.",
+          "In a population where infant survival depends heavily on years of care from both parents, which shift does parental-investment theory predict relative to an ecology where one parent can raise offspring alone? A) Greater returns to long-term pair bonding and mate qualities that predict reliable investment. B) Elimination of mate choice. C) Universal preference for short-term mating. D) No relationship between offspring needs and mating strategy.",
         correctAnswer:
-          "B) Parental investment predicts context-sensitive average tradeoffs; biparental care, ecology, institutions, and overlapping strategies make the absolute prediction unsupported.",
+          "A) Greater returns to long-term pair bonding and mate qualities that predict reliable investment.",
         explanation:
-          "Parental investment generates conditional population-level hypotheses, not deterministic claims about every person.",
+          "When offspring survival depends on sustained biparental care, reliable long-term investment becomes more valuable in mate choice.",
       },
       {
         topicSlug: "evolutionary-foundations",
@@ -318,11 +316,11 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "After growing up under unpredictable hardship, a teenager shows earlier risk-taking. Explain how to frame a life-history hypothesis without treating the outcome as inevitable or the hardship as beneficial. (Answer in one sentence.)",
+          "Under a life-history model, what allocation shift is predicted when childhood cues reliably indicate high mortality and an unpredictable future? (Answer in one sentence.)",
         correctAnswer:
-          "Frame earlier risk-taking as a probabilistic calibration hypothesis requiring longitudinal tests against deprivation, learning, institutions, and individual differences, while recognizing that an adaptive response can still be costly and does not make hardship beneficial.",
+          "The model predicts relatively earlier allocation toward mating and immediate returns rather than delayed growth, maintenance, and future-oriented investment.",
         explanation:
-          "Full credit states a conditional hypothesis, alternatives, and the distinction between adaptive history and welfare.",
+          "Life-history theory predicts allocation tradeoffs between present and future reproductive opportunities.",
       },
     ],
   },
@@ -338,20 +336,20 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A manager says employees who react angrily to unfair allocations, feel jealous about partners, and seek promotion are obeying fixed adaptations, so workplace rules cannot change them. Which answer is best? A) Evolved emotions compel behavior and excuse it. B) Anger, jealousy, and status hypotheses concern context-sensitive responses; appraisal, learning, norms, and institutions shape expression, and explanation does not justify conduct. C) Emotions have no evolutionary history. D) Happiness requires winning every status contest.",
+          "During a group project, one member repeatedly takes credit while contributing little. Which predicted function of anger best fits the offended members' response? A) Anger increases pressure on the exploiter to place greater weight on their welfare and contributions. B) Anger calculates genetic relatedness. C) Anger primarily prevents pathogen exposure. D) Anger signals that the group should ignore the unfair allocation.",
         correctAnswer:
-          "B) Anger, jealousy, and status hypotheses concern context-sensitive responses; appraisal, learning, norms, and institutions shape expression, and explanation does not justify conduct.",
+          "A) Anger increases pressure on the exploiter to place greater weight on their welfare and contributions.",
         explanation:
-          "Evolutionary explanations are probabilistic and do not remove cultural regulation or moral responsibility.",
+          "The recalibrational theory treats anger as a bargaining response to another person's insufficient valuation of one's welfare.",
       },
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A clinic observes anxiety after constant alert notifications and claims: “Ancestral threat detection is mismatched, therefore the patients' disorder is an adaptation and notifications are the sole cause.” Evaluate the reasoning and name evidence that would discriminate the claims. (Answer in one sentence.)",
+          "Use the smoke-detector principle to explain why a threat system may produce many false alarms when missing one real danger is extremely costly. (Answer in one sentence.)",
         correctAnswer:
-          "A mismatch hypothesis could explain symptoms without making the disorder adaptive or proving one cause, so longitudinal or experimental notification changes with dose-response, impairment, and prior-anxiety controls are needed.",
+          "When the cost of missing a real threat greatly exceeds the cost of a false alarm, selection favors a low activation threshold that produces frequent protective false alarms.",
         explanation:
-          "Full credit separates mechanism, mismatch, disorder, and causation while proposing discriminating evidence.",
+          "The smoke-detector principle predicts biased error management when false negatives are costlier than false positives.",
       },
     ],
   },
@@ -369,17 +367,17 @@ const REASONING_PRIMERS: SeedPrimer[] = [
     lectureTitle: "Primer: How to reason about evolutionary-psychology cases",
     body: `# How to reason about evolutionary-psychology cases
 
-This primer prepares you for the **Nano Evolutionary Psychology** diagnostic. It is ungraded, fresh on every attempt, and asks you to evaluate hypotheses rather than recite terms.
+This primer prepares you for the **Nano Evolutionary Psychology** diagnostic. It is ungraded, fresh on every attempt, and asks you to apply mechanisms rather than recite terms.
 
 ## It tests application, not memorization
 
-A question gives a short behavioral or research scene. Identify the proposed evolutionary mechanism, decide what the evidence supports, compare alternatives such as learning or culture, and point to the detail that discriminates them.
+A question gives a short behavioral or research scene. Identify the operative evolutionary mechanism, locate the cue that activates it, and derive the predicted tradeoff or behavior.
 
 ## What the questions reward
 
-- **Separating claim from evidence** — distinguish adaptation hypotheses from current usefulness, by-products, developmental calibration, culture, and mismatch.
+- **Applying mechanisms** — use kin selection, reciprocity, parental investment, sexual selection, life-history allocation, error management, or mismatch to solve the case.
 - **Using evidence from the scene** — point to the detail in the situation that supports your answer, rather than answering from a general impression.
-- **Using cautious inference** — state probabilistic conclusions, population overlap, uncertainty, and plausible competing explanations.
+- **Deriving predictions** — explain what the mechanism predicts when relatedness, costs, benefits, mating opportunities, threat levels, or future uncertainty changes.
 
 ## How to do this activity well
 
@@ -402,15 +400,15 @@ This short primer prepares you for the **General Reasoning** diagnostic — an u
 
 ## The five skills
 
-- **Analysis** separates an evolutionary hypothesis from proximate mechanisms and moral claims.
+- **Analysis** maps a recurrent adaptive problem to cues, decision rules, and behavioral outputs.
 - **Inference** distinguishes what a cross-cultural pattern suggests from what it proves.
 - **Evaluation** asks whether matched controls discriminate adaptation from familiarity or learning.
 - **Deduction** identifies what follows from a conditional model such as Hamilton's rule once its assumptions are supplied.
-- **Induction** generalizes cautiously from samples, especially when cultures and individual distributions vary.
+- **Induction** identifies how repeated ecological patterns can shape conditional psychological strategies.
 
 ## A recurring trap: things that move together
 
-Most wrong answers sound plausible but outrun the evidence. Keep apart observations, proposed functions, developmental causes, and moral judgments. One population pattern can motivate a hypothesis; converging cross-cultural, developmental, comparative, and experimental evidence supports a stronger claim.
+Most wrong answers apply the wrong mechanism or ignore a decisive variable in the scenario. Focus on relatedness, repeated interaction, investment asymmetry, error costs, ecological predictability, pathogen cues, alliance structure, or ancestral-modern mismatch.
 
 ## How to do this activity well
 

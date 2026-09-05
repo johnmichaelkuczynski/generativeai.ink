@@ -15,7 +15,7 @@ export type ParsedMultipleChoice = {
 export function parseMultipleChoicePrompt(
   prompt: string,
 ): ParsedMultipleChoice | null {
-  const matches = [...prompt.matchAll(/(?:^|\s)([A-D])\)\s*/g)];
+  const matches = [...prompt.matchAll(/(?:^|\s)([A-C])\)\s*/g)];
   if (matches.length < 2) return null;
 
   const stem = prompt.slice(0, matches[0].index).trim();

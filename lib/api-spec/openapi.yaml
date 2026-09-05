@@ -302,6 +302,30 @@ paths:
               schema:
                 $ref: "#/components/schemas/AnswerSaved"
 
+  /assignments/attempts/{attemptId}/answer/grade:
+    post:
+      operationId: gradeAssignmentAnswer
+      tags: [assignments]
+      summary: Save and immediately grade one answer without closing the attempt
+      parameters:
+        - name: attemptId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GradeAssignmentAnswerInput"
+      responses:
+        "200":
+          description: Immediate per-question grade
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssignmentAnswerGrade"
+
   /assignments/attempts/{attemptId}/submit:
     post:
       operationId: submitAttempt
@@ -823,7 +847,7 @@ components:
 
     AttemptState:
       type: object
-      required: [id, assignmentId, status, startedAt, answers]
+      required: [id, assignmentId, status, startedAt, problems, answers]
       properties:
         id: { type: integer }
         assignmentId: { type: integer }
@@ -833,6 +857,11 @@ components:
         startedAt: { type: string, format: date-time }
         submittedAt: { type: ["string", "null"], format: date-time }
         deadlineAt: { type: ["string", "null"], format: date-time }
+        problems:
+          type: array
+          description: Fresh question set generated for this attempt and kept stable until submission.
+          items:
+            $ref: "#/components/schemas/Problem"
         answers:
           type: array
           items:
@@ -872,6 +901,28 @@ components:
       required: [ok]
       properties:
         ok: { type: boolean }
+
+    GradeAssignmentAnswerInput:
+      type: object
+      required: [problemId, answer, trace]
+      properties:
+        problemId: { type: integer }
+        answer: { type: string }
+        trace:
+          $ref: "#/components/schemas/KeystrokeTrace"
+        skipDetection:
+          type: boolean
+          default: false
+
+    AssignmentAnswerGrade:
+      type: object
+      required: [problemId, correct, scorePercent, feedback]
+      properties:
+        problemId: { type: integer }
+        correct: { type: boolean }
+        scorePercent: { type: integer, minimum: 0, maximum: 100 }
+        feedback: { type: string }
+        correctAnswer: { type: string }
 
     SubmitAttemptInput:
       type: object

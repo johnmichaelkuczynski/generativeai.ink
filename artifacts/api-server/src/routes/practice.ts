@@ -18,7 +18,6 @@ import {
 import { chatJson } from "../lib/ai";
 import { gradeAnswer } from "../lib/grading";
 import {
-  fallbackQuestion,
   questionMatchesFormat,
   questionFormatForOrdinal,
   questionFormatInstruction,
@@ -189,7 +188,7 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
     }>(
       `You generate a single practice problem for Nano Evolutionary Psychology. The problem MUST be on the topic "${topic.title}" and at difficulty "${difficultyLabel}" (${difficulty.toFixed(
         1,
-      )}/5). Test applied scientific reasoning, not recall. The question MUST be fully self-contained.\n\nREQUIRED FORMAT:\n${formatInstruction}\n\nThe rolling bank uses exactly 60% multiple choice, 30% one-sentence answers, 8% 1–3 sentence answers, and 2% one-paragraph answers of 5–7 sentences.\n\nSTRICT QUESTION RULES:\n- Present a specific named behavioral, developmental, or research scenario and ask the student to evaluate an evolutionary hypothesis against evidence and alternatives.\n- Never ask for a definition, terminology recall, or bare yes/no.\n- Distinguish hypotheses from evidence; never imply genetic determinism, universality from an average, or moral justification from evolutionary origins.\n- The explanation briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
+      )}/5). Test applied scientific reasoning, not recall. The question MUST be fully self-contained.\n\nREQUIRED FORMAT:\n${formatInstruction}\n\nThe rolling bank uses exactly 60% multiple choice, 30% one-sentence answers, 8% 1–3 sentence answers, and 2% one-paragraph answers of 5–7 sentences.\n\nSTRICT QUESTION RULES:\n- Require the learner to apply a substantive mechanism or prediction: Hamilton's rule, reciprocal altruism, parental investment, sexual selection, life-history allocation, error-management theory, pathogen avoidance, coalitional psychology, theory of mind, mismatch, or supernormal stimuli.\n- Never ask for a definition, terminology recall, or bare yes/no.\n- FORBIDDEN: the correct answer may not merely say more evidence is needed, alternatives should be considered, certainty is unwarranted, or a conclusion should be avoided.\n- Changing only names or surface details is not a fresh question.\n- The explanation briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
         lastProblems.map((p) => p.prompt),
       )}.`,
       userRequest || `Generate a new ${difficultyLabel} problem on ${topic.title}.`,
@@ -197,8 +196,14 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
     if (!isValidReasoningProblem(generated, requiredFormat)) {
       throw new Error("generated problem did not meet scenario-reasoning requirements");
     }
-  } catch {
-    generated = fallbackQuestion(requiredFormat, topic.title);
+  } catch (error) {
+    res.status(503).json({
+      error:
+        error instanceof Error
+          ? `Could not generate a fresh substantive question: ${error.message}`
+          : "Could not generate a fresh substantive question.",
+    });
+    return;
   }
 
   const [stored] = await db
