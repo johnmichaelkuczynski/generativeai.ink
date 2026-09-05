@@ -33,6 +33,56 @@ type Step = {
   error?: string;
 };
 
+router.get("/diagnostics/database-evidence", async (_req, res) => {
+  const connectionString =
+    process.env.NEON_DATABASE_URL ?? process.env.DATABASE_URL;
+  if (!connectionString) {
+    res.status(503).json({
+      ok: false,
+      error: "No active database connection string is configured.",
+    });
+    return;
+  }
+
+  try {
+    const endpoint = new URL(connectionString).hostname;
+    const result = await db.execute(sql`
+      select
+        current_database() as database_name,
+        pg_size_pretty(pg_database_size(current_database())) as database_size,
+        now() as checked_at,
+        txid_current()::text as transaction_id,
+        (select count(*)::int from users) as users,
+        (select exists(select 1 from users where username = 'JMK')) as jmk_present,
+        (select count(*)::int from topics) as topics,
+        (select count(*)::int from lectures) as lectures,
+        (select count(*)::int from assignments) as assignments,
+        (select count(*)::int from problems) as problems,
+        (select count(*)::int from attempts) as attempts,
+        (select count(*)::int from answers) as answers,
+        (select count(*)::int from practice_sessions) as practice_sessions,
+        (select count(*)::int from practice_attempts) as practice_attempts
+    `);
+    const row = result.rows[0] as Record<string, unknown> | undefined;
+    if (!row) throw new Error("The database returned no evidence row.");
+
+    res.json({
+      ok: true,
+      provider: endpoint.endsWith(".neon.tech") ? "Neon" : "PostgreSQL",
+      connectionSource: process.env.NEON_DATABASE_URL
+        ? "NEON_DATABASE_URL"
+        : "DATABASE_URL",
+      endpoint,
+      ...row,
+    });
+  } catch (error) {
+    res.status(503).json({
+      ok: false,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
 async function run(name: string, fn: () => Promise<string | void>): Promise<Step> {
   const t0 = Date.now();
   try {

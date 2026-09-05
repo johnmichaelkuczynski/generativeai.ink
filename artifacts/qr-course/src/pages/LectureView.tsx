@@ -26,34 +26,86 @@ import { ArrowLeft, ArrowRight, MessageSquare, Sparkles, Send, X, RefreshCw, Che
 
 type ChatMsg = { role: "user" | "tutor"; text: string };
 
+const HIGHLIGHTS_BY_SECTION: Record<string, string[]> = {
+  "1. Foundations": [
+    "Evolutionary hypotheses explain how selection may have shaped psychological mechanisms; they do not claim that every behavior is adaptive, fixed, universal, or morally justified.",
+    "A credible adaptation claim needs discriminating evidence, such as design specificity, developmental patterns, cross-cultural comparisons, or predictions that defeat learning and by-product explanations.",
+    "The environment of evolutionary adaptedness describes recurring selection pressures, while gene–culture coevolution describes feedback between inherited capacities and cultural practices.",
+  ],
+  "2. Mate selection and sexual strategies": [
+    "Sexual selection includes both competition for mating opportunities and preferences exercised in mate choice.",
+    "Parental investment can shift average patterns of competition and choosiness, but ecology, institutions, sex ratios, and individual circumstances can substantially alter those patterns.",
+    "Short- and long-term strategies are conditional tradeoffs rather than fixed categories, and population averages do not determine any individual.",
+  ],
+  "3. Kinship and altruism": [
+    "Inclusive-fitness reasoning predicts when helping relatives can spread by comparing relatedness-weighted benefits with the helper's cost.",
+    "Reciprocal altruism can support cooperation among non-relatives when future interaction, memory, partner choice, and responses to cheating make cooperation worthwhile.",
+    "Parent–offspring conflict predicts some disagreement over investment without implying that family relationships are generally hostile or reducible to genes.",
+  ],
+  "4. Social cognition and cooperation": [
+    "Theory of mind helps people reason about beliefs and intentions, but its development also depends on language, executive capacity, and social experience.",
+    "Strong evidence for specialized cheater detection must outperform explanations based on familiarity, pragmatics, and general reasoning under matched conditions.",
+    "Coalitional thinking can produce rapid group distinctions, yet the identities and boundaries involved remain flexible and culturally shaped.",
+  ],
+  "5. Emotion and motivation": [
+    "Emotions coordinate attention, physiology, memory, and action around recurring problems; they are response systems rather than infallible instructions.",
+    "Fear, anger, disgust, jealousy, and status motives may prioritize different threats or opportunities, but context and learning shape how they are expressed.",
+    "An evolutionary account of an emotion must make testable predictions and cannot excuse harmful behavior or establish what people ought to do.",
+  ],
+  "6. Cognitive adaptations": [
+    "Domain-specific accounts propose mechanisms tuned to recurring information patterns, whereas domain-general accounts emphasize flexible learning, memory, and executive control.",
+    "Specialized and general processes can operate together, so a task advantage alone does not prove a dedicated mental module.",
+    "Useful evidence compares rival predictions and identifies the information-processing design, rather than relying only on a brain location or a plausible ancestral story.",
+  ],
+  "7. Evolutionary developmental psychology": [
+    "Selection shapes developmental systems that respond to environmental information rather than producing behavior independently of experience.",
+    "Life-history approaches examine conditional allocation among growth, maintenance, mating, and parenting under different constraints and cues.",
+    "Developmental plasticity can be adaptive without making every outcome optimal, irreversible, or caused by a single childhood signal.",
+  ],
+  "8. Pathology and mismatch": [
+    "Mismatch occurs when a mechanism encounters conditions that differ from those under which its design was shaped.",
+    "A vulnerability may reflect defense, tradeoff, by-product, developmental disruption, or mismatch; calling a disorder an adaptation requires separate evidence.",
+    "Evolutionary explanations complement clinical causes and treatments, but they do not prove that a modern environment is the sole cause or that suffering is beneficial.",
+  ],
+  "It tests application, not memorization": [
+    "Success requires applying evolutionary concepts to a concrete case rather than reciting definitions.",
+    "A strong answer identifies the claim, specifies what evidence would distinguish it, and keeps plausible alternatives in view.",
+  ],
+  "What the questions reward": [
+    "Rewarded answers separate ultimate explanations from proximate mechanisms and developmental causes.",
+    "They state conclusions proportionally, avoid deterministic claims, and test adaptations against learning, culture, drift, and by-product explanations.",
+  ],
+  "How to do this activity well": [
+    "Read for the decision the scenario requires, then answer that decision directly.",
+    "Use the named concept only when it changes the reasoning, and include the strongest relevant limitation or competing explanation.",
+  ],
+  "The five skills": [
+    "Identify the evolutionary claim precisely instead of accepting a broad story.",
+    "Connect the proposed mechanism to observable predictions and discriminating evidence.",
+    "Compare alternatives, reason about conditional variation, and avoid turning descriptive claims into moral conclusions.",
+  ],
+  "A recurring trap: things that move together": [
+    "Correlation alone cannot establish that one variable caused another or that either variable is an adaptation.",
+    "A strong analysis looks for confounds, reverse causation, measurement problems, and predictions that separate competing explanations.",
+  ],
+};
+
 function buildHighlightsMarkdown(body: string): string {
-  const sections = body
-    .split(/\n(?=##\s+)/)
-    .map((section) => section.trim())
+  const headings = body
+    .split("\n")
+    .filter((line) => /^##\s+/.test(line))
+    .map((line) => line.replace(/^##\s+/, "").trim());
+
+  const sections = headings
+    .map((heading) => {
+      const points = HIGHLIGHTS_BY_SECTION[heading];
+      if (!points?.length) return "";
+      const plainHeading = heading.replace(/^\d+\.\s*/, "");
+      return `## ${plainHeading}\n\n${points.map((point) => `- ${point}`).join("\n")}`;
+    })
     .filter(Boolean);
-  const bullets: string[] = [];
 
-  for (const section of sections) {
-    const lines = section.split("\n");
-    const heading =
-      lines.find((line) => /^##\s+/.test(line))?.replace(/^##\s+/, "").trim() ??
-      "Core idea";
-    const prose = lines
-      .filter((line) => !/^#{1,6}\s+/.test(line))
-      .join(" ")
-      .replace(/\s+/g, " ")
-      .trim();
-    const sentences =
-      prose.match(/[^.!?]+[.!?]+(?:\s|$)/g)?.map((sentence) => sentence.trim()) ??
-      (prose ? [prose] : []);
-    for (const sentence of sentences.slice(0, 2)) {
-      bullets.push(`- **${heading}:** ${sentence}`);
-      if (bullets.length >= 12) break;
-    }
-    if (bullets.length >= 12) break;
-  }
-
-  return `# Highlights\n\n${bullets.join("\n")}`;
+  return `# Highlights\n\n${sections.join("\n\n")}`;
 }
 
 export default function LectureView() {

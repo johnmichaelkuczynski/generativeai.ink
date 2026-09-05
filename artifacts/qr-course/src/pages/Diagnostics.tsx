@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import {
   CheckCircle2,
@@ -6,6 +6,8 @@ import {
   Loader2,
   PlayCircle,
   Activity,
+  Database,
+  RefreshCw,
   ShieldCheck,
   FileCheck2,
 } from "lucide-react";
@@ -27,6 +29,27 @@ type RunResult = {
   ok: boolean;
   generatedAt: string;
   steps: Step[];
+};
+
+type DatabaseEvidence = {
+  ok: true;
+  provider: string;
+  connectionSource: string;
+  endpoint: string;
+  database_name: string;
+  database_size: string;
+  checked_at: string;
+  transaction_id: string;
+  users: number;
+  jmk_present: boolean;
+  topics: number;
+  lectures: number;
+  assignments: number;
+  problems: number;
+  attempts: number;
+  answers: number;
+  practice_sessions: number;
+  practice_attempts: number;
 };
 
 const API = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/api`.replace(
@@ -97,6 +120,12 @@ export default function Diagnostics() {
   const [synthResult, setSynthResult] = useState<RunResult | null>(null);
   const [qcResult, setQcResult] = useState<RunResult | null>(null);
   const [sysError, setSysError] = useState<string | null>(null);
+  const [databaseEvidence, setDatabaseEvidence] =
+    useState<DatabaseEvidence | null>(null);
+  const [databaseEvidenceBusy, setDatabaseEvidenceBusy] = useState(true);
+  const [databaseEvidenceError, setDatabaseEvidenceError] = useState<string | null>(
+    null,
+  );
   const [synthError, setSynthError] = useState<string | null>(null);
   const [qcError, setQcError] = useState<string | null>(null);
   const [liveError, setLiveError] = useState<string | null>(null);
@@ -108,6 +137,36 @@ export default function Diagnostics() {
   const [liveDisplayedAnswer, setLiveDisplayedAnswer] = useState("");
   const [liveResult, setLiveResult] =
     useState<LongAnswerDiagnosticResult | null>(null);
+
+  const loadDatabaseEvidence = useCallback(async () => {
+    setDatabaseEvidenceBusy(true);
+    setDatabaseEvidenceError(null);
+    try {
+      const response = await fetch(apiUrl("/diagnostics/database-evidence"));
+      const body = (await response.json()) as
+        | DatabaseEvidence
+        | { ok: false; error?: string };
+      if (!response.ok || !body.ok) {
+        throw new Error(
+          "error" in body && body.error
+            ? body.error
+            : `Database evidence request failed with HTTP ${response.status}`,
+        );
+      }
+      setDatabaseEvidence(body);
+    } catch (error) {
+      setDatabaseEvidence(null);
+      setDatabaseEvidenceError(
+        error instanceof Error ? error.message : String(error),
+      );
+    } finally {
+      setDatabaseEvidenceBusy(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadDatabaseEvidence();
+  }, [loadDatabaseEvidence]);
 
   async function runSystem() {
     setSysBusy(true);
@@ -226,6 +285,150 @@ export default function Diagnostics() {
             Four self-tests to verify the course app is healthy end-to-end.
           </p>
         </div>
+
+        <section
+          className="rounded-lg border border-border bg-card overflow-hidden"
+          data-testid="section-live-database-evidence"
+        >
+          <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border px-5 py-4">
+            <div>
+              <h2 className="font-serif text-xl flex items-center gap-2">
+                <Database className="w-5 h-5" /> Live database evidence
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                A fresh SQL round trip from the running app to its configured database.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => void loadDatabaseEvidence()}
+              disabled={databaseEvidenceBusy}
+              className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-md border border-border bg-background font-medium disabled:opacity-60"
+              data-testid="button-refresh-database-evidence"
+            >
+              <RefreshCw
+                className={`w-4 h-4 ${databaseEvidenceBusy ? "animate-spin" : ""}`}
+              />
+              {databaseEvidenceBusy ? "Checking…" : "Refresh evidence"}
+            </button>
+          </div>
+
+          {databaseEvidenceError && (
+            <div
+              className="m-5 rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-800"
+              role="alert"
+              data-testid="status-database-evidence-error"
+            >
+              <div className="font-semibold">Database proof failed</div>
+              <div className="mt-1 font-mono break-all">{databaseEvidenceError}</div>
+            </div>
+          )}
+
+          {databaseEvidence && (
+            <div className="p-5 space-y-4">
+              <div
+                className="flex items-center gap-2 text-sm font-semibold text-green-700"
+                data-testid="status-database-connected"
+              >
+                <CheckCircle2 className="w-5 h-5" />
+                Connected to {databaseEvidence.provider} now
+              </div>
+
+              <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+                <div>
+                  <dt className="text-muted-foreground">Connection source</dt>
+                  <dd
+                    className="font-mono break-all"
+                    data-testid="text-database-connection-source"
+                  >
+                    {databaseEvidence.connectionSource}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground">Neon endpoint</dt>
+                  <dd
+                    className="font-mono break-all"
+                    data-testid="text-database-endpoint"
+                  >
+                    {databaseEvidence.endpoint}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground">Database</dt>
+                  <dd className="font-mono" data-testid="text-database-name">
+                    {databaseEvidence.database_name}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground">Stored size</dt>
+                  <dd data-testid="text-database-size">
+                    {databaseEvidence.database_size}
+                    <span className="ml-2 text-muted-foreground">
+                      (Neon rounds this to 0 GB)
+                    </span>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground">Fresh SQL check</dt>
+                  <dd data-testid="text-database-checked-at">
+                    {new Date(databaseEvidence.checked_at).toLocaleString()}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground">PostgreSQL transaction</dt>
+                  <dd
+                    className="font-mono"
+                    data-testid="text-database-transaction-id"
+                  >
+                    {databaseEvidence.transaction_id}
+                  </dd>
+                </div>
+              </dl>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {[
+                  ["Users", databaseEvidence.users],
+                  ["Topics", databaseEvidence.topics],
+                  ["Lectures", databaseEvidence.lectures],
+                  ["Assignments", databaseEvidence.assignments],
+                  ["Problems", databaseEvidence.problems],
+                  ["Attempts", databaseEvidence.attempts],
+                  ["Answers", databaseEvidence.answers],
+                  [
+                    "Practice records",
+                    databaseEvidence.practice_sessions +
+                      databaseEvidence.practice_attempts,
+                  ],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="rounded-md border border-border bg-background px-3 py-2"
+                  >
+                    <div className="text-xs text-muted-foreground">{label}</div>
+                    <div
+                      className="text-lg font-semibold tabular-nums"
+                      data-testid={`text-database-count-${String(label)
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                    >
+                      {value}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div
+                className="text-sm text-muted-foreground"
+                data-testid="text-database-jmk-present"
+              >
+                JMK database user:{" "}
+                <span className="font-semibold text-foreground">
+                  {databaseEvidence.jmk_present ? "present" : "missing"}
+                </span>
+              </div>
+            </div>
+          )}
+        </section>
 
         <section className="space-y-3">
           <div className="flex items-start justify-between gap-4">

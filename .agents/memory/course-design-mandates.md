@@ -69,4 +69,4 @@ Operator and synthetic diagnostics are part of the course format, not exempt tes
 Every lecture must offer a concise bullet-point Highlights preset immediately left of Short, and Highlights is the default reading view. Every lecture must also link directly to its related assignments.
 
 **Why:** Most learners, including the owner, want the essential points without reading the full lecture before beginning applicable work.
-**How to apply:** Preserve Short, Medium, Long, and custom versions; derive a scannable Highlights view from the short lecture and keep assignment links visible below the reading.
+**How to apply:** Preserve Short, Medium, Long, and custom versions. In Highlights, render each plain, unnumbered section label exactly once with unnumbered, self-contained bullet points beneath it—never numbers, sentence fragments, or a heading repeated per bullet. Keep assignment links visible below the reading.
