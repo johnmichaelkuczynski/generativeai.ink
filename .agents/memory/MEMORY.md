@@ -13,3 +13,4 @@
 - [Video content verification](video-content-verification.md) — screenshots reload a video-js artifact to scene 0; verify multi-scene walkthroughs by grepping Scene*.tsx for required real copy, not screenshots.
 - [Authoritative answer submission](authoritative-answer-submission.md) — assignment submit must carry and persist the final full-answer snapshot before grading; autosave is never grading truth.
 - [Stripe live-mode boundary](stripe-live-mode.md) — Live-only checkout uses secure production credentials, validates the monthly price, and processes only signature-verified webhooks.
+- [ZHI brand pronunciation](zhi-brand-pronunciation.md) — Speak ZHI as “Zhee,” never as separate letters; spoken web addresses omit protocol and slash.

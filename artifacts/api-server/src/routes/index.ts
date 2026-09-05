@@ -12,6 +12,7 @@ import reasoningRouter from "./reasoning";
 import adminRouter from "./admin";
 import courseCommentsRouter from "./courseComments";
 import accessRouter from "./access";
+import certificateRouter from "./certificate";
 import { reserveAiAction } from "../middlewares/access";
 
 const router: IRouter = Router();
@@ -32,6 +33,7 @@ router.use((req, res, next) => {
 });
 
 router.use(accessRouter);
+router.use(certificateRouter);
 router.use(healthRouter);
 router.use(courseRouter);
 router.use(assignmentsRouter);

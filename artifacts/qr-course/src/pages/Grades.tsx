@@ -4,6 +4,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
+import { useAuth } from "@clerk/react";
 
 const PHASE_SHORT: Record<string, string> = {
   before: "Before the course",
@@ -30,6 +31,11 @@ function statusPill(status: string) {
 
 export default function Grades() {
   const { data: gb, isLoading } = useGetGradebook();
+  const { isSignedIn } = useAuth();
+  const courseComplete =
+    Boolean(gb?.coursework.length) &&
+    gb!.coursework.every((assignment) => assignment.status === "submitted");
+  const certificatePassed = courseComplete && (gb?.overallPercent ?? 0) >= 60;
 
   return (
     <Layout>
@@ -64,6 +70,36 @@ export default function Grades() {
                 </div>
               </CardContent>
             </Card>
+
+            {courseComplete && (
+              <Card className={certificatePassed ? "border-primary/30" : "border-destructive/30"}>
+                <CardHeader>
+                  <CardTitle>
+                    Certificate status: {certificatePassed ? "Passed" : "Not passed"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-3">
+                  <p className="text-sm text-muted-foreground">
+                    {certificatePassed
+                      ? "Your personalized Evolutionary Psychology Level 1 certificate is ready."
+                      : "A coursework average of at least 60% is required for the certificate."}
+                  </p>
+                  {certificatePassed && isSignedIn ? (
+                    <a
+                      href="/api/certificate/download"
+                      className="inline-flex w-fit items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                      data-testid="button-download-certificate"
+                    >
+                      Download certificate
+                    </a>
+                  ) : certificatePassed ? (
+                    <p className="text-sm font-medium">
+                      Sign in with Google to download your named certificate.
+                    </p>
+                  ) : null}
+                </CardContent>
+              </Card>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {gb.components.map((c) => (

@@ -4,6 +4,7 @@ title = "Nano Evolutionary Psychology — Walkthrough"
 version = "1.0.0"
 id = "artifacts/course-video"
 router = "path"
+videoAspectRatio = "9:16"
 
 [[integratedSkills]]
 name = "video-js"

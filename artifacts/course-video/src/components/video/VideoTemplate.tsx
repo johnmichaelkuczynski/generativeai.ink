@@ -9,30 +9,28 @@ import { Scene5 } from './video_scenes/Scene5';
 import { Scene6 } from './video_scenes/Scene6';
 import { Scene7 } from './video_scenes/Scene7';
 import { Scene8 } from './video_scenes/Scene8';
-import { Scene9 } from './video_scenes/Scene9';
+import { Noise } from './Noise';
 
 export const SCENE_DURATIONS = {
-  intro: 6000,
-  dashboard: 4000,
-  curriculum: 4000,
-  lecture: 4000,
-  tutor: 6000,
-  practice: 5500,
-  grades: 6000,
-  analytics: 4500,
-  outro: 6000,
+  intro: 3100,
+  questions: 6000,
+  course: 7400,
+  topics: 13000,
+  features: 7100,
+  certificate: 6400,
+  zhisystems: 9200,
+  outro: 3232,
 };
 
 const SCENE_COMPONENTS: Record<string, React.ComponentType> = {
   intro: Scene1,
-  dashboard: Scene2,
-  curriculum: Scene3,
-  lecture: Scene4,
-  tutor: Scene5,
-  practice: Scene6,
-  grades: Scene7,
-  analytics: Scene8,
-  outro: Scene9,
+  questions: Scene2,
+  course: Scene3,
+  topics: Scene4,
+  features: Scene5,
+  certificate: Scene6,
+  zhisystems: Scene7,
+  outro: Scene8,
 };
 
 const SCENE_START_SEC: Record<string, number> = (() => {
@@ -72,7 +70,7 @@ export default function VideoTemplate({
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    audio.volume = 0.45;
+    audio.volume = 1.0;
     const targetTime = SCENE_START_SEC[baseSceneKey] ?? 0;
     if (Math.abs(audio.currentTime - targetTime) > AUDIO_SEEK_EPSILON_SEC) {
       audio.currentTime = targetTime;
@@ -81,16 +79,22 @@ export default function VideoTemplate({
   }, [currentSceneKey, baseSceneKey, muted]);
 
   return (
-    <div
-      className="w-full h-screen overflow-hidden relative"
-      style={{ backgroundColor: 'var(--color-bg-light)' }}
-    >
-      <AnimatePresence mode="popLayout">
-        {SceneComponent && <SceneComponent key={currentSceneKey} />}
-      </AnimatePresence>
+    <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden font-sans">
+      <div
+        className="@container relative overflow-hidden flex flex-col items-center justify-center w-full h-full bg-background text-foreground"
+        style={{ 
+          maxWidth: 'calc(100vh * 9 / 16)',
+          maxHeight: 'calc(100vw * 16 / 9)',
+        }}
+      >
+        <Noise />
+        <AnimatePresence mode="popLayout">
+          {SceneComponent && <SceneComponent key={currentSceneKey} />}
+        </AnimatePresence>
+      </div>
       <audio
         ref={audioRef}
-        src={`${import.meta.env.BASE_URL}audio/bg_music.mp3`}
+        src={`${import.meta.env.BASE_URL}audio/narration-final.mp3`}
         preload="auto"
         autoPlay
         muted={muted}

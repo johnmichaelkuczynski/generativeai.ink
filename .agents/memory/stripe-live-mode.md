@@ -12,7 +12,8 @@ processing purchase events.
 **Why:** The deployed connector could not retrieve the configured live price. The
 owner supplied production credentials through Replit Secrets; direct live price
 retrieval, live Checkout Session creation, and signed webhook processing were then
-verified successfully.
+verified successfully. The owner subsequently confirmed a real production
+subscription purchase succeeded through this direct live-only path.
 
 **How to apply:** Keep all credentials in Replit Secrets. Prefer the direct live
 client when configured, reject non-live prices, process only signature-verified

@@ -61,3 +61,45 @@ mtime_ms = 1788628203011
 storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/dcdc8a06-2840-438a-a8b5-5968d51b043b/a4d166c9-3999-438f-ba85-d02a58edb5a4"
 storage_version_token = "1788628220990811"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "aE7yKehr9EXSuxmB0TlEr"
+uri = "file://.agents/outputs/test-user-certificate.png"
+type = "image"
+title = "TEST USER Certificate Preview"
+description = "Rendered preview of the Evolutionary Psychology Level 1 passing certificate."
+logical_id = "af9f1f62-1bed-435e-86d0-a9c710511599"
+content_hash = "sha256:42fadeaed1f314729abb736bb4375a24decea92991e0b0aacdbb46d657418267"
+size = 50558
+mtime_ms = 1788644046079
+storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/af9f1f62-1bed-435e-86d0-a9c710511599/433b3a1d-2dd0-4534-a97f-6c1948519109"
+storage_version_token = "1788644057253567"
+content_type = "image/png"
+
+[[outputs]]
+id = "cTfhlhjzTDXRZvYGzmj7N"
+uri = "file://artifacts/qr-course/public/certificates/test-user-evolutionary-psychology-level-1.pdf"
+type = "pdf"
+title = "TEST USER Certificate PDF"
+description = "Downloadable one-page certificate of completion for TEST USER."
+logical_id = "93cb1ebc-be1d-4b3d-b151-e0797e3de18c"
+content_hash = "sha256:eb8694a97e87cb844aed1d7a231d2849e0f83a6500a3e079e542301aa0b7bf5a"
+size = 1774
+mtime_ms = 1788644044290
+storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/93cb1ebc-be1d-4b3d-b151-e0797e3de18c/2b591d93-c4e6-4692-9135-b7644fba797a"
+storage_version_token = "1788644057889775"
+content_type = "application/pdf"
+
+[[outputs]]
+id = "Ztl9r7T_-Zg8atJoXFjtR"
+uri = "file://artifacts/course-video/public/audio/narration_2.mp3"
+type = "audio"
+title = "warm conversational male TikTok narration"
+description = "Text-to-speech audio: Evopsychfourhour dot X Y Z. Curious why humans compete, cooperate, choose partners, protect family, and chase status? Nano Evolutionary Psychology turns those questions into a r…"
+
+[[outputs]]
+id = "E5lMze0pgbTE0bDJg_hzN"
+uri = "file://artifacts/course-video/public/audio/narration-final.mp3"
+type = "audio"
+title = "concise warm male TikTok narration"
+description = "Text-to-speech audio: Evopsychfourhour dot X Y Z. Ever wonder why humans compete, cooperate, pair up, protect family, and chase status? Nano Evolutionary Psychology is a rigorous four-to-six-hour cou…"

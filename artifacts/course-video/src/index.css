@@ -1,76 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 @import "tailwindcss";
 
-:root {
-  --color-primary: #1A2B3D;
-  --color-secondary: #EFECE6;
-  --color-accent: #E76E50;
-
-  --color-bg-light: #FDFCFB;
-  --color-bg-dark: #0B131E;
-  --color-bg-muted: #EFECE6;
-
-  --color-text-primary: #1A2B3D;
-  --color-text-secondary: #4A5568;
-  --color-text-muted: #718096;
-  --color-text-inverse: #FFFFFF;
-
-  --color-success: #10B981;
-  --color-warning: #FBBF24;
-  --color-error: #EF4444;
-
-  --font-display: 'Lora', serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+@theme {
+  --color-background: hsl(210, 20%, 98%);
+  --color-foreground: hsl(222, 47%, 11%);
+  --color-primary: hsl(222, 47%, 11%);
+  --color-primary-foreground: hsl(210, 20%, 98%);
+  --color-accent: hsl(215, 25%, 27%);
+  --color-accent-foreground: hsl(210, 20%, 98%);
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
 }
 
-@theme inline {
-  --color-primary: var(--color-primary);
-  --color-secondary: var(--color-secondary);
-  --color-accent: var(--color-accent);
-  --color-bg-light: var(--color-bg-light);
-  --color-bg-dark: var(--color-bg-dark);
-  --color-bg-muted: var(--color-bg-muted);
-  --color-text-primary: var(--color-text-primary);
-  --color-text-secondary: var(--color-text-secondary);
-  --color-text-muted: var(--color-text-muted);
-  --color-text-inverse: var(--color-text-inverse);
-  --color-success: var(--color-success);
-  --color-warning: var(--color-warning);
-  --color-error: var(--color-error);
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
-
-  --text-xs: 0.75rem;
-  --text-xs--line-height: calc(1 / 0.75);
-  --text-sm: 0.875rem;
-  --text-sm--line-height: calc(1.25 / 0.875);
-  --text-base: 1rem;
-  --text-base--line-height: calc(1.5 / 1);
-  --text-lg: 1.125rem;
-  --text-lg--line-height: calc(1.75 / 1.125);
-  --text-xl: 1.25rem;
-  --text-xl--line-height: calc(1.75 / 1.25);
-  --text-2xl: 1.5rem;
-  --text-2xl--line-height: calc(2 / 1.5);
-  --text-3xl: 1.875rem;
-  --text-3xl--line-height: calc(2.25 / 1.875);
-  --text-4xl: 2.25rem;
-  --text-4xl--line-height: calc(2.5 / 2.25);
-  --text-5xl: 3rem;
-  --text-5xl--line-height: 1;
-  --text-6xl: 3.75rem;
-  --text-6xl--line-height: 1;
-  --text-7xl: 4.5rem;
-  --text-7xl--line-height: 1;
-  --text-8xl: 6rem;
-  --text-8xl--line-height: 1;
-  --text-9xl: 8rem;
-  --text-9xl--line-height: 1;
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: #000;
+  }
 }
 
-body {
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.text-balance {
+  text-wrap: balance;
+}
+
+.clip-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
