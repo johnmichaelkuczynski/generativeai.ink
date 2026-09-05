@@ -30,6 +30,8 @@ import type {
   AssignmentSummary,
   AttemptResult,
   AttemptState,
+  CourseComment,
+  CourseCommentInput,
   CourseOverview,
   DetectionResult,
   DetectionScanInput,
@@ -373,6 +375,154 @@ export function useGetCourseOverview<TData = Awaited<ReturnType<typeof getCourse
 
 
 
+
+export const getListCourseCommentsUrl = () => {
+
+
+
+
+  return `/api/course/comments`
+}
+
+/**
+ * @summary List the most recent course comments
+ */
+export const listCourseComments = async ( options?: RequestInit): Promise<CourseComment[]> => {
+
+  return customFetch<CourseComment[]>(getListCourseCommentsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListCourseCommentsQueryKey = () => {
+    return [
+    `/api/course/comments`
+    ] as const;
+    }
+
+
+export const getListCourseCommentsQueryOptions = <TData = Awaited<ReturnType<typeof listCourseComments>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listCourseComments>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListCourseCommentsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listCourseComments>>> = ({ signal }) => listCourseComments({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listCourseComments>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListCourseCommentsQueryResult = NonNullable<Awaited<ReturnType<typeof listCourseComments>>>
+export type ListCourseCommentsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List the most recent course comments
+ */
+
+export function useListCourseComments<TData = Awaited<ReturnType<typeof listCourseComments>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listCourseComments>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListCourseCommentsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getCreateCourseCommentUrl = () => {
+
+
+
+
+  return `/api/course/comments`
+}
+
+/**
+ * @summary Save a course comment of up to three sentences
+ */
+export const createCourseComment = async (courseCommentInput: CourseCommentInput, options?: RequestInit): Promise<CourseComment> => {
+
+  return customFetch<CourseComment>(getCreateCourseCommentUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      courseCommentInput,)
+  }
+);}
+
+
+
+
+export const getCreateCourseCommentMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createCourseComment>>, TError,{data: BodyType<CourseCommentInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createCourseComment>>, TError,{data: BodyType<CourseCommentInput>}, TContext> => {
+
+const mutationKey = ['createCourseComment'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createCourseComment>>, {data: BodyType<CourseCommentInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createCourseComment(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateCourseCommentMutationResult = NonNullable<Awaited<ReturnType<typeof createCourseComment>>>
+    export type CreateCourseCommentMutationBody = BodyType<CourseCommentInput>
+    export type CreateCourseCommentMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Save a course comment of up to three sentences
+ */
+export const useCreateCourseComment = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createCourseComment>>, TError,{data: BodyType<CourseCommentInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof createCourseComment>>,
+        TError,
+        {data: BodyType<CourseCommentInput>},
+        TContext
+      > => {
+      return useMutation(getCreateCourseCommentMutationOptions(options));
+    }
 
 export const getGetWeekUrl = (weekNumber: number,) => {
 

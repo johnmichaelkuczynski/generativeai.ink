@@ -24,14 +24,19 @@ ALL questions — homeworks, unit test, final, practice assignments, AND the ada
 topic drill — must pose a specific concrete scenario and require reasoning. Freeform
 answers may be one sentence when the format distribution calls for it, but never a
 one-word/single-term/"yes-no" response. Never ask learners to define or recite an
-abstract formulation.
+abstract formulation. Every question must also be fully answerable from the reading
+shown to the learner: never test a named method, formula, coefficient, distinction,
+term, or fact unless the reading explicitly teaches it by that name. Normally omit
+formal principle names and test the relationship in plain language. If a name is
+unavoidable, define the complete principle inside the question itself.
 
 **Why:** Repeated, emphatic user mandate — answers must be "hard to share" and prove
 operational understanding, not memorization. The adaptive drill previously generated
 single-word concept-ID questions and was the one place that violated this.
 **How to apply:** Any new question-generation prompt must forbid definitions/one-word
-answers and demand a concrete case + reasoned answer. The semantic `gradeAnswer` grader
-already handles reasoned answers, so longer answers are safe to grade.
+answers and demand a concrete case + reasoned answer. Supply the assigned reading to
+the generator, require an exact supporting quote from it, reject unverifiable quotes,
+and make questions state any additional numbers or relationships they need.
 
 ## Multiple-choice questions use selection controls
 Multiple-choice questions must display their options as radio-style selections. Never

@@ -21,6 +21,8 @@ export * from './assignmentSummaryStatus';
 export * from './attemptResult';
 export * from './attemptState';
 export * from './attemptStateStatus';
+export * from './courseComment';
+export * from './courseCommentInput';
 export * from './courseOverview';
 export * from './courseOverviewTotals';
 export * from './detectionResult';

@@ -8,6 +8,7 @@ import {
   attemptProblemVariantsTable,
   answersTable,
   topicsTable,
+  lecturesTable,
 } from "@workspace/db";
 import {
   GetAssignmentResponse,
@@ -27,6 +28,8 @@ import {
   questionFormatForOrdinal,
   questionFormatInstruction,
   questionMatchesFormat,
+  rewriteFormalPrincipleNames,
+  usesFormalPrincipleName,
 } from "../lib/questionFormats";
 
 const router: IRouter = Router();
@@ -110,10 +113,12 @@ async function generateAttemptProblems(opts: {
       correctAnswer: problemsTable.correctAnswer,
       topicId: problemsTable.topicId,
       topicTitle: topicsTable.title,
+      reading: lecturesTable.body,
       position: problemsTable.position,
     })
     .from(problemsTable)
     .leftJoin(topicsTable, eq(problemsTable.topicId, topicsTable.id))
+    .leftJoin(lecturesTable, eq(problemsTable.topicId, lecturesTable.topicId))
     .where(eq(problemsTable.assignmentId, opts.assignment.id))
     .orderBy(asc(problemsTable.position));
   if (!templates.length) throw new Error("assignment has no source problems");
@@ -139,20 +144,25 @@ async function generateAttemptProblems(opts: {
       .map((prompt) => prompt.trim().toLowerCase()),
   );
 
-  for (let generationAttempt = 1; generationAttempt <= 2; generationAttempt += 1) {
+  for (let generationAttempt = 1; generationAttempt <= 5; generationAttempt += 1) {
     const output = await chatJson<{
       problems: Array<{
         prompt: string;
         correctAnswer: string;
         explanation: string;
+        readingSupportQuote: string;
       }>;
     }>(
       [
         `Write a completely fresh Nano Evolutionary Psychology ${opts.assignment.kind} question set.`,
-        `Return exactly ${templates.length} scenario-reasoning problems in strict JSON as {"problems":[{"prompt":string,"correctAnswer":string,"explanation":string}]}.`,
+        `Return exactly ${templates.length} scenario-reasoning problems in strict JSON as {"problems":[{"prompt":string,"correctAnswer":string,"explanation":string,"readingSupportQuote":string}]}.`,
+        "Every question must be fully answerable from its supplied reading alone. Never invoke or require a concept, method, formula, distinction, fact, or vocabulary term unless it is explicitly taught in that reading.",
+        "Test application of the principle, not recall of its label. Write the scenario and decision in ordinary language and minimize names such as Hamilton's rule. Use a formal name only when absolutely necessary, only if that exact name appears in the reading, and never ask the learner to supply or identify the name.",
+        "Avoid formal principle names in prompts and options; express the operative relationship in plain language instead. If a formal name is genuinely unavoidable, define the complete principle immediately in that same question so recognizing the label is never required.",
+        "Make each problem self-contained: explicitly state every numerical value, coefficient, factual relationship, or case detail needed to solve it unless the supplied reading explicitly gives that information.",
+        "For each question, readingSupportQuote must be an exact contiguous quote of at least five words from the supplied reading that establishes the knowledge needed to answer. Do not invent or paraphrase this quote.",
         "Never reuse, paraphrase, or preserve the named case, setting, surface details, or wording of any source or excluded question.",
-        "Every question must require applying a named evolutionary-psychology mechanism or quantitative prediction to a concrete case.",
-        "Prioritize kin selection and Hamilton's rule, reciprocal altruism, parental investment, sexual selection, life-history allocation, error-management theory, pathogen avoidance, coalitional psychology, theory of mind, mismatch, and supernormal stimuli.",
+        "Every question must require applying a substantive relationship or quantitative prediction from the reading to a concrete case.",
         "FORBIDDEN PATTERN: do not make the correct answer merely 'more evidence is needed,' 'consider alternatives,' 'avoid conclusions,' 'the claim is not proven,' or any equivalent generic methodological caution.",
         "Changing names, locations, species, or occupations while preserving the same reasoning structure does not make a question fresh.",
         "Obey each required answer format exactly. Multiple-choice questions must provide exactly two or three options, never four.",
@@ -162,21 +172,35 @@ async function generateAttemptProblems(opts: {
         assignmentTitle: opts.assignment.title,
         templates: templates.map((template, index) => ({
           topic: template.topicTitle ?? "evolutionary psychology",
-          conceptTarget: template.correctAnswer,
+          assignedReading: template.reading,
           requiredFormat: questionFormatInstruction(formats[index]!),
         })),
         excludedQuestions: [...excluded].slice(-60),
       }),
     );
-    const generated = Array.isArray(output?.problems) ? output.problems : [];
+    const generated = (Array.isArray(output?.problems) ? output.problems : []).map(
+      (problem) => ({
+        ...problem,
+        prompt: rewriteFormalPrincipleNames(problem.prompt ?? ""),
+        correctAnswer: rewriteFormalPrincipleNames(problem.correctAnswer ?? ""),
+        explanation: rewriteFormalPrincipleNames(problem.explanation ?? ""),
+      }),
+    );
     const valid =
       generated.length === templates.length &&
       generated.every((problem, index) => {
         const prompt = problem?.prompt?.trim() ?? "";
         const correctAnswer = problem?.correctAnswer?.trim() ?? "";
+        const supportQuote = problem?.readingSupportQuote?.trim() ?? "";
+        const reading = templates[index]?.reading ?? "";
+        const normalizedReading = reading.replace(/\s+/g, " ").toLowerCase();
+        const normalizedQuote = supportQuote.replace(/\s+/g, " ").toLowerCase();
         return (
           prompt.length >= 80 &&
           correctAnswer.length >= 30 &&
+          normalizedQuote.split(/\s+/).length >= 5 &&
+          normalizedReading.includes(normalizedQuote) &&
+          !usesFormalPrincipleName(prompt) &&
           !excluded.has(prompt.toLowerCase()) &&
           !/\b(?:more evidence|consider alternatives|cannot conclude|avoid (?:a )?conclusion|not enough evidence|before (?:concluding|inferring))\b/i.test(
             correctAnswer,

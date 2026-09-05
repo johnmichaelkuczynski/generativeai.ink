@@ -14,7 +14,7 @@ import { logger } from "./logger";
 // the value stored in seed_meta; a mismatch forces a full re-seed, so content
 // edits self-heal in every environment (including a republished production)
 // without a manual database wipe.
-const SEED_CONTENT_VERSION = "2026-09-05-nano-evolutionary-psychology-v3";
+const SEED_CONTENT_VERSION = "2026-09-05-nano-evolutionary-psychology-v4";
 
 type SeedTopic = {
   slug: string;
@@ -49,7 +49,7 @@ Evolutionary psychology explains how recurrent survival and reproductive problem
 
 ## 3. Kinship and altruism
 
-**Inclusive fitness** includes effects on one's own reproduction and on relatives, weighted by relatedness. Hamilton's rule, **rB > C**, predicts when a costly helping allele could spread; it does not say organisms consciously calculate kinship or that all family help is genetic. **Reciprocal altruism** can evolve among non-kin when partners meet repeatedly, benefits exceed costs, and cheaters can be detected or excluded. Parent and offspring share interests but are not genetically identical, producing **parent-offspring conflict** over investment while leaving extensive scope for attachment and care.
+**Inclusive fitness** includes effects on one's own reproduction and on relatives, weighted by relatedness. Hamilton's rule, **rB > C**, predicts when a costly helping allele could spread: **r** is genetic relatedness, **B** is the recipient's reproductive benefit, and **C** is the helper's reproductive cost. For course problems, use **r = 0.5** for a parent and child or for full siblings, **r = 0.25** for a grandparent and grandchild, aunt/uncle and niece/nephew, or half siblings, **r = 0.125** for first cousins, and **r = 0** for unrelated people. The rule does not say organisms consciously calculate kinship or that all family help is genetic. **Reciprocal altruism** can evolve among non-kin when partners meet repeatedly, benefits exceed costs, and cheaters can be detected or excluded. Parent and offspring share interests but are not genetically identical, producing **parent-offspring conflict** over investment while leaving extensive scope for attachment and care.
 
 ## 4. Social cognition and cooperation
 

@@ -85,6 +85,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/CourseOverview"
 
+  /course/comments:
+    get:
+      operationId: listCourseComments
+      tags: [course]
+      summary: List the most recent course comments
+      responses:
+        "200":
+          description: Recent comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseComment"
+    post:
+      operationId: createCourseComment
+      tags: [course]
+      summary: Save a course comment of up to three sentences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseCommentInput"
+      responses:
+        "201":
+          description: Saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseComment"
+
   /course/weeks/{weekNumber}:
     get:
       operationId: getWeek
@@ -1237,6 +1269,23 @@ components:
             assignmentsCompleted: { type: integer }
             assignmentsTotal: { type: integer }
             practiceCount: { type: integer }
+
+    CourseComment:
+      type: object
+      required: [id, comment, createdAt]
+      properties:
+        id: { type: integer }
+        comment: { type: string }
+        createdAt: { type: string, format: date-time }
+
+    CourseCommentInput:
+      type: object
+      required: [comment]
+      properties:
+        comment:
+          type: string
+          minLength: 1
+          maxLength: 600
 
     ReasoningAssessmentSummary:
       type: object

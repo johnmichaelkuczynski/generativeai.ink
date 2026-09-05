@@ -518,6 +518,20 @@ export interface CourseOverview {
   totals: CourseOverviewTotals;
 }
 
+export interface CourseComment {
+  id: number;
+  comment: string;
+  createdAt: string;
+}
+
+export interface CourseCommentInput {
+  /**
+     * @minLength 1
+     * @maxLength 600
+     */
+  comment: string;
+}
+
 export type ReasoningAssessmentSummaryInstrument = typeof ReasoningAssessmentSummaryInstrument[keyof typeof ReasoningAssessmentSummaryInstrument];
 
 

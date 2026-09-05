@@ -5,6 +5,7 @@ import {
   assignmentsTable,
   problemsTable,
   topicsTable,
+  lecturesTable,
   practiceSessionsTable,
   practiceProblemsTable,
   practiceAttemptsTable,
@@ -24,6 +25,8 @@ import {
   questionMatchesFormat,
   questionFormatForOrdinal,
   questionFormatInstruction,
+  rewriteFormalPrincipleNames,
+  usesFormalPrincipleName,
 } from "../lib/questionFormats";
 
 const router: IRouter = Router();
@@ -78,10 +81,12 @@ router.post(
         correctAnswer: problemsTable.correctAnswer,
         topicId: problemsTable.topicId,
         topicTitle: topicsTable.title,
+        reading: lecturesTable.body,
         position: problemsTable.position,
       })
       .from(problemsTable)
       .leftJoin(topicsTable, eq(problemsTable.topicId, topicsTable.id))
+      .leftJoin(lecturesTable, eq(problemsTable.topicId, lecturesTable.topicId))
       .where(eq(problemsTable.assignmentId, assignmentId))
       .orderBy(asc(problemsTable.position));
 
@@ -102,51 +107,77 @@ router.post(
       questionFormatForOrdinal((sequence?.maxId ?? 0) + index),
     );
 
-    let generated: Array<{
+    type GeneratedPracticeProblem = {
       prompt: string;
       correctAnswer: string;
       explanation: string;
-    }> = [];
-    try {
+      readingSupportQuote: string;
+    };
+    const generatedProblemsAreValid = (
+      candidate: GeneratedPracticeProblem[],
+    ): boolean =>
+      candidate.length === templates.length &&
+      templates.every((_, i) => {
+        const g = candidate[i];
+        const reading = templates[i]?.reading ?? "";
+        const quote = g?.readingSupportQuote?.trim() ?? "";
+        return Boolean(
+          g &&
+            typeof g.prompt === "string" &&
+            g.prompt.trim() &&
+            typeof g.correctAnswer === "string" &&
+            g.correctAnswer.trim() &&
+            quote.split(/\s+/).length >= 5 &&
+            reading
+              .replace(/\s+/g, " ")
+              .toLowerCase()
+              .includes(quote.replace(/\s+/g, " ").toLowerCase()) &&
+            !usesFormalPrincipleName(g.prompt) &&
+            isValidReasoningProblem(g, formats[i]!) &&
+            !/\b(?:more evidence|consider alternatives|cannot conclude|avoid (?:a )?conclusion|not enough evidence|before (?:concluding|inferring))\b/i.test(
+              g.correctAnswer,
+            ),
+        );
+      });
+
+    const generateOnce = async (): Promise<GeneratedPracticeProblem[]> => {
       const out = await chatJson<{
-        problems: Array<{
-          prompt: string;
-          correctAnswer: string;
-          explanation: string;
-        }>;
+        problems: GeneratedPracticeProblem[];
       }>(
-        `You write a PRACTICE version of a Nano Evolutionary Psychology ${assignment.kind} titled "${assignment.title}". Produce EXACTLY ${templates.length} genuinely new scenario problems, one per template in order. Each must require applying a substantive mechanism or prediction such as Hamilton's rule, reciprocal altruism, parental investment, sexual selection, life-history allocation, error-management theory, pathogen avoidance, coalitional psychology, theory of mind, mismatch, or supernormal stimuli. FORBIDDEN: a correct answer that merely says more evidence is needed, alternatives should be considered, certainty is unwarranted, or conclusions should be avoided. Changing only names or surface details is not fresh. Require reasoning, not definitions. Obey each template's requiredFormat exactly. Across the rolling question bank the formats are fixed at 60% multiple choice, 30% one-sentence, 8% 1–3 sentences, and 2% one paragraph of 5–7 sentences. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string}, ...]}.`,
+        `You write a PRACTICE version of a Nano Evolutionary Psychology ${assignment.kind} titled "${assignment.title}". Produce EXACTLY ${templates.length} genuinely new scenario problems, one per supplied reading in order. Every problem must be fully answerable from that reading alone. Test application of a principle in ordinary language, not recall of its label. Avoid formal principle names in prompts and options. If a formal name is genuinely unavoidable, define the complete principle immediately in that same question so recognizing the label is never required. Never ask the learner to identify or supply a principle's name. State every extra number or relationship needed in the problem. readingSupportQuote must be an exact contiguous quote of at least five words from the reading that establishes the answer. FORBIDDEN: a correct answer that merely says more evidence is needed, alternatives should be considered, certainty is unwarranted, or conclusions should be avoided. Changing only names or surface details is not fresh. Require reasoning, not definitions. Obey each requiredFormat exactly. Across the rolling question bank the formats are fixed at 60% multiple choice, 30% one-sentence, 8% 1–3 sentences, and 2% one paragraph of 5–7 sentences. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string, "readingSupportQuote": string}, ...]}.`,
         JSON.stringify({
           assignmentKind: assignment.kind,
           assignmentTitle: assignment.title,
           templates: templates.map((t, i) => ({
             number: i + 1,
             topic: t.topicTitle ?? "evolutionary psychology",
-            promptStyleExample: t.prompt,
-            modelAnswerExample: t.correctAnswer,
+            assignedReading: t.reading,
             requiredFormat: questionFormatInstruction(formats[i]!),
           })),
         }),
       );
-      generated = Array.isArray(out?.problems) ? out.problems : [];
-    } catch {
-      generated = [];
+      return (Array.isArray(out?.problems) ? out.problems : []).map(
+        (problem) => ({
+          ...problem,
+          prompt: rewriteFormalPrincipleNames(problem.prompt ?? ""),
+          correctAnswer: rewriteFormalPrincipleNames(problem.correctAnswer ?? ""),
+          explanation: rewriteFormalPrincipleNames(problem.explanation ?? ""),
+        }),
+      );
+    };
+
+    let generated: GeneratedPracticeProblem[] = [];
+    for (let generationAttempt = 1; generationAttempt <= 5; generationAttempt += 1) {
+      try {
+        generated = await generateOnce();
+      } catch {
+        generated = [];
+      }
+      if (generatedProblemsAreValid(generated)) break;
     }
 
-    const allGeneratedProblemsAreValid = templates.every((_, i) => {
-      const g = generated[i];
-      return Boolean(
-        g &&
-          typeof g.prompt === "string" &&
-          g.prompt.trim() &&
-          typeof g.correctAnswer === "string" &&
-          g.correctAnswer.trim() &&
-          isValidReasoningProblem(g, formats[i]!) &&
-          !/\b(?:more evidence|consider alternatives|cannot conclude|avoid (?:a )?conclusion|not enough evidence|before (?:concluding|inferring))\b/i.test(
-            g.correctAnswer,
-          ),
-      );
-    });
+    const allGeneratedProblemsAreValid =
+      generatedProblemsAreValid(generated);
     if (!allGeneratedProblemsAreValid || generated.length !== templates.length) {
       res.status(503).json({
         error:

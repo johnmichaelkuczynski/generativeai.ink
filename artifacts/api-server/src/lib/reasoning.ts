@@ -2,6 +2,10 @@ import { chatText, chatJson } from "./ai";
 import { gradeAnswer } from "./grading";
 import { logger } from "./logger";
 import { genSpecFor, type SkillArea, type Phase } from "./diagnosticContent";
+import {
+  rewriteFormalPrincipleNames,
+  usesFormalPrincipleName,
+} from "./questionFormats";
 
 // Shape of a persisted diagnostic item row (payload/scoring are jsonb).
 export interface DiagnosticItemRow {
@@ -439,11 +443,11 @@ async function generateSubjectVariant(
   const spec = genSpecFor("subject", phase);
   const system =
     "You are an assessment author writing ORIGINAL questions for Nano Evolutionary Psychology. " +
-    "Every question must be a brief, realistic behavioral, developmental, or research CASE requiring application of an evolutionary-psychology mechanism or prediction, never definition recall. Keep it answerable with one or two sentences. " +
+    "Every question must be a brief, realistic behavioral, developmental, or research CASE requiring application of a relationship or prediction, never definition or terminology recall. Keep it answerable with one or two sentences and state all information needed to solve it. " +
     "Each has exactly two or three answer options with one clearly best, well-supported answer. Prefer three options unless a binary distinction makes two clearer. " +
     "List the CORRECT option FIRST, followed by one or two plausible but wrong applications of the course's mechanisms. " +
     "Also write a one-sentence model answer explaining why the first option is best. " +
-    "Prioritize Hamilton's rule, reciprocal altruism, parental investment, sexual selection, error management, pathogen avoidance, coalitional psychology, life-history tradeoffs, theory of mind, mismatch, and supernormal stimuli. Never make generic methodological caution ('more evidence is needed,' 'consider alternatives,' or 'do not conclude') the correct answer. Keep the subject matter tasteful and age-appropriate. " +
+    "Write the operative principle in ordinary language and minimize formal names. If a formal name is genuinely unavoidable, define the complete principle immediately in the stem so recognizing the label is never required; never ask the learner to identify or supply that name. Never require outside knowledge. Never make generic methodological caution ('more evidence is needed,' 'consider alternatives,' or 'do not conclude') the correct answer. Keep the subject matter tasteful and age-appropriate. " +
     `Difficulty: ${spec.level} ` +
     `Stay strictly within this scope: ${spec.topicFocus} ` +
     'Respond ONLY as JSON of the form {"items":[{"prompt":"short case ending in a question","options":["best","worse","worse","worse"],"modelAnswer":"why the first option is best"}]}.';
@@ -458,11 +462,26 @@ async function generateSubjectVariant(
     throw new Error("subject variant: wrong item count");
   }
   return raw.map((q) => {
-    const prompt = q.prompt;
-    const options = q.options;
-    const modelAnswer = q.modelAnswer;
+    const prompt =
+      typeof q.prompt === "string"
+        ? rewriteFormalPrincipleNames(q.prompt)
+        : q.prompt;
+    const options = Array.isArray(q.options)
+      ? q.options.map((option) =>
+          typeof option === "string"
+            ? rewriteFormalPrincipleNames(option)
+            : option,
+        )
+      : q.options;
+    const modelAnswer =
+      typeof q.modelAnswer === "string"
+        ? rewriteFormalPrincipleNames(q.modelAnswer)
+        : q.modelAnswer;
     if (typeof prompt !== "string" || prompt.trim().length < 20) {
       throw new Error("subject variant: bad prompt");
+    }
+    if (usesFormalPrincipleName(prompt)) {
+      throw new Error("subject variant: formal principle name in learner prompt");
     }
     if (
       !Array.isArray(options) ||
@@ -513,7 +532,12 @@ export async function generateVariantItems(
       "Reasoning variant generation failed, using template items",
     );
   }
-  // Fallback: cycle the seeded template items up/down to the requested length.
+  if (instrument === "subject") {
+    throw new Error(
+      "Subject diagnostic generation failed grounding rules; no template questions were substituted.",
+    );
+  }
+  // General-reasoning templates do not require course terminology.
   return cycleToLength(templateContent(templateItems), count);
 }
 

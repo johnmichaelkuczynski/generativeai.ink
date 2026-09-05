@@ -3,6 +3,7 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import {
   db,
   topicsTable,
+  lecturesTable,
   practiceSessionsTable,
   practiceProblemsTable,
   practiceAttemptsTable,
@@ -21,6 +22,8 @@ import {
   questionMatchesFormat,
   questionFormatForOrdinal,
   questionFormatInstruction,
+  rewriteFormalPrincipleNames,
+  usesFormalPrincipleName,
 } from "../lib/questionFormats";
 
 const router: IRouter = Router();
@@ -179,21 +182,56 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
     .from(practiceProblemsTable);
   const requiredFormat = questionFormatForOrdinal(sequence?.maxId ?? 0);
   const formatInstruction = questionFormatInstruction(requiredFormat);
-  let generated: { prompt: string; correctAnswer: string; explanation: string };
+  const [lecture] = await db
+    .select({ body: lecturesTable.body })
+    .from(lecturesTable)
+    .where(eq(lecturesTable.topicId, topic.id));
+  if (!lecture) {
+    res.status(503).json({ error: "No antecedent reading is available for this topic." });
+    return;
+  }
+  let generated: {
+    prompt: string;
+    correctAnswer: string;
+    explanation: string;
+    readingSupportQuote: string;
+  };
   try {
     generated = await chatJson<{
       prompt: string;
       correctAnswer: string;
       explanation: string;
+      readingSupportQuote: string;
     }>(
       `You generate a single practice problem for Nano Evolutionary Psychology. The problem MUST be on the topic "${topic.title}" and at difficulty "${difficultyLabel}" (${difficulty.toFixed(
         1,
-      )}/5). Test applied scientific reasoning, not recall. The question MUST be fully self-contained.\n\nREQUIRED FORMAT:\n${formatInstruction}\n\nThe rolling bank uses exactly 60% multiple choice, 30% one-sentence answers, 8% 1–3 sentence answers, and 2% one-paragraph answers of 5–7 sentences.\n\nSTRICT QUESTION RULES:\n- Require the learner to apply a substantive mechanism or prediction: Hamilton's rule, reciprocal altruism, parental investment, sexual selection, life-history allocation, error-management theory, pathogen avoidance, coalitional psychology, theory of mind, mismatch, or supernormal stimuli.\n- Never ask for a definition, terminology recall, or bare yes/no.\n- FORBIDDEN: the correct answer may not merely say more evidence is needed, alternatives should be considered, certainty is unwarranted, or a conclusion should be avoided.\n- Changing only names or surface details is not a fresh question.\n- The explanation briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
+      )}/5). Test applied scientific reasoning, not recall. The question MUST be fully self-contained and fully answerable from the supplied reading alone.\n\nREQUIRED FORMAT:\n${formatInstruction}\n\nThe rolling bank uses exactly 60% multiple choice, 30% one-sentence answers, 8% 1–3 sentence answers, and 2% one-paragraph answers of 5–7 sentences.\n\nSTRICT QUESTION RULES:\n- Test application of a substantive relationship or prediction from the reading in ordinary language.\n- Do not include formal principle names in the prompt or options; express the operative relationship in plain language. Never ask the learner to identify or supply a name.\n- State every extra number, coefficient, or factual relationship needed in the question.\n- Never ask for a definition, terminology recall, or bare yes/no.\n- readingSupportQuote must be an exact contiguous quote of at least five words from the supplied reading that establishes the answer.\n- FORBIDDEN: the correct answer may not merely say more evidence is needed, alternatives should be considered, certainty is unwarranted, or a conclusion should be avoided.\n- Changing only names or surface details is not a fresh question.\n- The explanation briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string, "readingSupportQuote": string}. Avoid these recent prompts: ${JSON.stringify(
         lastProblems.map((p) => p.prompt),
       )}.`,
-      userRequest || `Generate a new ${difficultyLabel} problem on ${topic.title}.`,
+      JSON.stringify({
+        learnerRequest:
+          userRequest || `Generate a new ${difficultyLabel} problem on ${topic.title}.`,
+        assignedReading: lecture.body,
+      }),
     );
-    if (!isValidReasoningProblem(generated, requiredFormat)) {
+    generated = {
+      ...generated,
+      prompt: rewriteFormalPrincipleNames(generated.prompt ?? ""),
+      correctAnswer: rewriteFormalPrincipleNames(generated.correctAnswer ?? ""),
+      explanation: rewriteFormalPrincipleNames(generated.explanation ?? ""),
+    };
+    const quote = generated.readingSupportQuote?.trim() ?? "";
+    const quoteIsGrounded =
+      quote.split(/\s+/).length >= 5 &&
+      lecture.body
+        .replace(/\s+/g, " ")
+        .toLowerCase()
+        .includes(quote.replace(/\s+/g, " ").toLowerCase());
+    if (
+      !isValidReasoningProblem(generated, requiredFormat) ||
+      !quoteIsGrounded ||
+      usesFormalPrincipleName(generated.prompt)
+    ) {
       throw new Error("generated problem did not meet scenario-reasoning requirements");
     }
   } catch (error) {

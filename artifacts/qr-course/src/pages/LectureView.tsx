@@ -38,7 +38,7 @@ const HIGHLIGHTS_BY_SECTION: Record<string, string[]> = {
     "Short- and long-term strategies are conditional tradeoffs rather than fixed categories, and population averages do not determine any individual.",
   ],
   "3. Kinship and altruism": [
-    "Inclusive-fitness reasoning predicts when helping relatives can spread by comparing relatedness-weighted benefits with the helper's cost.",
+    "Hamilton’s rule, rB > C, predicts when helping relatives can spread: relatedness (r) multiplied by the recipient’s reproductive benefit (B) must exceed the helper’s reproductive cost (C). For course problems, r = 0.5 for parent–child or full siblings, 0.25 for grandparent–grandchild, aunt/uncle–niece/nephew, or half siblings, 0.125 for first cousins, and 0 for unrelated people.",
     "Reciprocal altruism can support cooperation among non-relatives when future interaction, memory, partner choice, and responses to cheating make cooperation worthwhile.",
     "Parent–offspring conflict predicts some disagreement over investment without implying that family relationships are generally hostile or reducible to genes.",
   ],

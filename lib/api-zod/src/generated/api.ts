@@ -97,6 +97,29 @@ export const GetCourseOverviewResponse = zod.object({
 
 
 /**
+ * @summary List the most recent course comments
+ */
+export const ListCourseCommentsResponseItem = zod.object({
+  "id": zod.number(),
+  "comment": zod.string(),
+  "createdAt": zod.coerce.date()
+})
+export const ListCourseCommentsResponse = zod.array(ListCourseCommentsResponseItem)
+
+
+/**
+ * @summary Save a course comment of up to three sentences
+ */
+export const createCourseCommentBodyCommentMax = 600;
+
+
+
+export const CreateCourseCommentBody = zod.object({
+  "comment": zod.string().min(1).max(createCourseCommentBodyCommentMax)
+})
+
+
+/**
  * @summary Get one week's lectures and assignment list
  */
 export const getWeekPathWeekNumberMax = 4;

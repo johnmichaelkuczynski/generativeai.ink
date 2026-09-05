@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { ReasoningCallout } from "@/components/ReasoningCallout";
 import TopicsRail from "@/components/TopicsRail";
+import { CourseCommentsCard } from "@/components/CourseCommentsCard";
 
 export default function Dashboard() {
   const { data: overview, isLoading: isLoadingOverview } = useGetCourseOverview();
@@ -107,6 +108,7 @@ export default function Dashboard() {
                 )}
               </CardContent>
             </Card>
+            <CourseCommentsCard />
           </div>
         </div>
       </div>

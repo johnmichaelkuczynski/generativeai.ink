@@ -27,6 +27,7 @@ router.get("/tutor/suggestions/:lectureId", async (req, res): Promise<void> => {
     extra +
     `From the lecture below, write 6 starter questions that make the student APPLY the lecture's ideas to a CONCRETE NAMED SCENARIO. Every question must name a person, organization, product, or deployed feature and ask the student to reason about that case.\n\n` +
     `THE SINGLE MOST IMPORTANT RULE: every question must contain an explicit, realistic behavioral, developmental, or research situation. It must ask the student to analyze evidence, judge an evolutionary hypothesis, compare an alternative, or predict a conditional result in THAT named scenario. Reuse concrete lecture cases when available.\n\n` +
+    `Test application, not vocabulary recall. Minimize formal principle names. If a name is genuinely unavoidable, it must appear in the lecture and the question must immediately define the complete principle so recognizing the label is never required. Never ask the student to identify or supply the name. Every question must be answerable from the lecture alone.\n\n` +
     `ABSOLUTELY FORBIDDEN — never produce any of these:\n` +
     `- Questions that ask for a definition ("What is X?", "What does X mean?", "Define X").\n` +
     `- Questions that ask to distinguish or compare concepts in the abstract ("How do X and Y differ?", "What is the difference between X and Y?", "How does X relate to Y?").\n` +
