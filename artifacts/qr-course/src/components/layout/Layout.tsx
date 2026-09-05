@@ -37,7 +37,7 @@ export function Sidebar() {
             />
           </a>
           <Link href="/dashboard">
-            <span className="font-serif font-semibold text-lg tracking-tight">Cloud Architecture (AWS/Azure)</span>
+            <span className="font-serif font-semibold text-lg tracking-tight">Nano Evolutionary Psychology</span>
           </Link>
         </div>
       </div>
@@ -69,7 +69,7 @@ export function Sidebar() {
         >
           Contact Us
         </a>
-        <span>Cloud Architecture (AWS/Azure)</span>
+        <span>Nano Evolutionary Psychology</span>
       </div>
     </div>
   );

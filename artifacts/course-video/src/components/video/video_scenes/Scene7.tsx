@@ -32,7 +32,7 @@ export function Scene7() {
               className="text-center mb-12"
             >
               <div className="text-sm font-mono text-white/50 mb-2 uppercase tracking-widest">Assessment Graded</div>
-              <h2 className="text-4xl font-display font-bold text-white">Day 1: Cloud Architecture</h2>
+              <h2 className="text-4xl font-display font-bold text-white">Nano Evolutionary Psychology</h2>
             </motion.div>
 
             <div className="flex gap-8 items-center">
@@ -65,7 +65,7 @@ export function Scene7() {
                     <span className="font-bold text-sm uppercase tracking-wider text-white/70">Grader Rationale</span>
                   </div>
                   <p className="text-white/80 leading-relaxed text-lg">
-                    Excellent grasp of the core concepts. You clearly explained why stateless load balancing is required for horizontal scaling. Minor deduction on question 4 regarding specific block vs object storage costs.
+                    Strong use of the evidence. You distinguished an evolutionary hypothesis from a deterministic claim and compared plausible alternatives. Minor deduction on question 4 for not addressing cultural variation.
                   </p>
                 </motion.div>
 

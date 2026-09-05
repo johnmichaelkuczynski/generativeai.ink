@@ -32,7 +32,7 @@ export function Scene9() {
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </div>
-        <span className="font-display font-bold text-4xl text-white">Cloud Architecture</span>
+        <span className="font-display font-bold text-4xl text-white">Nano Evolutionary Psychology</span>
       </motion.div>
 
       <motion.div

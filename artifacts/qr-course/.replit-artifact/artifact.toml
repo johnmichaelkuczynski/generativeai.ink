@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Cloud Architecture (AWS/Azure)"
+title = "Nano Evolutionary Psychology"
 version = "1.0.0"
 id = "artifacts/qr-course"
 router = "path"

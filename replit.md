@@ -1,21 +1,25 @@
-# Cloud Architecture (AWS/Azure)
+# Nano Evolutionary Psychology
 
-**A rigorous, one-day introduction to designing reliable, secure cloud architectures with AWS and Azure for adult researchers and professionals.**
+**A rigorous, 4–6 hour introduction to evolutionary approaches to human behavior for adult researchers, professionals, and students entering the field.**
 
 ---
 
 ## Overview
 
-Cloud Architecture (AWS/Azure) is a self-paced, single-user web course taught, tutored, drilled, and graded by AI, with built-in academic-integrity enforcement.
+Nano Evolutionary Psychology is a self-paced, single-user web course taught, tutored, drilled, and graded by AI, with built-in academic-integrity enforcement.
 
-The curriculum has **one intensive day with four topics**:
+The curriculum is designed for **4–6 hours and covers eight evolutionary psychology topic areas**:
 
-1. **The building blocks** — Renting instead of owning; compute, storage, network, and identity; virtual machines, containers, serverless functions, databases, regions, availability zones, virtual networks, subnets, and least-privilege access.
-2. **Designing for real use** — Scaling, load balancing, statelessness, failure design, redundancy, backup, cost, managed services, infrastructure as code, observability, encryption, secrets, and the shared responsibility model.
-3. **How to reason about cloud-architecture cases** — A concrete deployment scenario asks which architectural idea decides the outcome.
-4. **Core reasoning skills** — Analysis, inference, evaluation, deduction, and induction in a domain-neutral format.
+1. **Evolution by natural selection** — Variation, inheritance, differential reproduction, fitness, and levels of explanation.
+2. **Adaptation and evolutionary inference** — Adaptations, by-products, noise, competing hypotheses, predictions, and evidential standards.
+3. **Sexual selection and mating** — Mate preferences, competition, trade-offs, and variation across people and contexts.
+4. **Parental investment and families** — Investment, parent–offspring conflict, life-history trade-offs, and caregiving ecology.
+5. **Kin selection and inclusive fitness** — Relatedness, indirect fitness, kin recognition, and conditional helping.
+6. **Cooperation and reciprocity** — Reciprocal altruism, partner choice, punishment, reputation, and collective action.
+7. **Social cognition, status, and groups** — Coalitions, hierarchy, social learning, conflict, and flexible social strategies.
+8. **Culture, development, and critical methods** — Developmental calibration, culture–gene interactions, cross-cultural evidence, replication, and ethical interpretation.
 
-The subject reasoning primer uses concrete deployment scenarios and asks for the architectural concept and scene detail that explain each case. The general primer applies analysis, inference, evaluation, deduction, and induction.
+The subject reasoning primer uses concrete behavioral scenarios and asks for the evolutionary hypothesis, predicted evidence, alternatives, and limits relevant to each case. The general primer applies analysis, inference, evaluation, deduction, and induction. Course language treats evolutionary explanations as probabilistic and testable, not deterministic.
 
 The course is designed for **researchers and professionals entering the discipline, product and engineering teams, instructors evaluating AI-taught coursework, and researchers studying AI academic integrity**.
 
@@ -23,13 +27,13 @@ The course is designed for **researchers and professionals entering the discipli
 
 ## What It Does
 
-- **One-Day Intensive Curriculum** — Four topics with lessons, two homework sets, a timed course test, and a cumulative final exam.
+- **4–6 Hour Curriculum** — Eight topic areas with lessons, two homework sets, a timed course test, and a cumulative final exam.
 - **Three-Depth Lessons** — Every lesson is available at Short, Medium, or Long length while preserving its examples and learning objectives.
 - **Section-Scoped AI Tutor** — Answers stream token by token and remain grounded in the lecture section being read.
 - **Adaptive Topic Practice** — Generated scenario problems adjust difficulty after correct and incorrect answers.
 - **AI-Graded Assignments** — Homework, course-test, and final answers receive semantic grading, per-problem correctness, and written rationale.
 - **Two-Layer AI Detection on Every Submission** — A static text classifier and a diachronic keystroke-pattern detector each produce a verdict with rationale.
-- **Diagnostic Reasoning Checks** — Integration-case and General Reasoning instruments are available in multiple-choice, hybrid, and written formats; Short, Medium, and Long lengths; and before, one-third, two-thirds, and after phases. They are unlimited, freshly generated, ungraded practice.
+- **Diagnostic Reasoning Checks** — Evolutionary-psychology-case and General Reasoning instruments are available in multiple-choice, hybrid, and written formats; Short, Medium, and Long lengths; and before, one-third, two-thirds, and after phases. They are unlimited, freshly generated, ungraded practice.
 - **Live Analytics** — Dashboard KPIs, per-topic mastery, and recent activity expose progress and weak areas.
 - **Operator Diagnostics** — System-health and synthetic-student controls verify the database, model integration, detection pipeline, and practice and grading loops.
 
@@ -55,9 +59,9 @@ The course is designed for **researchers and professionals entering the discipli
 
 - Convert the existing app in place when changing subjects. Preserve its routes, components, page structure, topic rail, download buttons, math keyboards, course mechanics, diagnostic controls, visual design, and functionality.
 - The audience is adults, typically researchers, professionals, PhD students, and professors entering a new discipline. Describe the course as foundational, substantial, and rigorous.
-- The app name must remain the literal title **Cloud Architecture (AWS/Azure)** everywhere relevant.
+- The app name must remain the literal title **Nano Evolutionary Psychology** everywhere relevant.
 - Use plain, descriptive copy. Do not add slogans, jokes, cute framing, or unnecessary claims.
-- The “Topics Covered in This Course” list remains a small vertical left-hand rail on the landing page and dashboard, without unit, week, or number markers, and with Cloud Architecture PDF and TXT download buttons beneath it.
+- The “Topics Covered in This Course” list remains a small vertical left-hand rail on the landing page and dashboard, without unit, week, or number markers, and with Nano Evolutionary Psychology PDF and TXT download buttons beneath it.
 - Math keyboards remain present on every freeform answer and tutor input, regardless of whether a prompt appears to require notation. Math-keyboard insertions count as genuine keystrokes rather than bulk insertions.
 - Every homework, test, final, practice, and diagnostic question must use a concrete scenario and require reasoned application rather than definition recitation or a one-word answer.
-- The YouTube title must remain exactly **Cloud Architecture (AWS/Azure) — AI-Powered Course**.
+- The YouTube title must remain exactly **Nano Evolutionary Psychology — AI-Powered Course**.

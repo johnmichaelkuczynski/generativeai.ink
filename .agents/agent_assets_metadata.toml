@@ -33,3 +33,17 @@ uri = "file://artifacts/course-video/public/audio/bg_music.mp3"
 type = "audio"
 title = "background music"
 logical_id = "c293f880-625a-4534-bf49-6ceb17e64a8d"
+
+[[outputs]]
+id = "lGfyrCd5xMbikO6NEF48X"
+uri = "file://screenshots/nano-evolutionary-psychology-dashboard-fixed.jpg"
+type = "image"
+title = "Corrected Nano Evolutionary Psychology dashboard"
+description = "Verified dashboard showing the new course schedule, zero inherited progress, and no old activity."
+logical_id = "b6fc99dc-6dbd-4afc-9638-ee766c1a914e"
+content_hash = "sha256:a76f41b7caabeafd1047d72f6e6271670868dcaac05afcc4769d745a17cca3c3"
+size = 129346
+mtime_ms = 1788627591132
+storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/b6fc99dc-6dbd-4afc-9638-ee766c1a914e/065a9bf0-9279-49fd-84ff-1616cc9c8235"
+storage_version_token = "1788627609430788"
+content_type = "image/jpeg"

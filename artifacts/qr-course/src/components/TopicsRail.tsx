@@ -5,10 +5,14 @@ export const pdfUrl = `${base}api/course/download-pdf`;
 export const txtUrl = `${base}api/course/download-txt`;
 
 const COURSE_TOPIC_TITLES = [
-  "The building blocks",
-  "Designing for real use",
-  "How to reason about cloud-architecture cases",
-  "Core reasoning skills",
+  "Evolutionary foundations of behavior",
+  "Natural and sexual selection",
+  "Mating strategies and kin selection",
+  "Parenting and family dynamics",
+  "Cooperation and social exchange",
+  "Aggression and warfare",
+  "Status, prestige, and dominance",
+  "Evolutionary cognitive psychology",
 ];
 
 export function useCourseTopicTitles(): string[] {
@@ -53,7 +57,7 @@ export default function TopicsRail() {
           data-testid="rail-download-pdf"
         >
           <Download className="w-3.5 h-3.5" />
-          Download Cloud Architecture (PDF)
+          Download Nano Evolutionary Psychology (PDF)
         </a>
         <a
           href={txtUrl}
@@ -61,7 +65,7 @@ export default function TopicsRail() {
           data-testid="rail-download-txt"
         >
           <Download className="w-3.5 h-3.5" />
-          Download Cloud Architecture (TXT)
+          Download Nano Evolutionary Psychology (TXT)
         </a>
         <p className="text-[10px] text-muted-foreground leading-snug mt-0.5">
           Every lecture (short version) plus practice homework and exam

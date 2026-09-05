@@ -21,7 +21,15 @@ import AdminMode from "@/pages/AdminMode";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+      refetchOnMount: "always",
+      refetchOnWindowFocus: "always",
+    },
+  },
+});
 
 function Router() {
   return (

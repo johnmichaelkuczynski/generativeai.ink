@@ -21,9 +21,9 @@ const router: IRouter = Router();
 
 const WEEK_TITLES: Record<number, { title: string; summary: string }> = {
   1: {
-    title: "Cloud Architecture (AWS/Azure): A One-Day Intensive",
+    title: "Nano Evolutionary Psychology: 4–6 Hour Certification",
     summary:
-      "One intensive day, two sessions. The first builds a provider-neutral foundation in compute, storage, networking, identity, regions, availability zones, and managed data services. The second applies those primitives to scaling, load balancing, failure, redundancy, backups, recovery objectives, cost, infrastructure as code, observability, security, and shared responsibility.",
+      "A rigorous 4–6 hour, two-session certification covering foundations; mate selection and sexual strategies; kinship and altruism; social cognition and cooperation; emotion and motivation; cognitive adaptations; evolutionary developmental psychology; and pathology and mismatch.",
   },
 };
 
@@ -112,7 +112,7 @@ router.get("/course/overview", async (_req, res) => {
 
   res.json(
     GetCourseOverviewResponse.parse({
-      title: "Cloud Architecture (AWS/Azure)",
+      title: "Nano Evolutionary Psychology",
       weeks,
       totals: { assignmentsCompleted, assignmentsTotal, practiceCount },
     }),
@@ -203,13 +203,13 @@ router.post(
     const sourceBody = (base && base.trim().length > 0 ? base : lecture.body).trim();
 
     const sys =
-      "You are a Cloud Architecture (AWS/Azure) lecturer revising your own lecture at a student's request. " +
+      "You are an Evolutionary Psychology lecturer revising your own lecture at a student's request. " +
       "You are given the CURRENT lecture and ONE instruction from the student about how to revise it. " +
       "Apply the instruction faithfully. ABSOLUTE RULES, no exceptions:\n" +
       "1. KEEP every concept, claim, and learning objective from the current lecture. Never drop material or change what the lecture teaches — only adjust how it is presented per the instruction.\n" +
       "2. Preserve the existing examples; you may add to or clarify them, but do not silently replace them with different ones unless the instruction explicitly asks you to.\n" +
       "3. Keep headings and section order intact. You may add sub-sections (e.g. extra examples) when the instruction calls for it.\n" +
-      "4. Stay accurate to the source material and to production cloud architecture across AWS and Azure. Do not invent fake facts, citations, or quotations.\n" +
+      "4. Stay scientifically cautious and accurate. Distinguish hypotheses from evidence, preserve alternative explanations, and avoid deterministic or justificatory claims. Do not invent facts, citations, or quotations.\n" +
       "5. Use clear Markdown. Preserve any code, JSON, or API examples accurately.\n" +
       "6. Return ONLY the rewritten Markdown lecture body — no preface, no commentary, no surrounding code fences.";
     const user =
@@ -314,12 +314,12 @@ router.post(
     const sourceBody = (base && base.trim().length > 0 ? base : lecture.body).trim();
 
     const sys =
-      "You are a Cloud Architecture (AWS/Azure) lecturer adding illustrations to your own lecture. " +
+      "You are an Evolutionary Psychology lecturer adding illustrations to your own lecture. " +
       "You are given the CURRENT lecture. Return the SAME lecture, unchanged in what it teaches, but with vivid illustrations added. ABSOLUTE RULES, no exceptions:\n" +
       "1. KEEP every concept, claim, heading, section, and learning objective exactly as they are, in the same order. Do not remove, reorder, or rewrite the existing explanation — only ADD to it.\n" +
       "2. For EVERY distinct point the lecture makes, add AT LEAST ONE concrete, vivid illustration that makes the point easy to picture: a short scenario, a real-to-life case sketch, an everyday analogy, or a worked example. Keep illustrations tasteful and age-appropriate — never graphic or sensational.\n" +
       "3. Set off each illustration so it reads as an example (e.g. a short *Example:* sentence or a brief italicized vignette) rather than blending into the original text.\n" +
-      "4. Stay accurate to the source material and to production cloud architecture across AWS and Azure. Do not invent fake facts, statistics, citations, or quotations; keep examples plausibly illustrative, not presented as documented cases.\n" +
+      "4. Stay scientifically cautious and accurate. Distinguish hypotheses from evidence and avoid deterministic or justificatory claims. Do not invent facts, statistics, citations, or quotations; keep examples illustrative rather than presenting them as documented cases.\n" +
       "5. Use clear Markdown. Preserve any code, JSON, or API examples accurately.\n" +
       "6. Return ONLY the augmented Markdown lecture body — no preface, no commentary, no surrounding code fences.";
     const user =
@@ -434,10 +434,10 @@ router.get("/course/download-txt", async (_req, res) => {
 
     const lines: string[] = [];
     const rule = "=".repeat(72);
-    lines.push("CLOUD ARCHITECTURE (AWS/AZURE)");
-    lines.push("From Model to Operated Product — Course Reader");
+    lines.push("NANO EVOLUTIONARY PSYCHOLOGY");
+    lines.push("Evidence, Adaptation, and Human Behavior — Course Reader");
     lines.push(
-      "Both session lectures of the one-day intensive, with sample homework problems and exam questions.",
+      "Both sessions of the 4–6 hour certification, with sample homework problems and exam questions.",
     );
     lines.push(rule, "", "TOPICS COVERED", "");
     for (const t of topics) lines.push(`  ${t.slug}  ${t.title}`);
@@ -470,7 +470,7 @@ router.get("/course/download-txt", async (_req, res) => {
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     res.setHeader(
       "Content-Disposition",
-      'attachment; filename="cloud-architecture-aws-azure-course.txt"',
+      'attachment; filename="nano-evolutionary-psychology-course.txt"',
     );
     res.send(lines.join("\n"));
   } catch (err) {
@@ -489,25 +489,25 @@ router.get("/course/download-pdf", async (_req, res) => {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      'attachment; filename="cloud-architecture-aws-azure-course.pdf"',
+      'attachment; filename="nano-evolutionary-psychology-course.pdf"',
     );
 
     const doc = new PDFDocument({ margin: 54, bufferPages: true });
     doc.pipe(res);
 
     // Title page
-    doc.font("Times-Bold").fontSize(30).text("Cloud Architecture (AWS/Azure)", { align: "center" });
+    doc.font("Times-Bold").fontSize(30).text("Nano Evolutionary Psychology", { align: "center" });
     doc.moveDown(0.5);
     doc
       .font("Times-Roman")
       .fontSize(14)
-      .text("From Model to Operated Product — Course Reader", { align: "center" });
+      .text("Evidence, Adaptation, and Human Behavior — Course Reader", { align: "center" });
     doc.moveDown(0.3);
     doc
       .fontSize(11)
       .fillColor("#555555")
       .text(
-        "Both session lectures of the one-day intensive, with sample homework problems and exam questions.",
+        "Both sessions of the 4–6 hour certification, with sample homework problems and exam questions.",
         { align: "center" },
       );
     doc.fillColor("black");
@@ -566,7 +566,7 @@ router.get("/course/download-pdf", async (_req, res) => {
       .fontSize(10)
       .fillColor("#555555")
       .text(
-        "Answers, AI tutoring, adaptive practice, and graded assignments are available in the online Cloud Architecture (AWS/Azure) course.",
+        "Answers, AI tutoring, adaptive practice, and graded assignments are available in the online Nano Evolutionary Psychology course.",
       );
 
     doc.end();

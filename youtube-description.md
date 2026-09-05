@@ -1,28 +1,28 @@
-# YouTube — Cloud Architecture (AWS/Azure)
+# YouTube — Nano Evolutionary Psychology
 
 ## Title
 
-Cloud Architecture (AWS/Azure) — AI-Powered Course
+Nano Evolutionary Psychology — AI-Powered Course
 
 ---
 
 ## Description (paste into YouTube)
 
-**Cloud Architecture (AWS/Azure)** is a rigorous, self-paced course on designing reliable, secure cloud systems. It is taught, tutored, drilled, and graded by AI, with built-in academic-integrity enforcement.
+**Nano Evolutionary Psychology** is a rigorous, self-paced introduction to evolutionary approaches to human behavior. It is taught, tutored, drilled, and graded by AI, with built-in academic-integrity enforcement.
 
-The one-day curriculum has four topics. **The building blocks** covers renting instead of owning; compute, storage, network, identity, virtual machines, containers, serverless functions, databases, regions, availability zones, virtual networks, subnets, and least privilege. **Designing for real use** covers scaling, load balancing, statelessness, failure design, redundancy, backup, cloud cost, managed services, infrastructure as code, observability, encryption, secrets, and shared responsibility.
+The 4–6 hour curriculum covers eight topic areas: **evolution by natural selection; adaptation and evolutionary inference; sexual selection and mating; parental investment and families; kin selection and inclusive fitness; cooperation and reciprocity; social cognition, status, and groups; and culture, development, and critical methods**.
 
-The course also includes two diagnostic primers. **How to reason about cloud-architecture cases** uses a concrete deployment scenario to identify the architectural idea that decides it. **Core reasoning skills** covers analysis, inference, evaluation, deduction, and induction.
+The course also includes two diagnostic primers. **How to reason about evolutionary-psychology cases** uses concrete behavioral scenarios to identify hypotheses, predictions, alternative explanations, and limits. **Core reasoning skills** covers analysis, inference, evaluation, deduction, and induction. Evolutionary explanations are treated as testable and probabilistic rather than deterministic.
 
 In this video:
 
-- One intensive day with four topics
+- Approximately 4–6 hours across eight topic areas
 - Short, Medium, and Long lesson depths
 - A section-scoped AI tutor
 - Adaptive practice
 - AI-graded homework, a course test, and a final
 - Text-based and keystroke-pattern AI-authorship detection
-- Ungraded cloud-architecture-case and general-reasoning diagnostics
+- Ungraded evolutionary-psychology-case and general-reasoning diagnostics
 
 The course is designed for adult researchers, professionals, product teams, engineers, instructors, and academic-integrity researchers.
 
@@ -33,16 +33,16 @@ The course is designed for adult researchers, professionals, product teams, engi
 0:00 Course overview
 0:08 Curriculum and topics
 0:20 AI tutor, lessons, and adaptive practice
-0:35 Cloud Architecture (AWS/Azure)
+0:35 Nano Evolutionary Psychology
 
 ---
 
 ## Hashtags
 
-#CloudArchitecture #AWS #Azure #CloudComputing #CloudSecurity #AIeducation #EdTech
+#EvolutionaryPsychology #Psychology #HumanBehavior #ScienceEducation #AIeducation #EdTech
 
 ---
 
 ## Tags
 
-cloud architecture, AWS architecture, Azure architecture, cloud computing, cloud primitives, compute, storage, networking, identity and access management, virtual machines, containers, serverless, regions, availability zones, load balancing, statelessness, redundancy, backup, cloud cost, infrastructure as code, observability, cloud security, shared responsibility, AI tutor, adaptive learning, AI grading, academic integrity
+evolutionary psychology, natural selection, adaptation, sexual selection, mating, parental investment, kin selection, inclusive fitness, cooperation, reciprocity, social cognition, status, culture, development, scientific reasoning, AI tutor, adaptive learning, AI grading, academic integrity

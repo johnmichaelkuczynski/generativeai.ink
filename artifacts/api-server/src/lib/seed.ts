@@ -14,7 +14,7 @@ import { logger } from "./logger";
 // the value stored in seed_meta; a mismatch forces a full re-seed, so content
 // edits self-heal in every environment (including a republished production)
 // without a manual database wipe.
-const SEED_CONTENT_VERSION = "2026-08-25-cloud-architecture-v1";
+const SEED_CONTENT_VERSION = "2026-08-26-nano-evolutionary-psychology-v1";
 
 type SeedTopic = {
   slug: string;
@@ -29,204 +29,186 @@ type SeedTopic = {
 
 const TOPICS: SeedTopic[] = [
   {
-    slug: "building-blocks",
-    title: "The building blocks",
+    slug: "evolutionary-foundations",
+    title: "Evolution, mating, kinship, and cooperation",
     weekNumber: 1,
     blurb:
-      "Understand cloud computing through its four primitives—compute, storage, network, and identity—and learn how provider services combine them into dependable systems.",
-    lectureTitle: "The building blocks",
-    body: `# The building blocks
+      "Build a cautious evidence-based framework for evolutionary hypotheses, then apply it to mating, kin relationships, altruism, social cognition, and cooperation.",
+    lectureTitle: "Evolution, mating, kinship, and cooperation",
+    body: `# Evolution, mating, kinship, and cooperation
 
-Cloud computing means **renting capacity instead of owning hardware**. AWS or Azure operates the physical facilities, but the customer still chooses the architecture, configures access, protects data, and pays for what runs. The ownership boundary changes; responsibility does not disappear.
+Evolutionary psychology asks whether recurrent selection pressures helped shape psychological mechanisms. It does not imply that every behavior is adaptive, fixed, universal, morally good, or explained by genes alone. Good analysis separates an **evolutionary hypothesis** from evidence and competing developmental, cultural, learning, and by-product explanations.
 
-Most cloud services are variations on four primitives: **compute, storage, network, and identity**. Compute forms a ladder from virtual machines, to containers, to serverless functions. Moving up the ladder reduces operating work but also reduces control over the runtime.
+## 1. Foundations
 
-Storage is not one interchangeable bucket. **Object storage** suits durable files and blobs, **block storage** behaves like a disk attached to a machine, and **file storage** gives several systems a shared hierarchy. Managed relational and key-value databases remove routine infrastructure work, but schema, indexing, capacity, backups, and access remain design responsibilities.
+**Natural selection** changes inherited variants when they reliably affect reproductive success. An **adaptation** is a reliably developing feature shaped by selection because of past effects; current usefulness alone is not enough. Evidence may include cross-cultural patterns, comparative data, development, design specificity, and experimental predictions. The **environment of evolutionary adaptedness (EEA)** is not one place or a claim that humans stopped evolving: it refers to statistically recurrent ancestral conditions relevant to a mechanism. **Gene-culture coevolution** recognizes feedback: cultural practices alter selection pressures, while evolved learning capacities shape which practices spread.
 
-Geography also shapes the architecture. A **region** is a geographic market; **availability zones** are isolated locations within it. A virtual private cloud or virtual network, subnets, routes, and security groups control how resources communicate. **Identity and access management** controls who or what may act. Least privilege matters because a broad permission can expose an otherwise well-written system.`,
-    bodyMedium: `# The building blocks
+## 2. Mate selection and sexual strategies
 
-## Renting changes the boundary
+**Sexual selection** concerns traits affecting mating competition or choice. **Parental investment theory** predicts that the sex investing more in offspring will often be choosier, while the other may compete more, but ecology, individual condition, sex ratios, institutions, and culture can alter or reverse average patterns. Sexual dimorphism can provide comparative clues, not a complete behavioral script. Humans can pursue short- or long-term strategies conditionally; observed sex differences are distributions with overlap, not rules for individuals.
 
-In a private data center, an organization buys servers, installs them, replaces failed hardware, and plans capacity months ahead. In AWS or Azure, it rents services on demand. The provider maintains buildings, power, cooling, and physical equipment; the customer still chooses regions, network boundaries, identities, data placement, resilience, and cost controls. Cloud architecture begins by drawing that responsibility boundary accurately.
+## 3. Kinship and altruism
 
-## Four primitives under every service
+**Inclusive fitness** includes effects on one's own reproduction and on relatives, weighted by relatedness. Hamilton's rule, **rB > C**, predicts when a costly helping allele could spread; it does not say organisms consciously calculate kinship or that all family help is genetic. **Reciprocal altruism** can evolve among non-kin when partners meet repeatedly, benefits exceed costs, and cheaters can be detected or excluded. Parent and offspring share interests but are not genetically identical, producing **parent-offspring conflict** over investment while leaving extensive scope for attachment and care.
 
-Nearly every named cloud product combines **compute, storage, network, and identity**. A managed web platform still runs compute, reads and writes storage, communicates over a network, and authorizes identities. Product names change across AWS and Azure, but these primitives make unfamiliar services easier to reason about.
+## 4. Social cognition and cooperation
 
-## Compute on a ladder
+**Theory of mind** supports inferences about others' beliefs and intentions, though its development depends on maturation and social experience. Conditional-reasoning studies, including Wason tasks framed as social contracts, have been used to argue for specialized **cheater detection**; alternative accounts invoke familiarity, pragmatics, or general reasoning, so task contrasts matter. Coalition psychology may support alliance tracking and rapid “us/them” categorization, but group boundaries are flexible and culturally supplied. Describing such tendencies neither excuses prejudice nor makes conflict inevitable.`,
+    bodyMedium: `# Evolution, mating, kinship, and cooperation
 
-A **virtual machine** gives the most operating-system control and the most patching responsibility. A **container** packages an application and its dependencies while sharing more of the host environment. A **serverless function** runs short units of code when triggered and removes server management, but introduces execution limits, cold starts, and tighter provider constraints. The right rung depends on control, portability, workload shape, and operational capacity.
+## Scientific framing
 
-## Storage and databases
+Evolutionary explanations concern why information-processing tendencies may have been selected; proximate explanations concern hormones, learning, development, and immediate goals. Both can be true. Adaptation claims should make risky predictions and be compared with by-product, drift, general-learning, and cultural explanations. Present behavior does not reveal ancestral function by itself, and “evolved” never means immutable or justified.
 
-**Object storage** is durable and scalable for media, backups, logs, and static assets, but it is not a normal mounted disk. **Block storage** is suited to low-latency disk access for one machine or database node. **File storage** supports shared file semantics across clients. Choosing the wrong type creates unnecessary cost, latency, or coordination problems.
+## 1. Foundations
 
-Managed relational databases preserve tables, joins, and transactions while the provider automates much of the underlying operation. Managed key-value systems favor predictable access patterns and horizontal scale. “Managed” does not mean “someone else's problem”: teams still own schema choices, queries, permissions, backup policy, recovery testing, and cost.
+Natural selection requires heritable variation and systematic differences in reproductive outcomes. Adaptations show evidence of functional design for recurrent past problems; exaptations were selected for another role, and by-products accompany other features. The EEA is a distribution of relevant ancestral conditions, varying by mechanism rather than a mythical single savanna. Gene-culture coevolution is illustrated by dairying: a cultural practice changed selection on adult lactose digestion, while social learning enabled the practice to persist.
 
-## Regions and availability zones
+When evaluating a claim such as “people prefer calorie-rich food because it was advantageous ancestrally,” ask for specific predictions, comparisons, developmental evidence, and alternatives. A modern preference could reflect an evolved bias, learning, current scarcity, marketing, or their interaction.
 
-A **region** determines latency, regulation, service availability, and price. Multiple **availability zones** within a region reduce exposure to a single facility failure, but only if the application and data are actually distributed across them. Copying a diagram across zones without testing failover is not resilience.
+## 2. Mate selection and sexual strategies
 
-## Network and identity boundaries
+Parental investment includes resources that increase one offspring's prospects at a cost to other reproductive opportunities. Where minimum investment differs, average choice and competition may differ, but human biparental care, cooperative breeding, ecology, autonomy, and norms complicate simple predictions. Sexual selection includes both mate choice and competition within a sex; dimorphism offers one imperfect historical clue.
 
-A virtual private cloud or virtual network defines an isolated address space. **Subnets** separate public entry points from private application and data tiers. Routes decide where traffic can go; security groups or network security groups act as stateful gates. Identity policies decide which people and workloads may perform actions. Start with no access and add only what is required: least privilege limits the blast radius of mistakes and stolen credentials.`,
-    bodyLong: `# The building blocks
+Short- and long-term strategies are conditional allocations, not personality boxes. A strong study measures actual tradeoffs, distinguishes stated preference from behavior, samples beyond affluent populations, and reports overlap and context. Evolutionary hypotheses cannot justify coercion, infidelity, or unequal institutions.
 
-## Renting instead of owning
+## 3. Kinship and altruism
 
-Cloud computing replaces capital ownership with on-demand access to someone else's infrastructure. This creates speed and elasticity: a team can provision capacity in minutes and release it when demand falls. It also changes failure and cost behavior. A forgotten resource keeps billing, a provider outage can affect many services at once, and a misconfigured permission can expose resources globally.
+Hamilton's rule rB > C is an accounting condition: helping is favored when relatedness times the recipient's benefit exceeds the helper's cost. It predicts patterns across relevant contexts, not conscious arithmetic. Kin recognition can use cues such as co-residence, maternal association, or social labels, which can misfire; adoption and friendship show that care is not reducible to genetic relatedness.
 
-The provider secures the physical data centers, networking fabric, and managed-service substrate. The customer decides what to deploy, where to deploy it, how identities are authorized, how data is encrypted, and how the application recovers. Exact boundaries vary by service: a virtual machine leaves more operating-system work to the customer than a serverless function.
+Reciprocal altruism is favored by repeated interaction, memory, partner choice, and sanctions. Reputation and indirect reciprocity broaden cooperation, but cultural institutions can transform incentives. Parent-offspring conflict predicts disagreement over timing or allocation of investment because relatedness to current and potential siblings differs; it does not predict constant hostility.
 
-## The four primitives
+## 4. Social cognition and cooperation
 
-Use four questions to decode any cloud design. **Compute:** where does code execute, for how long, and with what isolation? **Storage:** what persists, under which access and durability model? **Network:** which components can communicate, through which routes and controls? **Identity:** which human or workload may perform each action? Named services are useful implementations, but the primitive questions prevent product catalogs from replacing architecture.
+Theory of mind permits prediction from another person's false belief rather than from reality. Performance varies with language, executive demands, age, and social experience. In social-contract Wason tasks, people often detect a benefit-taker who failed to pay a cost more readily than an abstract rule violation. That pattern is consistent with specialized cheater detection, but controls for familiarity and pragmatic clarity are needed.
 
-## Compute choices and their tradeoffs
+Humans form coalitions, track loyalty, and categorize groups quickly. Minimal-group experiments show how little can trigger favoritism, while cross-cutting identities and institutions show boundaries can change. Evolutionary accounts are probabilistic hypotheses about cognition, not claims that tribalism is desirable or unavoidable.`,
+    bodyLong: `# Evolution, mating, kinship, and cooperation
 
-Virtual machines provide operating-system access, custom networking, long-running processes, and broad software compatibility. That control includes patching, image maintenance, scaling, and process supervision. Containers standardize packaging and deployment while leaving orchestration, image security, and cluster or platform choices. Serverless functions scale around events and charge for execution, but impose runtime, duration, networking, and observability constraints.
+## How to reason scientifically
 
-Consider the same checkout API built three ways. A pair of virtual machines may be cheap at steady load but require patching and manual capacity decisions. Containers make packaging repeatable and horizontal scaling easier, but introduce an orchestrator or managed container platform. Serverless functions remove idle servers and absorb bursts, yet may cost more at sustained high volume and constrain long-running work. The cheapest first month can become the hardest architecture to change.
+Evolutionary psychology links ultimate questions about selection history with proximate questions about mechanism and development. These are complementary levels, not rivals. A proposed adaptation should identify the recurrent problem, the information available, the mechanism's design features, and predictions that distinguish it from learning, culture, drift, or a by-product. Cross-cultural recurrence can support a claim but does not alone prove genetic adaptation; cultural diffusion can also recur. Likewise, variation does not refute an evolved mechanism if the hypothesis predicts conditional responses.
 
-## Storage is not one thing
+Avoid three errors. The naturalistic fallacy treats what evolved as morally right. Genetic determinism treats development as independent of environments. Just-so storytelling accepts a plausible ancestral tale without discriminating evidence. Responsible conclusions use terms such as “consistent with,” state uncertainty, and identify alternatives.
 
-Object storage addresses data by key and excels at durable blobs, backups, logs, data lakes, and static content. Block storage exposes disk-like volumes for filesystems and database engines. File storage presents shared directories and file-locking semantics. The access model must match the workload. Treating object storage like a mounted disk creates awkward rewrites; putting a large media archive on premium block volumes wastes money.
+## 1. Foundations
 
-Durability and availability are different. A service may preserve data even while an endpoint is temporarily unavailable. Lifecycle rules, replication, retention, and encryption should follow business requirements rather than defaults.
+Natural selection operates when variants are heritable and affect reproductive success in a given environment. Adaptations are products of past selection, so a feature can persist after its environment changes, and a useful current effect can be incidental. Researchers seek converging evidence: comparative patterns, cross-cultural and within-cultural variation, developmental timing, experimental responses to predicted cues, physiological or computational design, and—in some cases—genetic evidence.
 
-## Databases as a service
+The EEA means the recurring selection-relevant inputs over many generations. Different systems had different relevant environments: pathogen defense depends on contamination patterns, while social exchange depends on repeated interaction. Human evolution also continued through the Holocene. Gene-culture coevolution rejects a genes-versus-culture split: cooking, pastoralism, agriculture, and institutions altered environments; evolved imitation, teaching, and norm psychology influenced cultural transmission.
 
-Managed relational databases automate hardware replacement, patching windows, backups, and replicas while preserving SQL and transactional structure. Managed key-value databases scale around known partition and access patterns. The provider can operate the service, but it cannot choose a sound schema, prevent an unbounded query, define acceptable data loss, or decide who should read sensitive records.
+*Case:* If a food preference is strongest only after repeated advertising, that weakens a simple invariant-adaptation claim but may fit an evolved learning bias interacting with a constructed market environment. The design must compare these models rather than choosing one by label.
 
-Before selecting a database, identify consistency needs, transactions, query patterns, growth, recovery targets, and team expertise. A service is not simpler merely because provisioning takes one click.
+## 2. Mate selection and sexual strategies
 
-## Geography is architecture
+Sexual selection arises from competition for mating opportunities and mate choice. Parental investment theory predicts strategic consequences from costs that increase offspring survival while limiting alternative reproduction. Yet humans have flexible pair bonds, paternal investment, alloparents, concealed ovulation, and strong institutions. Operational sex ratio, mortality, resource control, contraception, and gender norms can reshape behavior.
 
-Regions affect user latency, data residency, disaster exposure, service availability, and cost. Availability zones provide independent power and facilities within a region. A multi-zone architecture places redundant application instances and data paths across those zones, removes single-zone dependencies, and proves failover through testing.
+Sexual dimorphism in size or ornamentation can suggest historical mating competition when interpreted comparatively, but it cannot identify one modern preference. Short-term strategies may prioritize immediate mating opportunities; long-term strategies may prioritize compatibility, investment, and reliability. Individuals can shift with age, condition, opportunity, risk, and goals. Means do not diagnose a person: distributions overlap substantially, and within-sex variation may exceed an average between-sex difference.
 
-Multi-region systems can reduce global latency or survive a regional failure, but they add replication delay, conflict handling, higher cost, and operational complexity. Use them when the recovery requirement justifies them, not because the diagram looks more advanced.
+Evidence is stronger when preregistered predictions distinguish strategies, behavior is measured rather than inferred from stereotypes, representative cultures are sampled, and alternative economic or norm-based explanations are tested. No evolutionary explanation turns a preference into entitlement or excuses harm.
 
-## Virtual networks, subnets, and gates
+## 3. Kinship and altruism
 
-A VPC in AWS or virtual network in Azure gives resources a controlled address space. Public subnets host components that must receive internet traffic, such as load balancers. Private subnets keep application and data services away from direct public reach. Route tables describe paths; gateways connect networks; security groups or network security groups allow only required flows.
+Inclusive-fitness theory explains how alleles influencing help can spread through effects on genetic relatives. In rB > C, r is relatedness, B the recipient's reproductive benefit, and C the actor's cost. The rule applies to marginal effects under specified assumptions. Psychological mechanisms need only respond to historically informative cues; they need not represent genes or calculate the inequality.
 
-A strong design can explain every permitted connection. The public load balancer may reach application instances on one port; application instances may reach the database on another; the database has no direct internet route. “Inside the network” is not sufficient authorization, so identity and encryption still apply.
+Humans use fallible cues of kinship, including early co-residence and maternal association, plus culturally defined categories. Therefore kin-directed behavior can be shaped by both evolved cue systems and institutions. Reciprocal altruism instead concerns repeated exchange among individuals who may be unrelated. Future interaction, memory, detection, punishment, apology, and partner switching can stabilize it. One-shot anonymous generosity may involve reputation, internalized norms, signaling, empathy, or experimental expectations rather than simple direct reciprocity.
 
-## Identity, access, and least privilege
+Parent-offspring conflict follows because a child is fully related to itself but usually less related to siblings, whereas a parent is similarly related to each child. Predictions concern disagreements over weaning, attention, or resource allocation—not an absence of love. Testing requires separating conflict predictions from developmental need and local ecology.
 
-Identity is the control plane for every cloud action. Human users, applications, automation, and managed services should use distinct identities with short-lived credentials where possible. Policies should grant specific actions on specific resources under specific conditions. Broad administrator permissions are convenient during setup and dangerous in operation.
+## 4. Social cognition and cooperation
 
-Many cloud breaches are permission failures rather than novel code exploits: a public storage container, an exposed access key, or a workload role that can read every secret. Least privilege, multi-factor authentication, workload identities, permission review, and audit logs reduce the likelihood and blast radius of those failures.
+Theory of mind enables reasoning about beliefs, desires, knowledge, and intentions. False-belief tasks test whether a participant predicts action from an agent's mistaken belief. Language and executive-control demands affect performance, so failure on one task is not proof that the capacity is absent.
 
-## A reusable selection method
+Wason selection tasks ask which cards must be checked to test “if P, then Q.” Performance often improves when the rule is “if you take a benefit, you must pay a cost,” and violations correspond to cheaters. This finding motivated a domain-specific social-contract account. Competing accounts emphasize familiar content, deontic reasoning, and pragmatic interpretation. Carefully matched controls—not the memorable result alone—decide between them.
 
-For each component, state the workload, required control, persistence model, communication paths, identity, geographic requirement, failure behavior, and cost shape. Then choose services. Architecture starts with constraints and evidence; provider product names come after the reasoning.`,
+Coalition mechanisms may track alliances, obligations, status, and threats. Minimal groups can elicit rapid favoritism, but categorization shifts when new alliances or superordinate goals become salient. “Tribal psychology” is therefore not a fixed map of enemies. Norms, repeated contact, cross-cutting identities, and fair institutions can widen cooperation. Scientific description must never be used to naturalize discrimination.`,
   },
   {
-    slug: "designing-for-real-use",
-    title: "Designing for real use",
+    slug: "minds-development-mismatch",
+    title: "Emotion, cognition, development, and mismatch",
     weekNumber: 1,
     blurb:
-      "Design cloud systems for traffic, failures, recovery, cost, portability, observability, and security instead of treating deployment as the finish line.",
-    lectureTitle: "Designing for real use",
-    body: `# Designing for real use
+      "Evaluate evolutionary accounts of emotion, cognitive adaptations, development, life history, pathology, mismatch, and modern supernormal stimuli.",
+    lectureTitle: "Emotion, cognition, development, and mismatch",
+    body: `# Emotion, cognition, development, and mismatch
 
-A cloud diagram becomes an architecture only when it explains how the system behaves under traffic, failure, recovery, and change. **Scaling up** gives one machine more capacity; **scaling out** adds machines. Horizontal scaling usually wins for resilience, but it requires a load balancer and application instances that do not depend on local session state.
+## 5. Emotion and motivation
 
-Designing for failure means assuming instances, zones, dependencies, and deployments will break. Redundancy keeps service available; backups preserve data; recovery objectives define how much data loss and downtime the business can tolerate. A backup that has never been restored is only a hope.
+Evolutionary hypotheses treat emotions as coordinated responses to recurrent situations, not as infallible commands. **Fear** may prioritize threat avoidance; **anger** may bargain against imposed costs; **disgust** may reduce pathogen exposure; **jealousy** may respond to relationship threats; and **status or dominance** motives may track influence and deference. Each account requires evidence because learning, appraisal, physiology, personality, and culture shape triggers and expression. **Happiness and well-being** may partly signal progress toward goals or supportive relationships, but adaptation is not designed to maximize permanent happiness.
 
-Pay-per-use makes cost a design constraint. Managed services can reduce operational work, while self-hosting can preserve control and portability; neither is automatically cheaper. **Infrastructure as code** makes the architecture reviewable and repeatable. **Logs, metrics, and traces** make behavior visible.
+## 6. Cognitive adaptations
 
-Security follows the shared responsibility model. Encrypt data, protect secrets, minimize permissions, patch what you own, and test recovery. A stateless application spread across zones can survive a traffic spike and an instance loss; a single stateful server with no tested backup may fail even when its code is correct.`,
-    bodyMedium: `# Designing for real use
+A **domain-specific** account proposes mechanisms specialized for recurring information structures; a **domain-general** account emphasizes flexible learning, memory, and executive processes. They can interact, and evidence must compare predictions. **Heuristics** are efficient shortcuts under constraints; biases can be costs of generally useful rules, artifacts of tasks, or mismatches—not proof that humans are simply irrational. Language-evolution hypotheses include adaptation for communication, exaptation, cultural evolution, and gene-culture feedback; fossils do not preserve grammar, so conclusions rely on converging but incomplete evidence.
 
-## Scale up or scale out
+## 7. Evolutionary developmental psychology
 
-**Vertical scaling** replaces a machine with a larger one. It is simple but has a ceiling and often requires interruption. **Horizontal scaling** adds interchangeable instances behind a load balancer. It improves elasticity and failure tolerance, but only when work can be distributed and instances do not hide essential state on local disks or memory.
+Selection shapes developmental systems, not finished adult traits. **Attachment** organizes proximity and exploration around caregivers; caregiver sensitivity predicts patterns, but classifications are not destinies. **Life-history theory** concerns allocation among growth, maintenance, mating, and parenting under constraints; applying it to individual psychology requires careful measurement and avoidance of simplistic “fast/slow” labels. Childhood's long duration may support learning, play, social rehearsal, and brain development. Plasticity can be adaptive while early adversity still imposes harm.
 
-## Load balancing and statelessness
+## 8. Pathology and mismatch
 
-A load balancer accepts traffic, checks instance health, and routes requests only to healthy targets. The application should keep durable state in shared services such as databases, object storage, or caches rather than on one instance. Then any request can reach any healthy instance, and failed capacity can be replaced.
+**Mismatch** occurs when a mechanism encounters conditions different from those that shaped it. Easy access to concentrated food, endless social comparison, or attention-capturing media may amplify old preferences. **Supernormal stimuli** exaggerate features that normally guide behavior, but the label does not establish addiction or pathology. Mental disorders may involve malfunction, harmful extremes of normal defenses, tradeoffs, developmental disruption, mismatch, or causes unrelated to adaptation. Clinical claims need direct evidence and must not replace diagnosis or treatment.`,
+    bodyMedium: `# Emotion, cognition, development, and mismatch
 
-## Design for failure and recovery
+## 5. Emotion and motivation
 
-Redundant instances across availability zones protect against a machine or facility failure. Backups protect against deletion, corruption, and some disasters. They solve different problems. Define a **recovery time objective** for acceptable downtime and a **recovery point objective** for acceptable data loss, then design and test against them.
+Emotions coordinate attention, memory, physiology, and action. Fear can be biased toward false alarms when missing a real threat was historically costlier; this “smoke-detector” hypothesis predicts asymmetrical errors but does not explain every anxiety disorder. Anger may communicate that another person should place greater weight on one's welfare. Disgust has pathogen, sexual, and moral usages, yet moral disgust can be metaphorical and culturally learned.
 
-## Cost, managed services, and lock-in
+Jealousy hypotheses distinguish threats to attachment, investment, and exclusivity, but average sex differences are context-sensitive and cannot identify individuals. Status can be gained through dominance (cost imposition) or prestige (freely granted deference for valued skill). Happiness may regulate pursuit and affiliation; adaptation often favors responsive motivation rather than unbroken contentment. Evidence should include behavior and physiology, not only self-report stories.
 
-Cloud bills follow resources, requests, data transfer, storage class, and reserved capacity. Architecture should expose the cost drivers before launch. Managed services reduce patching and routine operations but may cost more, restrict configuration, or create provider-specific dependencies. Self-hosting increases control and portability while moving availability, patching, scaling, and backups back to the team.
+## 6. Cognitive adaptations
 
-## Infrastructure as code and observability
+Domain specificity is a question of input, representation, and function, not an all-or-none claim that modules are isolated. Face processing and social exchange may show specialization; working memory and executive control contribute broadly. Experiments should match difficulty and familiarity before attributing performance to a special-purpose mechanism.
 
-Infrastructure as code records networks, identities, compute, and data services in reviewable files. Teams can reproduce environments, inspect changes, and roll back through normal delivery controls. Observability combines **logs** for events, **metrics** for numerical trends, and **traces** for a request's path across services. Alerts should point to user impact and a responsible owner.
+Heuristics such as availability and loss aversion can be useful in some ecologies and misleading in others. A bias label describes a pattern relative to a benchmark; it does not supply its cause. Language has biological prerequisites and culturally evolving forms. Adaptationist, exaptation, gesture-first, vocal, and cultural-evolution accounts make partially distinct predictions, but sparse historical evidence warrants calibrated confidence.
 
-## Security posture
+## 7. Evolutionary developmental psychology
 
-Encrypt data in transit and at rest, keep secrets outside source code, rotate credentials, and grant least privilege. The cloud provider secures the infrastructure it operates; the customer secures identities, configuration, applications, and data according to the service model. Shared responsibility must be mapped component by component, not treated as a slogan.`,
-    bodyLong: `# Designing for real use
+Development uses inherited systems, social input, nutrition, stress, and chance. Attachment is a dynamic regulatory system: secure-base behavior changes with caregiver availability and context. Early patterns predict outcomes only probabilistically and can change.
 
-## Begin with demand and failure, not a service catalog
+Life-history models address allocation tradeoffs across the life course. Ecological unpredictability may influence development, but human findings are mixed and confounded by deprivation, institutions, and measurement. Childhood permits protected exploration, language learning, play, and acquisition of local subsistence and social skills. Calling plasticity “adaptive” describes a possible selection history, not that adversity benefits children.
 
-A production architecture should state expected traffic, latency, availability, data durability, recovery, security, compliance, and cost constraints. Those requirements determine where redundancy is needed and which managed services are justified. “Use the cloud” is not a requirement, and a diagram without failure behavior is not yet an operating design.
+## 8. Pathology and mismatch
 
-## Scaling up versus scaling out
+Mismatch hypotheses specify an ancestral input, a changed modern input, a mechanism, and a predicted outcome. Ultra-processed foods and variable-reward notifications may act as supernormal stimuli by magnifying sweetness or social-reward cues, but controlled evidence is needed.
 
-Vertical scaling adds CPU, memory, or faster storage to one machine. It can be the correct early choice for a database or a modest application because it preserves simplicity. Its limits are maximum machine size, maintenance interruption, and a larger single failure domain.
+For disorders, alternatives include defense dysregulation, mutation load, tradeoffs, developmental injury, infection, social conditions, and mismatch. Some low mood or anxiety may have functional components without major depression or panic disorder being adaptive. Evolutionary formulation may generate research questions; it neither blames patients nor substitutes for evidence-based care.`,
+    bodyLong: `# Emotion, cognition, development, and mismatch
 
-Horizontal scaling adds multiple instances. Capacity can grow and shrink incrementally, and one instance can fail without ending the service. The application must support concurrency, distribute work, and avoid local state that only one instance can see. Scaling out wins when demand varies or availability matters, but it adds coordination and observability needs.
+## A method for evaluating claims
 
-## Load balancing and stateless application tiers
+For each claim, identify the proposed ancestral problem, cue, response, benefit, cost, and modern prediction. Then ask whether a developmental, cultural, or general-process model predicts the same result. Prefer preregistered, cross-cultural, longitudinal, clinical, and experimental evidence over retrospective stories. Mechanisms are probabilistic and context sensitive; an explanation of origins is not moral approval.
 
-A load balancer provides one entry point and routes requests across healthy targets. Health checks should verify that an instance can actually serve useful traffic, not merely that a process exists. Session data, uploads, and durable work should live in shared stores. Idempotent request handling and queue-based background work help the system tolerate retries.
+## 5. Emotion and motivation
 
-Imagine a ticket launch. A stateless web tier scales from four instances to forty while a managed queue absorbs slower confirmation work. A competitor keeps carts in local memory on two servers. When traffic shifts or one server fails, customers lose sessions. The traffic spike exposed an architecture decision, not a lack of raw CPU.
+Fear systems may learn rapidly about cues ancestrally associated with danger and tolerate false alarms. A smoke-detector model predicts that defensive thresholds depend on relative error costs. Yet modern phobias also reflect conditioning, observation, cognition, and individual vulnerability. Anger has been modeled as bargaining: it may signal that another should revise a harmful allocation. Tests should measure whether anger tracks bargaining power and welfare tradeoffs rather than assuming all aggression has one function.
 
-## Everything breaks
+Disgust can reduce contact with pathogens through cues of spoilage or contamination. Pregnancy-related changes and local disease ecology offer tests, while culture strongly calibrates targets. Moral condemnation should not automatically be treated as pathogen defense. Jealousy can motivate mate guarding or relationship repair when a valued bond is threatened. Forced-choice studies of sex differences are debated because wording, norms, and measurement alter results; distributions overlap.
 
-Instances terminate, networks partition, credentials expire, dependencies throttle, zones fail, and operators make mistakes. Design timeouts, retries with backoff, circuit breakers, queues, and graceful degradation around those facts. Retries must be bounded and safe; uncontrolled retries can turn a partial outage into a full one.
+Status is multidimensional. Dominance relies on threat, whereas prestige follows respected competence. People may monitor rank because it affected access to allies and resources, but institutions define valued skills and can limit coercion. Happiness and well-being correlate with relationships, autonomy, health, meaning, and material security. Hedonic adaptation may keep goals responsive, but it is not evidence that suffering is beneficial or unavoidable.
 
-Redundancy removes single points of failure only when dependencies are also redundant. Two application instances that share one database in one zone still depend on that zone. Failover paths need regular exercises so documentation and actual behavior do not diverge.
+## 6. Cognitive adaptations
 
-## Redundancy, backup, and recovery objectives
+Domain-specific mechanisms process restricted kinds of information or solve recurring classes of problem; domain-general systems support flexible control across tasks. Most behavior recruits both. A cheater-detection task, for example, requires reading, memory, and rule representation even if specialized social-contract computations contribute. Neural localization alone does not prove an evolved module.
 
-Redundancy keeps a service operating through component failure. Backups preserve recoverable copies after deletion or corruption. Replication can copy corruption quickly, so it does not replace backups. Define the **RTO**—how long recovery may take—and the **RPO**—how much recent data may be lost.
+Heuristics economize on time and information. Availability can track environmental frequency when memorable instances are representative, but media exposure can distort it. Loss aversion may reflect asymmetric consequences, reference-dependent valuation, or experimental framing. Researchers must specify a normative benchmark and ecological conditions before calling a response biased.
 
-These objectives drive design. A five-minute RTO may require warm standby capacity and automated failover. A 24-hour RTO may allow restoration from backups. Test restores, measure time, verify application consistency, and record whether the exercise met both objectives.
+Language depends on vocal or gestural control, social inference, learning, and structured combinatorial capacities. Hypotheses include direct selection for communication, selection on components later assembled or exapted, and cultural adaptation of languages to learnability. Comparative communication, genetics, development, typology, and archaeology each constrain the story, but none alone reconstructs language origins. Cautious synthesis is stronger than certainty.
 
-## Pay-per-use is a design constraint
+## 7. Evolutionary developmental psychology
 
-Costs arise from active compute, provisioned capacity, stored bytes, request counts, managed-service tiers, data transfer, logging, backups, and idle environments. Track unit economics such as cost per customer, request, or workload. Tag resources, set budgets, remove idle capacity, and select storage and compute based on workload shape.
+Evolution designs developmental rules that use environmental input. Attachment behavior balances caregiver proximity with exploration under perceived safety. Secure, avoidant, resistant, and disorganized classifications summarize observations; they are not fixed essences. Caregiving, temperament, stress, and culture influence expression, and later relationships can change trajectories.
 
-The lowest list price is not always the lowest total cost. A self-hosted database may look cheaper until patching, on-call work, backup testing, and downtime are included. A fully managed service may be expensive at high scale. Architecture should make the tradeoff explicit.
+Life-history theory models finite allocation to growth, somatic maintenance, learning, mating effort, and parenting. Translating species-level theory into psychological scales is controversial. Claims that harshness automatically creates a “fast strategy” risk circularity and ignore structural constraints. Strong studies measure ecology independently, follow development over time, and test mediators.
 
-## Managed services, self-hosting, and lock-in
+Extended childhood may permit large brains to mature, accumulation of local knowledge, cooperative care, play, and flexible social learning. Play can rehearse motor, social, and imaginative skills, though not every game is an adaptation. Developmental plasticity can make the best of difficult conditions without making those conditions good: a response may reduce one risk while imposing later costs.
 
-Managed services transfer routine operation to the provider and can improve reliability for a small team. They also introduce service limits, provider-specific APIs, migration work, and concentrated dependency. Self-hosting offers control and potentially easier portability, but the team owns upgrades, scaling, security hardening, availability, and recovery.
+## 8. Pathology and mismatch
 
-Evaluate lock-in by likely change, not fear alone. Standard protocols, exportable data, clear boundaries, and infrastructure as code can preserve options. Deliberately accepting provider-specific features can be rational when their operational value exceeds plausible migration cost.
+Mismatch is a testable relation, not a catch-all. Researchers should specify how current environments differ from selection-relevant distributions and show that the proposed mechanism mediates harm. Concentrated sugar can exceed ancestral sweetness cues; algorithmic feeds can deliver rapid, repeated novelty and social feedback. These may be supernormal stimuli—exaggerated cue configurations that elicit unusually strong responses—but dose, individual differences, and causal outcomes still require study.
 
-## Infrastructure as code
+Evolutionary models of mental disorder include malfunction of selected systems, extremes or dysregulation of defenses, antagonistic tradeoffs, mutation-selection balance, developmental insult, infection, social adversity, and mismatch. Fever can be a defense, yet dangerously high fever needs treatment; similarly, possible functions of ordinary anxiety do not make disabling anxiety disorders beneficial. Clinical categories involve distress and impairment, and evolutionary speculation should complement—not displace—clinical evidence.
 
-Infrastructure as code turns architecture into versioned, reviewable definitions. A change to a network rule or database tier can pass through peer review, automated validation, and deployment history. Reusable modules reduce drift across development, staging, and production.
-
-State, secrets, and provider permissions still require care. Plans should be reviewed before application; destructive changes need safeguards; emergency console changes should be reconciled back into code. The goal is reproducibility and accountability, not merely automation.
-
-## Logs, metrics, and traces
-
-Logs capture discrete events with context. Metrics summarize rates, errors, latency, saturation, and business outcomes over time. Traces follow one request across distributed services. Together they let a team move from “users report checkout is slow” to the dependency and operation consuming the latency budget.
-
-Observability should be designed with the system. Use correlation identifiers, structured logs, service-level indicators, actionable alerts, retention controls, and dashboards tied to user impact. Unlimited logging can leak sensitive data and create large bills, so collection itself needs architecture.
-
-## Security and shared responsibility
-
-Encrypt traffic and stored data, centralize secrets, rotate credentials, patch customer-managed systems, restrict public exposure, and record privileged actions. Identity policies should be specific; network controls provide another layer but do not replace authorization.
-
-The shared responsibility boundary moves with the service. On a VM, the customer patches the operating system. On a managed database, the provider patches more of the platform while the customer owns data access, configuration, schema, and application behavior. On serverless compute, the provider owns still more runtime operation, but insecure code and excessive permissions remain the customer's responsibility.
-
-## A production-readiness review
-
-Before launch, ask: Can instances be replaced without losing state? What happens when a zone or dependency fails? Are backups restorable within the stated RTO and RPO? Which resources drive cost? Can the environment be recreated from code? Do logs, metrics, and traces reveal user impact? Which security duties belong to the provider and which remain ours? A design is ready when these answers are tested, not merely documented.`,
+*Case:* A researcher finds that heavy notification use correlates with low mood and calls depression an adaptation to smartphones. The inference fails: smartphones are recent, correlation does not establish direction, and a mismatch hypothesis should identify attention or social-comparison mechanisms and test them experimentally or longitudinally. Even support for mismatch would not imply that depression itself is an adaptation.`,
   },
 ];
 
@@ -249,127 +231,127 @@ type SeedAssignment = {
 const ASSIGNMENTS: SeedAssignment[] = [
   {
     kind: "homework",
-    title: "Homework 1 — The building blocks",
+    title: "Homework 1 — Evolution, mating, kinship, and cooperation",
     weekNumber: 1,
     isTimed: false,
     timeLimitMinutes: null,
     instructions:
-      "Untimed practice covering Session 1. Explain each concrete case in 3–5 reasoned sentences. Definitions and one-word answers do not receive credit.",
+      "Untimed Session 1 practice. Enter the full best option for multiple choice; answer the short item in 1–2 sentences. Every item requires reasoning from a scenario.",
     problems: [
       {
-        topicSlug: "building-blocks",
+        topicSlug: "evolutionary-foundations",
         prompt:
-          "Northstar Media stores a growing video archive on premium block volumes attached to one virtual machine. Costs are rising, uploads stop whenever that machine is replaced, and viewers only need to fetch complete video files. Recommend a better storage design and explain why it fits the access pattern. (3–5 sentences.)",
+          "A researcher finds that people in one city prefer sweet foods and concludes, “This preference is an adaptation, so culture and learning are irrelevant.” Which response is best? A) Current usefulness proves adaptation. B) The pattern fits several hypotheses; test design specificity, development, cultures, and learning before inferring adaptation. C) Any cultural effect disproves evolution. D) The EEA was one fixed place that determines every modern choice. Enter the full option.",
         correctAnswer:
-          "Move the durable video objects to object storage because they are retrieved as whole blobs, need independent durability, and should not depend on one VM's attached disk. Serve them through controlled object access or a content-delivery layer, and keep only temporary processing space on block storage. The design lowers cost, removes the single-machine dependency, and lets compute instances be replaced or scaled independently.",
+          "B) The pattern fits several hypotheses; test design specificity, development, cultures, and learning before inferring adaptation.",
         explanation:
-          "Full credit connects whole-file access to object storage and explains the durability, cost, and compute-decoupling consequences.",
+          "A contemporary pattern does not establish an adaptation or exclude gene-culture and learning effects.",
       },
       {
-        topicSlug: "building-blocks",
+        topicSlug: "evolutionary-foundations",
         prompt:
-          "Priya deploys a payroll service on a public virtual machine whose role can read every storage bucket and secret in the account. The application needs one private database and one payroll-export bucket. Redesign its network and identity boundaries using least privilege. (3–5 sentences.)",
+          "In a fishing community, siblings share food more often than strangers, but unrelated partners also exchange food repeatedly and stop helping defectors. Explain how inclusive fitness and reciprocal altruism generate distinct predictions for this pattern. (Answer in 1–2 sentences.)",
         correctAnswer:
-          "Place the application in a private subnet behind a controlled public entry point rather than exposing the VM directly. Give its workload identity permission only to connect to the payroll database and read or write the named export bucket, while denying unrelated secrets and storage. Restrict network flows to the required ports and record access so a compromised instance has a limited blast radius.",
+          "Inclusive fitness predicts more costly help toward relatives when relatedness-weighted benefits exceed costs under Hamilton's rule. Reciprocal altruism predicts help among non-kin when interaction repeats and defectors can be detected or excluded.",
         explanation:
-          "Full credit combines private networking, restricted flows, workload identity, and resource-specific permissions instead of relying on one broad account role.",
-        hint: "Separate where traffic may flow from which cloud actions the workload may perform.",
+          "Full credit distinguishes kin-selected effects from contingent repeated exchange without implying conscious calculation.",
+        hint: "Ask what relatedness predicts separately from what repeated interaction predicts.",
       },
     ],
   },
   {
     kind: "homework",
-    title: "Homework 2 — Designing for real use",
+    title: "Homework 2 — Emotion, cognition, development, and mismatch",
     weekNumber: 1,
     isTimed: false,
     timeLimitMinutes: null,
     instructions:
-      "Untimed practice covering Session 2. Connect each observed failure to an architectural change in 3–5 reasoned sentences. Definitions and one-word answers do not receive credit.",
+      "Untimed Session 2 practice. Enter the full best option for each multiple-choice scenario.",
     problems: [
       {
-        topicSlug: "designing-for-real-use",
+        topicSlug: "minds-development-mismatch",
         prompt:
-          "Harbor Tickets runs two web servers behind a load balancer, but each server keeps customer carts in local memory. During a launch, scaled-out instances send returning customers to different servers and their carts disappear. Explain the architectural failure and redesign the state handling. (3–5 sentences.)",
+          "A child performs poorly on a verbally complex false-belief task, and a commentator concludes that the child has no theory of mind. Which evaluation is best? A) One task proves the entire capacity is absent. B) Theory of mind is only cultural. C) Compare simpler tasks and control language and executive demands before drawing that conclusion. D) False-belief performance is unrelated to development. Enter the full option.",
         correctAnswer:
-          "The web tier is not stateless, so the load balancer cannot safely route each request to any healthy instance. Move cart state to a shared durable database or managed cache with an appropriate persistence policy, and keep application instances interchangeable. Then the platform can add, replace, or remove instances without losing customer state.",
+          "C) Compare simpler tasks and control language and executive demands before drawing that conclusion.",
         explanation:
-          "Full credit identifies local state as the barrier to horizontal scaling and moves durable session data to a shared service.",
+          "Task failure can reflect language or executive load, so converging measures are needed.",
       },
       {
-        topicSlug: "designing-for-real-use",
+        topicSlug: "minds-development-mismatch",
         prompt:
-          "Mateo's team copies its production database into a second availability zone and calls disaster recovery complete, but it has never restored a backup or measured failover. The business allows at most 15 minutes of data loss and one hour of downtime. Design a testable recovery plan. (3–5 sentences.)",
+          "A social-media app supplies unpredictable likes and endless novel clips. A writer calls it a supernormal stimulus and says that label proves it causes a mental disorder. Which response is best? A) The label proves diagnosis. B) Exaggerated reward cues support a mismatch hypothesis, but causal effects, impairment, dose, and alternatives still require evidence. C) Modern stimuli cannot engage evolved systems. D) Any strong preference is a disorder. Enter the full option.",
         correctAnswer:
-          "Translate the business limits into an RPO of 15 minutes and an RTO of one hour. Use multi-zone redundancy for service continuity, maintain backups or point-in-time recovery that satisfy the RPO, and regularly restore into an isolated environment while timing the process. Test application failover and data consistency, because replication alone can copy corruption and an untested backup does not prove recovery.",
+          "B) Exaggerated reward cues support a mismatch hypothesis, but causal effects, impairment, dose, and alternatives still require evidence.",
         explanation:
-          "Full credit distinguishes redundancy from backup and ties restore and failover tests to the stated RPO and RTO.",
+          "A supernormal-stimulus label is a mechanistic hypothesis, not evidence of causation or clinical disorder by itself.",
       },
     ],
   },
   {
     kind: "test",
-    title: "Course Test — Cloud Architecture",
+    title: "Course Test — Nano Evolutionary Psychology",
     weekNumber: 1,
     isTimed: true,
     timeLimitMinutes: 15,
     instructions:
-      "Timed. 15 minutes. Covers both sessions. Analyze each concrete engineering case in 4–6 sentences. Definitions and unsupported one-line recommendations do not receive credit. Pasting is disabled; keystrokes are screened for AI use.",
+      "Timed. 15 minutes. Enter the full best option for multiple choice; answer the short item in 1–3 sentences. Pasting is disabled; keystrokes are screened for AI use.",
     problems: [
       {
-        topicSlug: "building-blocks",
+        topicSlug: "evolutionary-foundations",
         prompt:
-          "Atlas Health must place a patient portal in one cloud region. Users need a public HTTPS endpoint, but application instances and the relational database must not be directly reachable from the internet. Design the network, identity, and availability-zone layout. (4–6 sentences.)",
+          "In a society where both parents provide intensive infant care and women control substantial resources, a student predicts all men will seek only short-term mates because males always invest less. Which answer best evaluates the prediction? A) It follows inevitably from sex. B) Parental investment predicts context-sensitive average tradeoffs; biparental care, ecology, institutions, and overlapping strategies make the absolute prediction unsupported. C) Sexual selection cannot apply to humans. D) Culture erases every evolved influence. Enter the full option.",
         correctAnswer:
-          "Place a managed load balancer in public subnets and application instances in private subnets across at least two availability zones. Put the managed relational database in private data subnets with multi-zone capability and allow database traffic only from the application security group. Give the application a workload identity with only the required database and secret permissions, while administrators use separate controlled identities. Encrypt traffic and data, and avoid public addresses on application and database resources.",
+          "B) Parental investment predicts context-sensitive average tradeoffs; biparental care, ecology, institutions, and overlapping strategies make the absolute prediction unsupported.",
         explanation:
-          "Full credit connects public entry, private tiers, multi-zone placement, restricted security-group flows, workload identity, and encryption.",
+          "Parental investment generates conditional population-level hypotheses, not deterministic claims about every person.",
       },
       {
-        topicSlug: "designing-for-real-use",
+        topicSlug: "evolutionary-foundations",
         prompt:
-          "A retailer expects a flash sale to produce ten times normal traffic for two hours. Its current application runs on one large VM, writes uploaded receipts to local disk, and deploys by changing that machine manually. Redesign for the spike, replaceability, and repeatable operations. (4–6 sentences.)",
+          "Participants solve a social-contract Wason task better than an abstract task, and investigators claim a dedicated cheater-detection adaptation. Which follow-up most directly strengthens that claim? A) Repeat only the same wording. B) Compare matched familiar and deontic controls while preserving logical structure, showing a selective advantage for benefit-without-cost violations. C) Ask whether participants like cooperation. D) Treat any correct answer as proof of tribalism. Enter the full option.",
         correctAnswer:
-          "Run multiple stateless application instances or containers behind a load balancer with autoscaling based on tested demand signals. Move receipts to object storage and shared application state to managed data services so instances can be replaced without data loss. Define the network, identities, scaling rules, and services as infrastructure as code instead of manual changes. Add health checks, metrics, logs, and a rollback-capable deployment process, then load-test the architecture before the sale.",
+          "B) Compare matched familiar and deontic controls while preserving logical structure, showing a selective advantage for benefit-without-cost violations.",
         explanation:
-          "Full credit integrates horizontal scaling, statelessness, object storage, infrastructure as code, observability, testing, and rollback.",
+          "Matched controls distinguish specialized social-contract reasoning from familiarity, pragmatics, or general reasoning.",
       },
       {
-        topicSlug: "designing-for-real-use",
+        topicSlug: "minds-development-mismatch",
         prompt:
-          "A legal-document service promises recovery within two hours with no more than ten minutes of lost uploads. It has multi-zone compute but keeps one database and has nightly backups that nobody has restored. Explain the gaps and design recovery evidence that would justify the promise. (4–6 sentences.)",
+          "After growing up under unpredictable hardship, a teenager shows earlier risk-taking. Explain how to frame a life-history hypothesis without treating the outcome as inevitable or the hardship as beneficial. (Answer in 1–3 sentences.)",
         correctAnswer:
-          "The stated RTO is two hours and the RPO is ten minutes, but nightly backups cannot satisfy the RPO and multi-zone compute does not protect the single database. Add database redundancy and continuous or frequent point-in-time recovery that can meet ten minutes of data loss. Run scheduled failover and isolated restore exercises, time each step, verify document consistency, and record whether both objectives were met. Keep runbooks and observability for the recovery path, not only normal operation.",
+          "The hypothesis predicts probabilistic developmental calibration to independently measured unpredictability, but deprivation, institutions, learning, and individual differences are alternatives or moderators. Longitudinal evidence is needed, and a possibly adaptive response to danger can still carry costs and does not make hardship good.",
         explanation:
-          "Full credit maps the promise to RTO/RPO, finds the single data-tier failure, and requires measured failover and restore tests.",
+          "Full credit states a conditional hypothesis, alternatives, and the distinction between adaptive history and welfare.",
       },
     ],
   },
   {
     kind: "final",
-    title: "Final — Cloud Architecture",
+    title: "Final — Nano Evolutionary Psychology",
     weekNumber: 1,
     isTimed: true,
     timeLimitMinutes: 25,
     instructions:
-      "Timed cumulative final. 25 minutes. Analyze each end-to-end case in 5–7 sentences connecting multiple course decisions. Definitions and unsupported labels do not receive credit. Pasting is disabled; keystrokes are screened for AI use.",
+      "Timed cumulative final. 25 minutes. Enter the full best option for multiple choice; answer the short item in 1–3 sentences. Pasting is disabled; keystrokes are screened for AI use.",
     problems: [
       {
-        topicSlug: "building-blocks",
+        topicSlug: "minds-development-mismatch",
         prompt:
-          "A research publisher is moving an internal manuscript platform to AWS or Azure. It needs a public web entry point, private application and database tiers, durable document storage, controlled staff access, and continued service through one availability-zone failure. Trace a defensible architecture from the four primitives through regional placement and permissions. (5–7 sentences.)",
+          "A manager says employees who react angrily to unfair allocations, feel jealous about partners, and seek promotion are obeying fixed adaptations, so workplace rules cannot change them. Which answer is best? A) Evolved emotions compel behavior and excuse it. B) Anger, jealousy, and status hypotheses concern context-sensitive responses; appraisal, learning, norms, and institutions shape expression, and explanation does not justify conduct. C) Emotions have no evolutionary history. D) Happiness requires winning every status contest. Enter the full option.",
         correctAnswer:
-          "Use a public managed load balancer as the only internet entry point and place interchangeable application compute in private subnets across at least two availability zones. Store manuscripts in encrypted object storage and use a managed relational database in private data subnets with multi-zone resilience and tested backups. Security groups should allow only the required load-balancer-to-application and application-to-database flows. Workload identities should receive resource-specific permissions, while staff use separate roles with multi-factor authentication and least privilege. Choose the region based on user latency and data-residency requirements, record audit activity, and verify that losing one zone leaves a healthy path to compute and data.",
+          "B) Anger, jealousy, and status hypotheses concern context-sensitive responses; appraisal, learning, norms, and institutions shape expression, and explanation does not justify conduct.",
         explanation:
-          "Full credit integrates compute, storage, network, identity, geography, multi-zone design, least privilege, and recovery rather than listing services without relationships.",
+          "Evolutionary explanations are probabilistic and do not remove cultural regulation or moral responsibility.",
       },
       {
-        topicSlug: "designing-for-real-use",
+        topicSlug: "minds-development-mismatch",
         prompt:
-          "After a product launch, an online marketplace suffers timeouts, duplicate orders from retries, rapidly rising cloud costs, and an hour-long recovery after one zone fails. The environment was created manually and the team has logs but no metrics or traces. Diagnose the architectural failures and give a safe improvement plan. (5–7 sentences.)",
+          "A clinic observes anxiety after constant alert notifications and claims: “Ancestral threat detection is mismatched, therefore the patients' disorder is an adaptation and notifications are the sole cause.” Evaluate the reasoning and name evidence that would discriminate the claims. (Answer in 1–3 sentences.)",
         correctAnswer:
-          "Contain the incident by stabilizing traffic, protecting order integrity, and failing over to known-good capacity while preserving evidence. Make order operations idempotent, use bounded retries with backoff, and move slow work through queues so retries do not multiply damage. Run stateless application instances across zones behind a load balancer and remove any single-zone data dependency, with recovery designed to explicit RTO and RPO targets. Recreate the environment as reviewed infrastructure as code, add metrics for rates, errors, latency, saturation, and cost, and add traces to locate slow dependencies. Attribute spending to services and unit demand, then test autoscaling, zone failure, restore, and rollback before the next launch. Recheck least privilege, secrets, encryption, and the shared-responsibility boundary during the redesign.",
+          "Mismatch of an ordinarily useful threat system could contribute to symptoms without making the disorder itself adaptive or proving one cause. Longitudinal or experimental notification changes, dose-response evidence, mechanism measures, clinical impairment, and controls for prior anxiety and social stress would discriminate causation from correlation and alternatives.",
         explanation:
-          "Full credit integrates containment, idempotency, scaling, resilience, recovery objectives, infrastructure as code, observability, cost, and security.",
+          "Full credit separates mechanism, mismatch, disorder, and causation while proposing discriminating evidence.",
       },
     ],
   },
@@ -380,24 +362,24 @@ type SeedPrimer = Omit<SeedTopic, "bodyMedium" | "bodyLong">;
 const REASONING_PRIMERS: SeedPrimer[] = [
   {
     slug: "reasoning-primer-subject",
-    title: "How to reason about cloud-architecture cases",
+    title: "How to reason about evolutionary-psychology cases",
     weekNumber: 1,
     blurb:
-      "Diagnostic primer: applying Cloud Architecture concepts to concrete deployment and operations cases.",
-    lectureTitle: "Primer: How to reason about cloud-architecture cases",
-    body: `# How to reason about cloud-architecture cases
+      "Diagnostic primer: evaluating evolutionary-psychology hypotheses in concrete behavioral cases.",
+    lectureTitle: "Primer: How to reason about evolutionary-psychology cases",
+    body: `# How to reason about evolutionary-psychology cases
 
-This primer prepares you for the **Cloud Architecture** diagnostic. It is ungraded, fresh on every attempt, and asks you to apply the two sessions rather than recite terms.
+This primer prepares you for the **Nano Evolutionary Psychology** diagnostic. It is ungraded, fresh on every attempt, and asks you to evaluate hypotheses rather than recite terms.
 
 ## It tests application, not memorization
 
-A question gives a short scene: a public database is reachable from the internet, a workload has account-wide permissions, a load-balanced application loses local sessions, or an untested nightly backup cannot meet a ten-minute recovery point. Name the cloud-architecture idea that explains the failure and point to the scene detail that decides it.
+A question gives a short behavioral or research scene. Identify the proposed evolutionary mechanism, decide what the evidence supports, compare alternatives such as learning or culture, and point to the detail that discriminates them.
 
 ## What the questions reward
 
-- **Naming the right idea** — distinguish compute, storage, network, and identity choices; vertical and horizontal scaling; redundancy and backup; recovery objectives; cost, observability, and shared responsibility.
+- **Separating claim from evidence** — distinguish adaptation hypotheses from current usefulness, by-products, developmental calibration, culture, and mismatch.
 - **Using evidence from the scene** — point to the detail in the situation that supports your answer, rather than answering from a general impression.
-- **Choosing the right operating layer** — decide whether the remedy belongs in resource selection, network boundaries, permissions, state management, failure recovery, infrastructure as code, observability, or security.
+- **Using cautious inference** — state probabilistic conclusions, population overlap, uncertainty, and plausible competing explanations.
 
 ## How to do this activity well
 
@@ -416,19 +398,19 @@ Take it as often as you like; the questions are freshly generated every time, an
     lectureTitle: "Primer: Core reasoning skills",
     body: `# Core reasoning skills
 
-This short primer prepares you for the **General Reasoning** diagnostic — an ungraded, fresh-attempt check of five genuine reasoning skills. The skills remain domain-general, with cloud-architecture examples showing how they guide engineering judgment.
+This short primer prepares you for the **General Reasoning** diagnostic — an ungraded, fresh-attempt check of five genuine reasoning skills. The skills remain domain-general, with evolutionary-psychology examples showing how they guide scientific judgment.
 
 ## The five skills
 
-- **Analysis** separates layers and assumptions. A timeout caused by a saturated database is different from one caused by an unhealthy application instance.
-- **Inference** distinguishes what a signal proves from what it merely suggests. Rising CPU may justify investigation; by itself it does not prove horizontal scaling is the only solution.
-- **Evaluation** asks whether evidence supports a decision. A successful backup job cannot justify a recovery claim without a measured restore.
-- **Deduction** identifies architectural guarantees. If every request can reach any stateless instance and durable state is shared, replacing one instance does not erase a session.
-- **Induction** generalizes cautiously from samples. One successful failover test supports limited confidence; repeated tests under representative load support a stronger claim.
+- **Analysis** separates an evolutionary hypothesis from proximate mechanisms and moral claims.
+- **Inference** distinguishes what a cross-cultural pattern suggests from what it proves.
+- **Evaluation** asks whether matched controls discriminate adaptation from familiarity or learning.
+- **Deduction** identifies what follows from a conditional model such as Hamilton's rule once its assumptions are supplied.
+- **Induction** generalizes cautiously from samples, especially when cultures and individual distributions vary.
 
 ## A recurring trap: things that move together
 
-Most wrong answers sound plausible but outrun the evidence. Keep apart what facts show, what architecture guarantees, what you assume, and what is only possible. A multi-zone diagram suggests redundancy; a measured zone-failure exercise is stronger evidence that the system actually recovers.
+Most wrong answers sound plausible but outrun the evidence. Keep apart observations, proposed functions, developmental causes, and moral judgments. One population pattern can motivate a hypothesis; converging cross-cultural, developmental, comparative, and experimental evidence supports a stronger claim.
 
 ## How to do this activity well
 
@@ -505,7 +487,7 @@ export async function seedIfEmpty(): Promise<void> {
   const markerTopic = await db
     .select({ id: topicsTable.id })
     .from(topicsTable)
-    .where(eq(topicsTable.slug, "building-blocks"));
+    .where(eq(topicsTable.slug, "evolutionary-foundations"));
   // Read the stored content version. Tolerate the seed_meta table not yet
   // existing (e.g. a boot that races ahead of schema migration): treat that as
   // "no version recorded", which forces a reseed once the table is present.
@@ -546,7 +528,7 @@ export async function seedIfEmpty(): Promise<void> {
     const row = (existing.rows[0] ?? {}) as { n?: number };
     if ((row.n ?? 0) > 0) {
       logger.warn(
-        "Seed: stale course content detected — replacing with Cloud Architecture",
+        "Seed: stale course content detected — replacing with Nano Evolutionary Psychology",
       );
       await tx.execute(
         sql`TRUNCATE TABLE answers, attempts, practice_attempts, practice_problems, practice_sessions, problems, assignments, lectures, topics, diagnostic_responses, diagnostic_attempts, diagnostic_items, diagnostic_assessments RESTART IDENTITY CASCADE`,

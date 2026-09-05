@@ -99,13 +99,13 @@ router.post(
           explanation: string;
         }>;
       }>(
-        `You write a PRACTICE version of a Cloud Architecture (AWS/Azure) ${assignment.kind} titled "${assignment.title}". You are given the real assignment's problems as templates. Produce EXACTLY ${templates.length} NEW problems, one per template, in the same order. Each new problem must: (1) cover the SAME topic and test the SAME cloud-architecture concept as its template, (2) use a clearly DIFFERENT, specific, realistic named cloud-system scenario (never copy the template), (3) require the student to analyze evidence and justify an architectural or operational decision in a multi-sentence answer, and (4) be fully self-contained — do NOT reference "the lecture", "the text", or "the course"; state all relevant facts from the scenario in the problem. NEVER ask for a definition, abstract comparison, terminology recall, a one-word answer, or bare yes/no. For each problem also write a multi-sentence model "correctAnswer" showing the case-specific reasoning and a short "explanation" of what earns full credit. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string}, ...]} with exactly ${templates.length} items.`,
+        `You write a PRACTICE version of a Nano Evolutionary Psychology ${assignment.kind} titled "${assignment.title}". Produce EXACTLY ${templates.length} new scenario problems, one per template in order, testing the same concept with a different named behavioral, developmental, or research case. Require evidence-based reasoning, not definitions. Preserve multiple-choice format when the template has options; otherwise require only 1-3 sentences. Distinguish hypotheses from evidence, include plausible alternatives, and avoid deterministic or justificatory claims. Respond as strict JSON: {"problems": [{"prompt": string, "correctAnswer": string, "explanation": string}, ...]}.`,
         JSON.stringify({
           assignmentKind: assignment.kind,
           assignmentTitle: assignment.title,
           templates: templates.map((t, i) => ({
             number: i + 1,
-            topic: t.topicTitle ?? "cloud architecture",
+            topic: t.topicTitle ?? "evolutionary psychology",
             promptStyleExample: t.prompt,
             modelAnswerExample: t.correctAnswer,
           })),

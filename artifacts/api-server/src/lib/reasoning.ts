@@ -285,7 +285,7 @@ function deterministicFeedback(
         : " Your reasoning was solid across the items.";
     return `Thanks for working through this reasoning check.${overall?.value ? ` You scored ${overall.value}.` : ""}${weakLine} Remember that a strong answer follows only from the reasons given — distinguish what is stated, what is assumed, and what is merely plausible.`;
   }
-  return `Thanks for working through these Cloud Architecture cases.${overall?.value ? ` You scored ${overall.value}.` : ""} Strong answers identify the decisive layer from the scene; check compute, storage, network, identity, scaling, resilience, recovery, cost, observability, and security.`;
+  return `Thanks for working through these Evolutionary Psychology cases.${overall?.value ? ` You scored ${overall.value}.` : ""} Strong answers distinguish a hypothesis from evidence, identify alternatives, and avoid treating group patterns as individual destinies or evolutionary origins as moral justification.`;
 }
 
 export async function generateFeedback(
@@ -298,7 +298,7 @@ export async function generateFeedback(
     .join("\n");
   const system =
     instrument === "subject"
-      ? "You are an instructor giving warm, specific feedback on a student's Cloud Architecture reasoning check (brief realistic cloud-system cases). 2-4 sentences. Note overall performance and offer one concrete way to identify the responsible architecture layer from scene evidence. Use only the metrics provided; do not invent numbers. Plain prose, no markdown headings."
+      ? "You are an instructor giving warm, specific feedback on a student's Evolutionary Psychology reasoning check. In 2-4 sentences, note overall performance and offer one concrete way to separate evolutionary hypotheses, evidence, and alternatives. Use only the metrics provided; do not invent numbers. Plain prose, no markdown headings."
       : "You are a reasoning instructor giving warm, specific feedback on a student's general-reasoning check. 2-4 sentences. Note overall performance and the skill areas to strengthen, using only the metrics provided. Plain prose, no markdown headings.";
   const user = `Assessment: ${assessmentTitle}\nResult summary: ${summary.headline}\nMetrics:\n${metricsText}`;
   try {
@@ -412,17 +412,17 @@ async function generateSubjectVariant(
 ): Promise<GeneratedItemContent[]> {
   const spec = genSpecFor("subject", phase);
   const system =
-    "You are an assessment author writing ORIGINAL questions for a Cloud Architecture (AWS/Azure) course. " +
-    "Every question must be a brief, realistic CASE about designing or operating a cloud system that rewards REASONING from a decisive scene detail, never definition recall or a one-word fact. Keep it answerable with one sentence. " +
+    "You are an assessment author writing ORIGINAL questions for Nano Evolutionary Psychology. " +
+    "Every question must be a brief, realistic behavioral, developmental, or research CASE that rewards reasoning from decisive evidence, never definition recall. Keep it answerable with one or two sentences. " +
     "Each has exactly four answer options with one clearly best, well-supported answer. " +
     "List the CORRECT option FIRST, followed by three plausible but worse distractors (an over-simple single-cause claim, an 'obvious'/sensational answer, or an irrelevant one). " +
     "Also write a one-sentence model answer explaining why the first option is best. " +
-    "Keep the subject matter tasteful and age-appropriate — never graphic or sensational. " +
+    "Distinguish hypotheses from evidence, include plausible alternatives, and avoid deterministic or justificatory claims. Keep the subject matter tasteful and age-appropriate. " +
     `Difficulty: ${spec.level} ` +
     `Stay strictly within this scope: ${spec.topicFocus} ` +
     'Respond ONLY as JSON of the form {"items":[{"prompt":"short case ending in a question","options":["best","worse","worse","worse"],"modelAnswer":"why the first option is best"}]}.';
   const user =
-    `Write ${count} new, distinct Cloud Architecture case questions within the scope above.\n` +
+    `Write ${count} new, distinct Evolutionary Psychology case questions within the scope above.\n` +
     `For style only (do NOT copy these): ${JSON.stringify(examplePrompts)}.`;
   const out = await chatJson<{
     items?: { prompt?: unknown; options?: unknown; modelAnswer?: unknown }[];

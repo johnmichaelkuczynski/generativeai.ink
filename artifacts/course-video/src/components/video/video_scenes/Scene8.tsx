@@ -4,8 +4,8 @@ import { AppShell } from '../AppShell';
 
 export function Scene8() {
   const topicsList = [
-    { name: 'The building blocks', acc: '98%', status: 'Strong', color: 'text-[#10B981]', bg: 'bg-[#10B981]/10' },
-    { name: 'Designing for real use', acc: '85%', status: 'Proficient', color: 'text-[#10B981]', bg: 'bg-[#10B981]/10' },
+    { name: 'Evolution and adaptation', acc: '98%', status: 'Strong', color: 'text-[#10B981]', bg: 'bg-[#10B981]/10' },
+    { name: 'Cooperation and kin selection', acc: '85%', status: 'Proficient', color: 'text-[#10B981]', bg: 'bg-[#10B981]/10' },
   ];
 
   return (

@@ -22,11 +22,11 @@ router.get("/tutor/suggestions/:lectureId", async (req, res): Promise<void> => {
   }
 
   const SYSTEM_PROMPT =
-    'You are a rigorous Cloud Architecture (AWS/Azure) tutor writing study questions. Reply as strict JSON of the form {"questions": string[]} with NO other keys.';
+    'You are a rigorous Evolutionary Psychology tutor writing study questions. Reply as strict JSON of the form {"questions": string[]} with NO other keys.';
   const buildUserPrompt = (extra: string) =>
     extra +
     `From the lecture below, write 6 starter questions that make the student APPLY the lecture's ideas to a CONCRETE NAMED SCENARIO. Every question must name a person, organization, product, or deployed feature and ask the student to reason about that case.\n\n` +
-    `THE SINGLE MOST IMPORTANT RULE: every question must contain an explicit, realistic cloud-architecture situation (e.g. "Northstar Media stores durable videos on one VM's block disk", "Priya's payroll workload can read every cloud secret", "Harbor Tickets loses carts because each scaled instance keeps local state", "Mateo's untested nightly backup cannot meet a ten-minute recovery point"). The question must ask the student to analyze, explain, judge, decide, or predict something about THAT named scenario. Reuse concrete lecture cases when available; otherwise invent a vivid, specific AWS/Azure deployment case consistent with the lecture.\n\n` +
+    `THE SINGLE MOST IMPORTANT RULE: every question must contain an explicit, realistic behavioral, developmental, or research situation. It must ask the student to analyze evidence, judge an evolutionary hypothesis, compare an alternative, or predict a conditional result in THAT named scenario. Reuse concrete lecture cases when available.\n\n` +
     `ABSOLUTELY FORBIDDEN — never produce any of these:\n` +
     `- Questions that ask for a definition ("What is X?", "What does X mean?", "Define X").\n` +
     `- Questions that ask to distinguish or compare concepts in the abstract ("How do X and Y differ?", "What is the difference between X and Y?", "How does X relate to Y?").\n` +
@@ -36,10 +36,10 @@ router.get("/tutor/suggestions/:lectureId", async (req, res): Promise<void> => {
     `If a question does not name a concrete example and ask the student to reason about it, REWRITE it until it does.\n\n` +
     `GOOD vs BAD:\n` +
     `- BAD: "What's the difference between vertical and horizontal scaling?"\n` +
-    `- GOOD: "Harbor Media's input mix changes while labels are delayed; explain what Maya can conclude now and what evidence she still needs."\n` +
+    `- GOOD: "Harbor University's one-city mating-preference sample shows an average difference; explain what Maya can conclude and what evidence she still needs."\n` +
     `- BAD: "What is a security group?"\n` +
-    `- GOOD: "Northstar Bank trains on dollars but serves cents; judge which controls Priya should add before the next release."\n\n` +
-    `Cover several different major ideas from the reading across the 6 questions. One clear sentence each (roughly 18–35 words), no compound double-questions. Each must require a reasoned multi-sentence answer.\n\n` +
+    `- GOOD: "Northstar's Wason study improves with social-contract wording; judge which matched controls Priya should add."\n\n` +
+    `Cover several major ideas across the 6 questions. Require cautious framing: hypotheses are not established facts, averages do not determine individuals, and evolutionary explanations do not justify conduct. One clear sentence each, answerable in 1–3 sentences.\n\n` +
     `Return exactly 6 questions.\n\nLECTURE TITLE: ${lecture.title}\n\nLECTURE BODY:\n"""\n${lecture.body}\n"""`;
 
   // Reject abstract / definition / comparison questions so none reach the UI.
@@ -97,7 +97,7 @@ router.get("/tutor/suggestions/:lectureId", async (req, res): Promise<void> => {
     const good: string[] = [];
     const seen = new Set<string>();
     const retryNote =
-      "Your previous attempt included abstract, definition-style, or unnamed questions, which are unacceptable. EVERY question MUST name a specific person, organization, product, or deployed feature and require multi-sentence reasoning about its concrete situation. ";
+      "Your previous attempt included abstract, definition-style, or unnamed questions, which are unacceptable. EVERY question MUST name a specific person, community, study, or observed behavior and require evidence-based reasoning about its concrete situation. ";
     // Bounded refill loop: regenerate until we have 6 concrete questions.
     for (let attempt = 0; attempt < 3 && good.length < 6; attempt++) {
       const batch = (await generate(attempt === 0 ? "" : retryNote)).filter(
@@ -129,7 +129,7 @@ router.post("/tutor/ask", async (req, res): Promise<void> => {
   const { message, selectedLectureText } = parsed.data;
 
   const sys =
-    "You are an encouraging Cloud Architecture (AWS/Azure) tutor. Explain step by step with concrete production cases, grounding your guidance in compute, storage, networks, identity, regions and availability zones, scaling, failure design, recovery objectives, managed services, infrastructure as code, observability, cost, and shared responsibility as relevant. Clarify key cloud terms when they come up. Keep replies short (3-6 sentences) unless the student asks for more detail. Never just give the answer — guide them.";
+    "You are an encouraging Evolutionary Psychology tutor. Use concrete behavioral and research cases spanning adaptation and evidence, gene-culture coevolution, mating, kinship, cooperation, emotion, cognition, development, and mismatch. Distinguish hypotheses from evidence, discuss alternatives, avoid deterministic claims, and never treat evolutionary origins as moral justification. Keep replies short (3-6 sentences) unless asked for more. Never just give the answer — guide the student.";
   const user = selectedLectureText
     ? `Context from the lecture the student is reading:\n"""\n${selectedLectureText}\n"""\n\nStudent question: ${message}`
     : message;

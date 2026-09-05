@@ -1,14 +1,14 @@
-# Generative AI Integration — App Blueprint
+# Nano Evolutionary Psychology — App Blueprint
 
-A complete architectural blueprint for the Generative AI Integration one-day intensive course. This document is the single reference for what the app does, how it is wired, and the contracts between pieces. For day-to-day commands and gotchas see `replit.md`.
+A complete architectural blueprint for the Nano Evolutionary Psychology 4–6 hour course. This document is the single reference for what the app does, how it is wired, and the contracts between pieces. For day-to-day commands and gotchas see `replit.md`.
 
 ---
 
 ## 1. Product summary
 
-Generative AI Integration is a self-paced, single-user, no-login web course covering two sessions. **Models as tools** explains the model API surface: prompts and tokens, message roles, context-window budgets, sampling controls, structured output, tool calling, streaming, latency, pricing, and the responsibilities of an integration layer. **Building with generation** covers prompt contracts, retrieval-augmented generation, agents and tool-use loops, evaluation, guardrails, and deployment through an end-to-end grounded support assistant. Students read AI-rewritten lecture notes at three lengths, ask an AI tutor scoped to the section they are reading, drill on adaptive practice problems, and submit homework, a course test, and a final that are AI-graded and AI-detection-screened.
+Nano Evolutionary Psychology is a self-paced, single-user, no-login web course designed for approximately 4–6 hours of study. Its eight topic areas are **evolution by natural selection; adaptation and evolutionary inference; sexual selection and mating; parental investment and families; kin selection and inclusive fitness; cooperation and reciprocity; social cognition, status, and groups; and culture, development, and critical methods**. Throughout, evolutionary accounts are presented as testable, probabilistic hypotheses rather than deterministic explanations of individual behavior. Students read AI-rewritten lecture notes at three lengths, ask an AI tutor scoped to the section they are reading, drill on adaptive practice problems, and submit two homework sets, a course test, and a final that are AI-graded and AI-detection-screened.
 
-Two diagnostic primers accompany the sessions. The subject primer asks students to identify the concept and deciding evidence in concrete integration failures rather than defaulting to a better-prompt explanation. The general primer applies analysis, inference, evaluation, deduction, and induction to AI systems, with particular attention to what outputs prove, what architecture guarantees, and why a demonstration does not establish reliability.
+Two diagnostic primers accompany the topic areas. The subject primer asks students to identify an evolutionary hypothesis, its predictions, plausible alternatives, and evidential limits in concrete behavioral cases rather than assuming every trait is an adaptation. The general primer applies analysis, inference, evaluation, deduction, and induction in a domain-neutral format, with particular attention to what observations can support and why a pattern alone does not establish an evolutionary cause.
 
 The product surface is two deployable artifacts in one pnpm monorepo:
 

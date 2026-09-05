@@ -35,8 +35,8 @@ function isValidReasoningProblem(problem: {
   const sentenceCount = answer.split(/[.!?]+(?:\s|$)/).filter(Boolean).length;
   return (
     prompt.length >= 80 &&
-    answer.length >= 100 &&
-    sentenceCount >= 2 &&
+    answer.length >= 60 &&
+    sentenceCount >= 1 &&
     !/\b(define|what (?:is|are) .+ called|what does .+ mean|difference between)\b/i.test(
       prompt,
     )
@@ -173,9 +173,9 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
       correctAnswer: string;
       explanation: string;
     }>(
-      `You generate a single practice problem for the course Cloud Architecture (AWS/Azure). The problem MUST be on the topic "${topic.title}" and at difficulty "${difficultyLabel}" (${difficulty.toFixed(
+      `You generate a single practice problem for Nano Evolutionary Psychology. The problem MUST be on the topic "${topic.title}" and at difficulty "${difficultyLabel}" (${difficulty.toFixed(
         1,
-      )}/5). Test practical understanding of cloud architecture, not recall of any particular reading. The question MUST be fully self-contained: do NOT reference "the lecture", "the text", "the course", "the example", or "the case"; state every fact needed to reason about the situation.\n\nSTRICT QUESTION RULES (no exceptions):\n- Every question must present a SPECIFIC, realistic, NAMED cloud-system scenario (for example, Northstar Media stores durable videos on one VM's block disk; Priya's payroll workload can read every cloud secret; Harbor Tickets loses carts because each scaled instance keeps local state; Mateo's untested nightly backup cannot meet a ten-minute recovery point). Ask the student to APPLY the topic's idea to THAT scenario by diagnosing the decisive detail and recommending or predicting an architectural or operational consequence.\n- NEVER ask for a definition, an abstract comparison, a term, or what something is "called"; NEVER ask the student to recite terminology.\n- NEVER write a question whose answer is a single word, a single term, or a bare "yes"/"no". Require a reasoned 2-4 sentence answer tied to the scenario.\n- The "correctAnswer" must be a 2-4 sentence model answer showing the operational reasoning for THIS scenario. The "explanation" briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
+      )}/5). Test applied scientific reasoning, not recall. The question MUST be fully self-contained.\n\nSTRICT QUESTION RULES:\n- Present a specific named behavioral, developmental, or research scenario and ask the student to evaluate an evolutionary hypothesis against evidence and alternatives.\n- Never ask for a definition, terminology recall, or bare yes/no. Require a 1-3 sentence answer tied to the scenario.\n- Distinguish hypotheses from evidence; never imply genetic determinism, universality from an average, or moral justification from evolutionary origins.\n- The correctAnswer must be 1-3 sentences. The explanation briefly says what earns full credit.\n\nRespond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
         lastProblems.map((p) => p.prompt),
       )}.`,
       userRequest || `Generate a new ${difficultyLabel} problem on ${topic.title}.`,
@@ -185,9 +185,9 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
     }
   } catch {
     generated = {
-      prompt: `At Northstar Bank, Maya's production model behaves differently after a feature pipeline change. Apply "${topic.title}" to diagnose the decisive system detail and recommend what Maya should verify or change. Justify your answer in 2-4 sentences.`,
+      prompt: `At Northstar University, Maya observes a behavioral pattern and proposes an explanation from "${topic.title}". Identify what the observation supports and one alternative or test that would discriminate the hypothesis. Answer in 1-3 sentences.`,
       correctAnswer:
-        `A strong answer applies "${topic.title}" to the cloud-system evidence, explains what the observed detail does and does not establish, and recommends a concrete architectural control with a way to verify it. It reasons from the scenario rather than merely naming a concept.`,
+        `A strong answer applies "${topic.title}" to the evidence, explains what the observation does and does not establish, and identifies a competing explanation or discriminating test. It avoids deterministic or justificatory claims.`,
       explanation:
         "Full credit reasons about the specific situation and shows operational understanding; restating a definition does not earn credit.",
     };
@@ -278,7 +278,7 @@ router.post("/practice/sessions/:sessionId/grade", async (req, res): Promise<voi
     try {
       tutorTip = (
         await chatJson<{ tip: string }>(
-          "You are a kind, concise Cloud Architecture tutor. Given a problem, the correct answer, and the student's wrong attempt, give ONE focused next-step tip (2 sentences max). Respond as strict JSON: {\"tip\": string}.",
+          "You are a kind, concise Evolutionary Psychology tutor. Given a problem, the correct answer, and the student's wrong attempt, give ONE focused next-step tip (2 sentences max), emphasizing evidence and cautious inference. Respond as strict JSON: {\"tip\": string}.",
           JSON.stringify({
             prompt: problem.prompt,
             correctAnswer: problem.correctAnswer,

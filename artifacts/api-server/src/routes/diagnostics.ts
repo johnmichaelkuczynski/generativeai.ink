@@ -73,9 +73,9 @@ router.post(
     let answer = "";
     for (let attempt = 0; attempt < 2; attempt += 1) {
       const generated = await chatText(
-        "You are a strong student in the Cloud Architecture (AWS/Azure) course. " +
+        "You are a strong student in Nano Evolutionary Psychology. " +
           "Write a correct, specific answer to the supplied real course problem. " +
-          "Use the supplied answer key as the conceptual anchor, then develop the reasoning with concrete architecture consequences. " +
+          "Use the supplied answer key as the conceptual anchor, then develop cautious reasoning about evidence, alternatives, and implications. " +
           "Return exactly five substantial prose paragraphs, each 60-100 words, separated by one blank line. " +
           "Do not use headings, bullets, numbering, code fences, or any text before or after the five paragraphs.",
         JSON.stringify({
@@ -296,7 +296,7 @@ router.get("/diagnostics/system", async (_req, res) => {
       if (!process.env.GPTZERO_API_KEY)
         throw new Error("GPTZERO_API_KEY is not set");
       const score = await gptzeroAiScore(
-        "In conclusion, the multifaceted tapestry of cloud architecture is paramount to navigating the labyrinthine landscape of compute, storage, networking, identity, resilience, recovery, observability, and shared responsibility.",
+        "In conclusion, the multifaceted tapestry of evolutionary psychology is paramount to navigating adaptation, mating, kinship, cooperation, emotion, cognition, development, and mismatch.",
       );
       if (score == null)
         throw new Error("GPTZero returned no score (key invalid or API down)");
@@ -514,7 +514,7 @@ router.post("/diagnostics/synthetic-run", async (_req, res) => {
           correctAnswer: string;
           explanation: string;
         }>(
-          `You generate a single Cloud Architecture (AWS/Azure) practice problem on "${topic.title}" at easy difficulty. Use a specific realistic named cloud-system scenario and require a reasoned 2-4 sentence answer that applies the topic to decisive facts. Never ask for definitions, abstract comparisons, terminology recall, one-word answers, or bare yes/no. Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}.`,
+          `You generate a single Nano Evolutionary Psychology practice problem on "${topic.title}" at easy difficulty. Use a specific named behavioral or research scenario and require a reasoned 1-3 sentence answer that evaluates evidence and alternatives. Never ask for definitions or terminology recall. Avoid deterministic or justificatory claims. Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}.`,
           `New problem on ${topic.title}.`,
         );
         const [stored] = await db
@@ -563,7 +563,7 @@ router.post("/diagnostics/synthetic-run", async (_req, res) => {
   steps.push(
     await run("AI detection scan (pasted-style text should flag)", async () => {
       const r = await detect(
-        "In conclusion, the multifaceted tapestry of cloud architecture is paramount to navigating the labyrinthine landscape of compute, storage, networking, identity, resilience, recovery, observability, and shared responsibility.",
+        "In conclusion, the multifaceted tapestry of evolutionary psychology is paramount to navigating adaptation, mating, kinship, cooperation, emotion, cognition, development, and mismatch.",
         {
           keystrokeCount: 8,
           eraseCount: 0,
@@ -730,7 +730,7 @@ router.post("/diagnostics/quality-control", async (_req, res) => {
           // The course is grounded in a specific source text, whose framework and
           // terminology can differ from mainstream treatments. The check judges
           // keys against what the course actually teaches — not generic textbook
-            // cloud architecture. Homework is scoped to its own topic's lecture, but
+            // evolutionary psychology. Homework is scoped to its own topic's lecture, but
           // cumulative assessments (test/midterm/final) draw on examples from
           // across the whole unit, so they are grounded in every lecture in the
           // unit; otherwise a correct key citing a sibling topic's example
@@ -748,9 +748,9 @@ router.post("/diagnostics/quality-control", async (_req, res) => {
           // course's own lecture material, blind to the seeded key, so the
           // verdict can't just rubber-stamp the key.
           const derived = await chatText(
-            "You are a strong Cloud Architecture (AWS/Azure) student answering a scenario-based problem. " +
+            "You are a strong Evolutionary Psychology student answering a scenario-based problem. " +
               `Base your answer on ${sourceLabel} provided, using its framework and terminology rather than outside theories. ` +
-              "Answer the prompt directly with concise, multi-sentence reasoning tied to the scenario. " +
+              "Answer directly with concise reasoning tied to the scenario, preserving cautious scientific framing. " +
               "Do not restate the prompt or add commentary.\n\n=== COURSE LECTURE MATERIAL ===\n" +
               lecture,
             p.prompt,
@@ -764,7 +764,7 @@ router.post("/diagnostics/quality-control", async (_req, res) => {
             confidence: number;
             rationale: string;
           }>(
-            "You are an academic quality-control reviewer for the course Cloud Architecture (AWS/Azure). " +
+            "You are an academic quality-control reviewer for Nano Evolutionary Psychology. " +
               `You are given ${sourceLabel} the problem is drawn from, a problem prompt, the SHORT answer key the course grades students against, and an independently derived answer produced without seeing the key. ` +
               "Judge the key ONLY against what the provided course material teaches — its definitions, framework, terminology, and examples — not against outside or mainstream treatments that the course does not use. " +
               "When the provided material contains multiple lectures, an example or term taught in ANY of them counts as taught by the course; do not flag a key merely because the example appears in a different lecture than the one most associated with the prompt. " +
@@ -871,13 +871,13 @@ router.post("/diagnostics/expand-lectures", async (req, res) => {
       : "Noticeably more explanation: clarify each concept, motivate each design choice, and add a short 'why this works' note where useful.";
 
   const sys =
-    `You are a Cloud Architecture (AWS/Azure) lecturer producing the ${level.toUpperCase()} version of a lecture. ` +
+    `You are an Evolutionary Psychology lecturer producing the ${level.toUpperCase()} version of a lecture. ` +
     "You are given the SHORT version of the lecture. Rewrite it as a longer teaching version. RULES, no exceptions:\n" +
     "1. KEEP every heading and every concept from the SHORT version, in the same order, with the same names. You may add new sub-sections only when needed to introduce additional examples — but no new top-level topics.\n" +
     `2. ${moreExplanation}\n` +
     `3. ${moreExamples} Use \`## Example\` / \`### Example 1\`, \`### Example 2\` headings, with clear thought experiments and worked-through cases.\n` +
     `4. Length target: ${ratio}.\n` +
-    "5. Friendly, plain English. No filler, no hedging, no 'in conclusion'. Examples carry the load.\n" +
+    "5. Friendly, plain English. Preserve scientifically necessary caution: distinguish hypotheses and evidence and avoid deterministic or justificatory claims. No filler or 'in conclusion'.\n" +
     "6. Return ONLY the rewritten Markdown lecture body. No preface, no commentary, no code fences around the whole thing.";
 
   let updated = 0;

@@ -4,10 +4,14 @@ import { AppShell } from '../AppShell';
 
 export function Scene3() {
   const topics = [
-    "The building blocks",
-    "Designing for real use",
-    "How to reason about cloud-architecture cases",
-    "Core reasoning skills"
+    "Evolution by natural selection",
+    "Adaptation and evolutionary inference",
+    "Sexual selection and mating",
+    "Parental investment and families",
+    "Kin selection and inclusive fitness",
+    "Cooperation and reciprocity",
+    "Social cognition, status, and groups",
+    "Culture, development, and critical methods"
   ];
 
   return (
@@ -25,9 +29,9 @@ export function Scene3() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <div className="text-sm font-medium text-[#718096] mb-1">ONE-DAY INTENSIVE</div>
-            <h2 className="text-3xl font-display font-bold text-[#1A2B3D]">Cloud Architecture (AWS/Azure)</h2>
-            <p className="text-[#4A5568] mt-2">2 course topics • 2 diagnostic primers</p>
+            <div className="text-sm font-medium text-[#718096] mb-1">4–6 HOUR COURSE</div>
+            <h2 className="text-3xl font-display font-bold text-[#1A2B3D]">Nano Evolutionary Psychology</h2>
+            <p className="text-[#4A5568] mt-2">8 evolutionary psychology topic areas</p>
           </motion.div>
 
           <div className="flex-1 bg-white rounded-lg border border-[#E2E8F0] shadow-sm overflow-hidden flex flex-col relative">

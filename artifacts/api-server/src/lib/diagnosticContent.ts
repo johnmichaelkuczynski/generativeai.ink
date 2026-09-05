@@ -3,8 +3,8 @@
 //
 // Two instruments, each offered at FOUR time-points (phases) so a student can
 // gauge themselves before, during, and after the course:
-//   - subject  — Cloud Architecture reasoning. Realistic short cases about
-//     cloud systems; the best-supported answer
+//   - subject  — Evolutionary Psychology reasoning. Realistic short cases about
+//     behavioral hypotheses and evidence; the best-supported answer
 //     is keyed first.
 //   - general  — General Reasoning. Genuine reasoning items spanning analysis,
 //     inference, evaluation, deduction, and induction (NOT a "docility"/agree-
@@ -88,25 +88,25 @@ const SUBJECT_SPECS: Record<Phase, GenSpec> = {
     level:
       "Intro level: answerable by a thoughtful newcomer before lessons. Do not require technical vocabulary; reward brief plain-language reasoning from details in the scene.",
     topicFocus:
-      "Basic cloud boundaries: renting infrastructure changes who operates the hardware but not the customer's responsibility for configuration; compute, storage, network, and identity solve different problems; storage types are not interchangeable; public exposure and broad permissions create risk. Use simple cases that reward practical judgment without requiring jargon.",
+      "Basic scientific framing: adaptation is a hypothesis rather than a synonym for useful; evolutionary and proximate explanations can coexist; evolved does not mean fixed, universal, or morally justified; culture and genes can coevolve. Use accessible behavioral cases without requiring jargon.",
   },
   third: {
     level:
       "Early course level: covers Session 1 fundamentals. Keep cases brief and one-sentence-friendly.",
     topicFocus:
-      "Session 1 fundamentals: renting rather than owning; compute, storage, network, and identity primitives; virtual machines, containers, and serverless functions; object, block, and file storage; managed relational and key-value databases; regions and availability zones; VPCs or virtual networks, subnets, security groups, IAM, and least privilege.",
+      "Session 1: natural selection, adaptation evidence, gene-culture coevolution, EEA; parental investment, sexual selection and dimorphism, conditional short- and long-term strategies; inclusive fitness and Hamilton's rule, reciprocal altruism, parent-offspring conflict; theory of mind, cheater detection and Wason tasks, coalitions and flexible group boundaries.",
   },
   twothirds: {
     level:
       "Mid-course level: covers all of Session 1 and early Session 2. Use short cases requiring one clear diagnostic step.",
     topicFocus:
-      "All Session 1 concepts, including compute and storage selection, managed databases, geography, networking, and identity; plus early Session 2 concepts: scaling up versus out, load balancing, statelessness, designing for failure, redundancy, backups, RTO, and RPO.",
+      "All Session 1 concepts plus Session 2 emotion and motivation: fear, anger, disgust, jealousy, status or dominance, happiness and well-being; and cognitive adaptations: domain-specific versus domain-general accounts, heuristics and biases, and cautious language-evolution hypotheses.",
   },
   after: {
     level:
       "End-of-course level: covers both sessions. Use concise integrative cases, still answerable in one sentence.",
     topicFocus:
-      "The full course: compute, storage, network, and identity choices; regions and availability zones; horizontal scaling and statelessness; failure design, redundancy, backups, RTO, and RPO; cloud cost; managed services versus self-hosting and lock-in; infrastructure as code; logs, metrics, and traces; encryption, secrets, least privilege, and shared responsibility.",
+      "The full course, adding evolutionary developmental psychology (attachment, life-history allocation, childhood and plasticity) and pathology or mismatch (ancestral-modern mismatch, competing accounts of mental disorders, supernormal stimuli). Require cautious, probabilistic inference and alternatives.",
   },
 };
 
@@ -152,7 +152,7 @@ const FORMAT_LABEL: Record<DiagFormat, string> = {
 function instructionsFor(instrument: Instrument, format: DiagFormat): string {
   const subject =
     instrument === "subject"
-      ? "Answer each Cloud Architecture case — these reward careful reasoning from the scene, not memorized definitions"
+      ? "Answer each Evolutionary Psychology case — these reward careful reasoning from the scene, not memorized definitions"
       : "Answer each reasoning question — these measure how you think, not what you recall";
   const body =
     format === "mcq"
@@ -164,86 +164,86 @@ function instructionsFor(instrument: Instrument, format: DiagFormat): string {
 }
 
 // ===========================================================================
-// SUBJECT — Cloud Architecture blueprint cases (best answer keyed FIRST)
+// SUBJECT — Evolutionary Psychology blueprint cases (best answer keyed FIRST)
 // ===========================================================================
 
 const SUBJECT_BEFORE: DiagItem[] = [
   {
     prompt:
-      "A small company moves its application to the cloud and assumes the provider now controls who can read its data; what is the best correction?",
+      "A commentator says a behavior seen today must be an adaptation because it is currently useful; what is the best correction?",
     options: [
-      "The provider operates the underlying infrastructure, while the customer still configures identities, access, data protection, and the application",
-      "The provider automatically makes every customer permission safe",
-      "Moving to the cloud removes the need to manage credentials",
-      "Only application code matters after migration",
+      "Current usefulness is insufficient; adaptation requires evidence that past selection shaped the feature for that effect",
+      "Every useful behavior is genetically fixed",
+      "Any learned behavior cannot involve evolved capacities",
+      "A plausible ancestral story is decisive evidence",
     ],
     modelAnswer:
-      "Cloud changes the ownership boundary, but the customer still owns access configuration, application security, and data protection under shared responsibility.",
+      "Adaptation is a historical causal claim requiring discriminating evidence, not merely a label for something useful now.",
   },
   {
     prompt:
-      "A media company stores millions of complete video files on expensive disks attached to one virtual machine; which change best fits the access pattern?",
+      "A study finds an average sex difference in one dating sample, and a reporter says it determines every individual's strategy; which response is best?",
     options: [
-      "Move the durable videos to object storage and let compute instances access them independently",
-      "Buy a larger attached disk and keep the same single-machine dependency",
-      "Put every video inside a relational database row",
-      "Rename the disk so it is easier to identify",
+      "Average differences can coexist with large overlap and context-sensitive individual strategies",
+      "Every member of a sex must match its average",
+      "Culture makes all biological hypotheses impossible",
+      "One sample establishes a human universal",
     ],
     modelAnswer:
-      "Whole durable files fit object storage, which separates data durability and scale from one replaceable compute instance.",
+      "Group averages do not diagnose individuals, and strategy hypotheses should test overlap, context, ecology, and culture.",
   },
   {
     prompt:
-      "A payroll service's cloud role can read every bucket and secret even though it uses one database and one export bucket; which response best reduces the risk?",
+      "A speaker says an evolved tendency is morally right and cannot be changed by institutions; what is the strongest evaluation?",
     options: [
-      "Grant only the specific database and bucket actions the workload requires",
-      "Keep administrator access because the application is inside the cloud account",
-      "Make the role public so access failures are less likely",
-      "Use a longer role name without changing its permissions",
+      "An origin claim neither justifies conduct nor implies developmental or institutional inflexibility",
+      "Natural selection makes all outcomes ethically good",
+      "Evolved mechanisms never use environmental input",
+      "Institutions cannot alter behavior",
     ],
     modelAnswer:
-      "Least privilege limits the workload identity to required resources and actions, reducing the blast radius of misuse or compromise.",
+      "This confuses description with justification and evolution with determinism.",
   },
 ];
 
 const SUBJECT_THIRD: DiagItem[] = [
   {
     prompt:
-      "A team chooses serverless functions for a continuously running video encoder that often needs two hours and custom operating-system packages; what should be investigated first?",
+      "In a community where both parents invest heavily, a researcher predicts universal male pursuit of short-term mating; what should be investigated first?",
     options: [
-      "Whether the function's duration, runtime, and packaging limits conflict with the workload, and whether containers or VMs fit better",
-      "Whether the function can be given a more descriptive name",
-      "Whether object storage should be renamed block storage",
-      "Whether all compute options have identical control and limits",
+      "Whether ecology, biparental care, opportunity, institutions, and individual overlap support a conditional rather than universal prediction",
+      "Whether every man reports the same preference",
+      "Whether parental investment has no relevance to humans",
+      "Whether the prediction sounds natural",
     ],
     modelAnswer:
-      "The workload needs long execution and custom runtime control, so the team should compare the serverless constraints with container or VM compute.",
+      "Parental-investment predictions are conditional and population-level, so local ecology and overlapping strategies must be measured.",
     skillArea: "analysis",
   },
   {
     prompt:
-      "An application and its database are both placed in one availability zone even though the design diagram lists two zones; what follows?",
+      "Related siblings help one another, while unrelated neighbors help only when they expect future meetings; which account best fits the contrast?",
     options: [
-      "A failure of that zone can still remove both application and data service despite the diagram",
-      "Naming a second zone automatically creates redundancy",
-      "A second region is guaranteed without extra configuration",
-      "The database becomes public only because it is in one zone",
+      "Inclusive fitness may predict kin help, while reciprocal altruism predicts contingent repeated exchange among non-kin",
+      "Hamilton's rule explains only help among unrelated strangers",
+      "Reciprocity requires genetic relatedness",
+      "Both patterns prove conscious fitness calculation",
     ],
     modelAnswer:
-      "Resilience depends on where the actual resources and dependencies run, not on the number of zones shown in a diagram.",
+      "The two theories use different conditions: relatedness-weighted effects versus repeated interaction and defector control.",
     skillArea: "inference",
   },
   {
     prompt:
-      "A public web server needs to read one private bucket, but the team plans to embed an account-wide access key in its source code; which change is best?",
+      "People detect a social-contract violation more readily than an abstract Wason-rule violation; which study best tests a specialized cheater-detection account?",
     options: [
-      "Use a workload identity with short-lived, bucket-specific permissions and keep secrets out of source code",
-      "Commit the key in an encrypted-looking filename",
-      "Make every bucket public so the key is unnecessary",
-      "Give the server permanent administrator credentials",
+      "Compare logically matched familiar and deontic controls while isolating benefit-without-cost violations",
+      "Repeat the social task without controls",
+      "Ask whether participants value fairness",
+      "Assume improved performance proves tribal hostility",
     ],
     modelAnswer:
-      "A workload identity with least privilege avoids a long-lived embedded secret and restricts the server to the bucket it actually needs.",
+      "Matched controls can distinguish social-contract specialization from familiarity, pragmatics, or general reasoning.",
     skillArea: "evaluation",
   },
 ];
@@ -251,41 +251,41 @@ const SUBJECT_THIRD: DiagItem[] = [
 const SUBJECT_TWOTHIRDS: DiagItem[] = [
   {
     prompt:
-      "A load-balanced shopping site stores carts in each web server's local memory; after scaling out, customers sometimes lose carts; which conclusion is best?",
+      "News exposure makes rare dangers easy to recall, and viewers overestimate their frequency; which conclusion is best?",
     options: [
-      "The web tier is not truly stateless, so cart state should move to a shared data service",
-      "The load balancer must always send every user to the largest server",
-      "Horizontal scaling guarantees local state will be synchronized",
-      "A larger server name will preserve carts",
+      "An availability heuristic may be efficient with representative memories but biased in this media environment",
+      "The error proves humans have no useful reasoning capacities",
+      "Any memorable event is objectively common",
+      "Domain-general learning cannot interact with evolved tendencies",
     ],
     modelAnswer:
-      "Local session state makes instances non-interchangeable; shared durable state is required for reliable horizontal scaling.",
+      "The scenario supports a context-dependent heuristic account, not a claim of global irrationality.",
     skillArea: "evaluation",
   },
   {
     prompt:
-      "A database backup job reports success every night, but the business promises one-hour recovery and nobody has attempted a restore; which conclusion is strongest?",
+      "Employees defer freely to a skilled mentor but obey another manager only because of threats; what distinction best organizes the evidence?",
     options: [
-      "The recovery promise is unproven until a restore is completed and timed against the one-hour target",
-      "A successful backup job guarantees every restore will finish within one hour",
-      "Redundant web servers make database restores unnecessary",
-      "The backup filename determines the recovery time",
+      "The mentor receives prestige, while the threatening manager relies on dominance",
+      "Both relationships prove identical status mechanisms",
+      "Prestige always requires physical force",
+      "Status has no cultural inputs",
     ],
     modelAnswer:
-      "Backup creation proves a copy exists, not that the team can restore consistent data within the stated RTO.",
+      "Prestige is voluntarily granted for valued competence, whereas dominance rests on cost-imposition capacity.",
     skillArea: "inference",
   },
   {
     prompt:
-      "A service needs no more than ten minutes of data loss after a failure; what must its recovery design demonstrate?",
+      "A fear experiment shows many false alarms but few missed threats; what evidence would support a smoke-detector account?",
     options: [
-      "Backups or replication and restore procedures can recover to a point no more than ten minutes old",
-      "The application server can reboot within ten minutes",
-      "The provider advertises high durability for a different service",
-      "The team can recreate the network diagram from memory",
+      "The relative costs of missing threats exceed false alarms and thresholds shift predictably with perceived danger",
+      "Every false alarm is a disorder",
+      "Fear is unaffected by learning",
+      "Any unpleasant feeling is maladaptive",
     ],
     modelAnswer:
-      "The ten-minute requirement is an RPO and must be supported by the data-protection interval and verified recovery procedure.",
+      "Asymmetric error costs and cue-sensitive thresholds would provide discriminating support while leaving room for learning.",
     skillArea: "analysis",
   },
 ];
@@ -293,41 +293,41 @@ const SUBJECT_TWOTHIRDS: DiagItem[] = [
 const SUBJECT_AFTER: DiagItem[] = [
   {
     prompt:
-      "A team manually creates production networks and identities in the console, and nobody can reproduce or review the changes after an incident; which fix is most reliable?",
+      "A child uses a caregiver as a secure base but becomes more avoidant after caregiving changes; which conclusion is best?",
     options: [
-      "Define the infrastructure as versioned code with reviewed plans, controlled application, and recorded state",
-      "Ask one administrator to remember every click",
-      "Permit emergency console changes without reconciliation",
-      "Record only the final resource names in a document",
+      "Attachment is a developing regulatory system influenced by experience, not a fixed lifelong type",
+      "The first classification permanently determines personality",
+      "Attachment has no biological organization",
+      "Caregiving cannot alter attachment behavior",
     ],
     modelAnswer:
-      "Infrastructure as code makes the environment reproducible, reviewable, and auditable instead of depending on undocumented console actions.",
+      "The change supports probabilistic developmental plasticity rather than destiny.",
     skillArea: "evaluation",
   },
   {
     prompt:
-      "A product launch survives on two stateless web instances, but every request still depends on one database in one zone; what evidence is missing from the team's high-availability claim?",
+      "A study links unpredictable childhood hardship with adult risk-taking and calls hardship beneficial; what correction is strongest?",
     options: [
-      "A tested failure path showing the data tier remains available or recovers within the required objective when that zone fails",
-      "A screenshot showing two web-server icons",
-      "A larger web-server instance in the same zone",
-      "A guarantee that load balancing duplicates the database",
+      "Test probabilistic developmental predictions and alternatives; a possibly calibrated response can carry costs and does not make adversity good",
+      "Every exposed child must develop the same strategy",
+      "Life-history labels prove causation",
+      "Development is independent of institutions",
     ],
     modelAnswer:
-      "Redundant compute does not remove the single-zone database dependency; the availability claim needs a tested data-tier failure and recovery path.",
+      "Adaptive-history hypotheses do not imply inevitability, welfare, or moral endorsement.",
     skillArea: "inference",
   },
   {
     prompt:
-      "During an incident, the team has application logs but cannot tell whether time is spent in the web tier, queue, or database; what control is missing?",
+      "Heavy notification use correlates with anxiety, so a researcher calls the disorder an adaptation to phones; what evidence is missing?",
     options: [
-      "Correlated metrics and distributed traces that show latency and request flow across services",
-      "More unstructured log lines without request identifiers",
-      "A policy to delete old telemetry during incidents",
-      "A brighter dashboard background",
+      "Longitudinal or experimental evidence linking altered cues through a specified mismatch mechanism to impairment while controlling alternatives",
+      "A stronger ancestral story without new data",
+      "Proof that all anxiety is adaptive",
+      "A claim that correlation fixes causal direction",
     ],
     modelAnswer:
-      "Metrics reveal where latency changes and traces connect one request's path across services, filling the gap left by isolated logs.",
+      "Mismatch could contribute without making disorder adaptive; mechanism and causal direction require direct tests.",
     skillArea: "evaluation",
   },
 ];
@@ -440,7 +440,7 @@ const BASE_CONTENT: BaseContent[] = PHASE_ORDER.flatMap((phase) => {
     {
       instrument: "subject" as const,
       phase,
-      baseTitle: `Cloud Architecture Check — ${PHASE_LABEL[phase]}`,
+      baseTitle: `Evolutionary Psychology Check — ${PHASE_LABEL[phase]}`,
       items: subjectItems[phase],
     },
     {

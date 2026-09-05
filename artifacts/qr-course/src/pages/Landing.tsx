@@ -38,27 +38,43 @@ const features = [
   },
   {
     icon: BarChart3,
-    title: "One Intensive Day, 4 Topics",
-    body: "From cloud building blocks through resilient, secure architecture decisions.",
+    title: "Rigorous 4–6 Hour Foundation",
+    body: "From evolutionary foundations through status, prestige, and cognitive mechanisms.",
   },
 ];
 
 const topics = [
   {
-    session: "Topic",
-    title: "The building blocks",
+    session: "Topic 1",
+    title: "Evolutionary foundations of behavior",
   },
   {
-    session: "Topic",
-    title: "Designing for real use",
+    session: "Topic 2",
+    title: "Natural and sexual selection",
   },
   {
-    session: "Reasoning primer",
-    title: "How to reason about cloud-architecture cases",
+    session: "Topic 3",
+    title: "Mating strategies and kin selection",
   },
   {
-    session: "Reasoning primer",
-    title: "Core reasoning skills",
+    session: "Topic 4",
+    title: "Parenting and family dynamics",
+  },
+  {
+    session: "Topic 5",
+    title: "Cooperation and social exchange",
+  },
+  {
+    session: "Topic 6",
+    title: "Aggression and warfare",
+  },
+  {
+    session: "Topic 7",
+    title: "Status, prestige, and dominance",
+  },
+  {
+    session: "Topic 8",
+    title: "Evolutionary cognitive psychology",
   },
 ];
 
@@ -97,7 +113,7 @@ export default function Landing() {
             />
           </a>
           <span className="font-serif font-semibold text-lg tracking-tight">
-            Cloud Architecture (AWS/Azure)
+            Nano Evolutionary Psychology
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -122,7 +138,7 @@ export default function Landing() {
         <div className="flex-1 min-w-0">
         <section className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary leading-tight mb-8">
-            A one-day intensive course on designing reliable, secure cloud architectures with AWS and Azure.
+            A rigorous 4–6 hour foundational evolutionary psychology certification.
           </h1>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <CourseEntryButton
@@ -136,7 +152,7 @@ export default function Landing() {
               data-testid="button-download-pdf"
             >
               <Download className="w-5 h-5" />
-              Download Cloud Architecture (PDF)
+              Download Course (PDF)
             </a>
             <a
               href={txtUrl}
@@ -144,7 +160,7 @@ export default function Landing() {
               data-testid="button-download-txt"
             >
               <Download className="w-5 h-5" />
-              Cloud Architecture (TXT)
+              Course (TXT)
             </a>
           </div>
         </section>
@@ -171,7 +187,7 @@ export default function Landing() {
             Topics Covered in This Course
           </h2>
           <p className="text-center text-sm text-muted-foreground mb-6">
-            One intensive day, four topics — every lecture readable free online, or{" "}
+            Rigorous foundation, eight topics — every lecture readable free online, or{" "}
             <a href={pdfUrl} className="underline hover:text-foreground" data-testid="link-download-pdf">
               download the course as a PDF
             </a>{" "}
@@ -195,7 +211,7 @@ export default function Landing() {
       </main>
 
       <footer className="border-t border-border px-6 py-6 text-center text-sm text-muted-foreground">
-        Cloud Architecture (AWS/Azure)
+        Nano Evolutionary Psychology
       </footer>
     </div>
   );

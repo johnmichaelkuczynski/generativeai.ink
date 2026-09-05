@@ -21,9 +21,9 @@ export default function Dashboard() {
       <div className="p-8 max-w-6xl mx-auto w-full flex flex-col gap-8 min-w-0">
         <div>
           <h1 className="text-3xl font-serif font-bold text-primary mb-2">
-            {overview ? "Cloud Architecture (AWS/Azure)" : <Skeleton className="h-9 w-64" />}
+            {overview ? "Nano Evolutionary Psychology" : <Skeleton className="h-9 w-64" />}
           </h1>
-          <p className="text-muted-foreground">Welcome to your Cloud Architecture (AWS/Azure) course workspace.</p>
+          <p className="text-muted-foreground">Welcome to your Nano Evolutionary Psychology course workspace.</p>
         </div>
 
         <ReasoningCallout phase="before" />

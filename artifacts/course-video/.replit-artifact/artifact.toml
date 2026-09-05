@@ -1,6 +1,6 @@
 kind = "video"
 previewPath = "/course-video/"
-title = "Cloud Architecture (AWS/Azure) — Walkthrough"
+title = "Nano Evolutionary Psychology — Walkthrough"
 version = "1.0.0"
 id = "artifacts/course-video"
 router = "path"

@@ -15,7 +15,7 @@ interface GeneratedCase {
 }
 
 const GENERATION_SYSTEM = [
-  "You generate a test bench of candidate STUDENT answers so an administrator can audit how a Cloud Architecture grader scores them.",
+  "You generate a test bench of candidate STUDENT answers so an administrator can audit how an Evolutionary Psychology grader scores them.",
   "You are given a QUESTION and its MODEL ANSWER. Produce a wide spread of candidate answers that probe the grader.",
   "",
   "`expectedCorrect` is what a FAIR grader — one that scores ONLY on substance / on whether the student supplied what the QUESTION asks for, and that completely ignores grammar, spelling, capitalization, sentence fragments, notes, shorthand, wording, and formatting — SHOULD return for that answer.",

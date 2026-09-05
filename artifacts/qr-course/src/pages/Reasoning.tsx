@@ -21,15 +21,15 @@ const PHASE_ORDER = ["before", "third", "twothirds", "after"];
 const INSTRUMENT_ORDER: Instrument[] = ["subject", "general"];
 
 const INSTRUMENT_LABELS: Record<Instrument, string> = {
-  subject: "Cloud Architecture Cases",
+  subject: "Evolutionary Psychology Cases",
   general: "General Reasoning",
 };
 
 const INSTRUMENT_BLURBS: Record<Instrument, string> = {
   subject:
-    "Diagnose realistic cloud-system failures by naming the deciding concept and evidence.",
+    "Diagnose realistic evolutionary psychology cases by naming the deciding concept and evidence.",
   general:
-    "Apply analysis, inference, evaluation, deduction, and induction to cloud-system decisions.",
+    "Apply analysis, inference, evaluation, deduction, and induction to evolutionary psychology mechanisms.",
 };
 
 type Format = "mcq" | "hybrid" | "written";
@@ -204,7 +204,7 @@ export default function Reasoning() {
             Diagnostic Checks
           </h1>
           <p className="text-muted-foreground">
-            Two kinds of check — <strong>Cloud Architecture Cases</strong> (about the
+            Two kinds of check — <strong>Evolutionary Psychology Cases</strong> (about the
             course material) and <strong>General Reasoning</strong> — offered at
             four points in your journey: before the course, one-third through,
             two-thirds through, and after. Pick any one anytime, in the format

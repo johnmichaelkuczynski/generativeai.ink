@@ -25,7 +25,7 @@ export function Scene6() {
       <AppShell activeTab="Assignments">
         <div className="p-10 w-full h-full flex flex-col max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-display font-bold text-[#1A2B3D]">Practice: IAM Permissions</h2>
+            <h2 className="text-2xl font-display font-bold text-[#1A2B3D]">Practice: Kin Selection</h2>
             <div className="flex items-center gap-2 text-sm">
               <span className="text-[#718096]">Streak: 3</span>
               <div className="flex gap-1">
@@ -52,15 +52,15 @@ export function Scene6() {
             </AnimatePresence>
 
             <div className="text-lg text-[#1A2B3D] font-medium mb-6">
-              Explain the principle of least privilege in IAM, and give an example of how it limits blast radius.
+              In what conditions might helping a relative increase inclusive fitness? Explain the relevant factors.
             </div>
 
             <div className="border border-[#1A2B3D] rounded-md p-4 mb-4 min-h-[150px] relative bg-[#FDFCFB]">
               <div className="font-mono text-[#1A2B3D]">
                 {phase >= 1 ? (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                    Least Privilege: Grant only the exact permissions needed.<br/>
-                    Example: A VM only allowed to read a specific S3 bucket.
+                    Kin selection may favor costly helping when relatedness and the recipient's benefit<br/>
+                    are sufficiently large relative to the helper's cost; context still matters.
                   </motion.div>
                 ) : (
                   <span className="text-[#718096] opacity-50">Type your answer here...</span>

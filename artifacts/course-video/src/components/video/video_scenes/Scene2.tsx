@@ -24,7 +24,7 @@ export function Scene2() {
 
           <div className="grid grid-cols-3 gap-6 mb-8">
             {[
-              { label: 'Assignments', val: '2/14', sub: 'Day 1 in progress' },
+              { label: 'Assignments', val: '2/14', sub: 'Course in progress' },
               { label: 'Practice Problems', val: '124', sub: '92% accuracy' },
               { label: 'Current Streak', val: '5 Days', sub: 'Keep it up!' }
             ].map((kpi, i) => (
@@ -49,10 +49,10 @@ export function Scene2() {
               transition={{ delay: 0.7 }}
               className="flex-1 bg-white p-6 rounded-lg border border-[#E2E8F0] shadow-sm flex flex-col"
             >
-              <h3 className="font-display font-bold text-lg mb-4">Current Day</h3>
+              <h3 className="font-display font-bold text-lg mb-4">Current Course</h3>
               <div className="bg-[#1A2B3D] text-white p-6 rounded-md mb-4">
-                <div className="text-xs font-mono mb-2 opacity-80">DAY 1</div>
-                <div className="text-xl font-display font-bold">Cloud Architecture</div>
+                <div className="text-xs font-mono mb-2 opacity-80">4–6 HOURS</div>
+                <div className="text-xl font-display font-bold">Nano Evolutionary Psychology</div>
                 <div className="mt-6 flex justify-between items-end">
                   <div className="w-2/3">
                     <div className="h-2 bg-white/20 rounded-full overflow-hidden">
@@ -76,7 +76,7 @@ export function Scene2() {
                   <div key={i} className="flex gap-3 items-start">
                     <div className="w-2 h-2 rounded-full bg-[#10B981] mt-1.5" />
                     <div>
-                      <div className="text-sm font-medium text-[#1A2B3D]">Practice: IAM Permissions</div>
+                      <div className="text-sm font-medium text-[#1A2B3D]">Practice: Kin Selection</div>
                       <div className="text-xs text-[#718096]">Score: 10/10 • 2h ago</div>
                     </div>
                   </div>

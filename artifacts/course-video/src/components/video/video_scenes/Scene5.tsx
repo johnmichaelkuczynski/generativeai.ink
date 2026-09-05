@@ -4,8 +4,8 @@ import { AppShell } from '../AppShell';
 
 export function Scene5() {
   const [phase, setPhase] = useState(0);
-  const question = "Why should we use managed database services instead of hosting our own?";
-  const answer = "Because of the shared responsibility model. A managed database handles backups, patching, and failover, so you focus on the schema rather than the infrastructure.";
+  const question = "What evidence would support an adaptation hypothesis?";
+  const answer = "A useful test derives specific predictions and compares them with alternatives. Converging evidence may support the hypothesis, but it does not show that a behavior is inevitable or universal.";
   const [typedQ, setTypedQ] = useState("");
   const [typedA, setTypedA] = useState("");
 

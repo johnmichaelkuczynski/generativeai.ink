@@ -19,7 +19,7 @@ export function AppShell({ children, activeTab = 'Dashboard' }: { children: Reac
           <div className="w-8 h-8 rounded-md bg-[#1A2B3D] flex items-center justify-center">
             <Search className="w-5 h-5 text-white" />
           </div>
-          <span className="font-display font-bold text-lg">Cloud Architecture</span>
+          <span className="font-display font-bold text-lg">Nano Evolutionary Psychology</span>
         </div>
         
         <nav className="flex flex-col gap-2 flex-1">
