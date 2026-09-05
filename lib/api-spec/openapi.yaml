@@ -44,7 +44,7 @@ paths:
     post:
       operationId: generateLongAnswerDiagnostic
       tags: [diagnostics]
-      summary: Generate a substantial five-paragraph answer for a real course problem
+      summary: Generate an answer of no more than one paragraph for a real course problem
       responses:
         "200":
           description: Generated

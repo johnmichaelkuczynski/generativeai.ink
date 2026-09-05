@@ -56,7 +56,7 @@ function answerHash(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
 }
 
-// ---------- Diagnostic 4: visible long-answer HTTP + persistence proof ----------
+// ---------- Diagnostic 4: visible single-paragraph HTTP + persistence proof ----------
 router.post(
   "/diagnostics/long-answer/generate",
   async (_req, res): Promise<void> => {
@@ -75,9 +75,9 @@ router.post(
       const generated = await chatText(
         "You are a strong student in Nano Evolutionary Psychology. " +
           "Write a correct, specific answer to the supplied real course problem. " +
-          "Use the supplied answer key as the conceptual anchor, then develop cautious reasoning about evidence, alternatives, and implications. " +
-          "Return exactly five substantial prose paragraphs, each 60-100 words, separated by one blank line. " +
-          "Do not use headings, bullets, numbering, code fences, or any text before or after the five paragraphs.",
+          "Use the supplied answer key as the conceptual anchor and give cautious reasoning about evidence and alternatives. " +
+          "Return a non-empty answer of no more than one prose paragraph, preferably 50-90 words in one or two sentences. " +
+          "Do not use headings, bullets, numbering, code fences, blank lines, or any text before or after the paragraph.",
         JSON.stringify({
           problem: problem.prompt,
           answerKey: problem.correctAnswer,
@@ -85,8 +85,10 @@ router.post(
       );
       const paragraphs = answerParagraphs(generated);
       if (
-        paragraphs.length === 5 &&
-        paragraphs.every((paragraph) => paragraph.length >= 180)
+        paragraphs.length > 0 &&
+        paragraphs.length <= 1 &&
+        paragraphs[0]!.length >= 100 &&
+        paragraphs[0]!.length <= 900
       ) {
         answer = paragraphs.join("\n\n");
         break;
@@ -96,7 +98,7 @@ router.post(
     if (!answer) {
       res.status(502).json({
         error:
-          "The generator did not return exactly five substantial paragraphs after two attempts.",
+          "The generator did not return a valid answer within the one-paragraph maximum after two attempts.",
       });
       return;
     }

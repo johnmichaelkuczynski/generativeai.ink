@@ -17,7 +17,7 @@ export const HealthCheckResponse = zod.object({
 
 
 /**
- * @summary Generate a substantial five-paragraph answer for a real course problem
+ * @summary Generate an answer of no more than one paragraph for a real course problem
  */
 export const GenerateLongAnswerDiagnosticResponse = zod.object({
   "problemId": zod.number(),

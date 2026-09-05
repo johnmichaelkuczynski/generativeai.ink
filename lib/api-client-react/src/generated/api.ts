@@ -163,7 +163,7 @@ export const getGenerateLongAnswerDiagnosticUrl = () => {
 }
 
 /**
- * @summary Generate a substantial five-paragraph answer for a real course problem
+ * @summary Generate an answer of no more than one paragraph for a real course problem
  */
 export const generateLongAnswerDiagnostic = async ( options?: RequestInit): Promise<LongAnswerDiagnosticGenerated> => {
 
@@ -211,7 +211,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type GenerateLongAnswerDiagnosticMutationError = ErrorType<unknown>
 
     /**
- * @summary Generate a substantial five-paragraph answer for a real course problem
+ * @summary Generate an answer of no more than one paragraph for a real course problem
  */
 export const useGenerateLongAnswerDiagnostic = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generateLongAnswerDiagnostic>>, TError,void, TContext>, request?: SecondParameter<typeof customFetch>}

@@ -215,7 +215,7 @@ export default function Diagnostics() {
         ? "Writing on screen…"
         : liveStage === "grading"
           ? "Persisting and grading…"
-          : "Run five-paragraph proof";
+          : "Run one-paragraph-maximum proof";
 
   return (
     <Layout>
@@ -316,11 +316,11 @@ export default function Diagnostics() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 className="font-serif text-xl flex items-center gap-2">
-                <FileCheck2 className="w-5 h-5" /> Diagnostic 4 — Five-paragraph
-                answer proof
+                <FileCheck2 className="w-5 h-5" /> Diagnostic 4 — One-paragraph
+                maximum answer proof
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
-                Generates a substantial five-paragraph answer for a real course
+                Generates a course-length answer of no more than one paragraph for a real course
                 problem, visibly writes the complete text below, sends that exact
                 text through HTTP, persists and reads it back from the answers
                 table, then grades the persisted text with the real course grader.
@@ -337,7 +337,7 @@ export default function Diagnostics() {
               ) : (
                 <PlayCircle className="w-4 h-4" />
               )}
-              {liveBusy ? liveButtonLabel : "Run five-paragraph proof"}
+              {liveBusy ? liveButtonLabel : "Run one-paragraph-maximum proof"}
             </button>
           </div>
 

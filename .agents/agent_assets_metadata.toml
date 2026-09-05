@@ -47,3 +47,17 @@ mtime_ms = 1788627591132
 storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/b6fc99dc-6dbd-4afc-9638-ee766c1a914e/065a9bf0-9279-49fd-84ff-1616cc9c8235"
 storage_version_token = "1788627609430788"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "w1AIIj2qp6pJCNJ8WWwHm"
+uri = "file://screenshots/nano-evolutionary-psychology-diagnostic-one-paragraph.jpg"
+type = "image"
+title = "Corrected one-paragraph diagnostic"
+description = "Verified diagnostics page with the obsolete five-paragraph requirement removed."
+logical_id = "dcdc8a06-2840-438a-a8b5-5968d51b043b"
+content_hash = "sha256:c2d939706abc263481fedcfb3f040a79ff0b7caf5bbe8475d2693c1c8852340a"
+size = 127732
+mtime_ms = 1788628203011
+storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/dcdc8a06-2840-438a-a8b5-5968d51b043b/a4d166c9-3999-438f-ba85-d02a58edb5a4"
+storage_version_token = "1788628220990811"
+content_type = "image/jpeg"

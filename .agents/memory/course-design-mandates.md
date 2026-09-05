@@ -31,3 +31,10 @@ single-word concept-ID questions and was the one place that violated this.
 **How to apply:** Any new question-generation prompt must forbid definitions/one-word
 answers and demand a concrete case + reasoned answer. The semantic `gradeAnswer` grader
 already handles reasoned answers, so longer answers are safe to grade.
+
+## Answer-length diagnostics must match the active course
+Operator and synthetic diagnostics are part of the course format, not exempt test fixtures. If the course caps answers at one paragraph, no diagnostic may generate, require, or advertise a multi-paragraph proof.
+
+**Why:** A retained five-paragraph diagnostic contradicted a one-paragraph course mandate and failed because the model correctly resisted the obsolete format.
+
+**How to apply:** Sweep diagnostic API prompts, validators, OpenAPI summaries, and visible labels whenever answer-length rules change; verify generation, exact persistence, grading, and cleanup with a real request.
