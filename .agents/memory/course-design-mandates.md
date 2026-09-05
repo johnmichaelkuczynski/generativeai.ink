@@ -36,13 +36,16 @@ already handles reasoned answers, so longer answers are safe to grade.
 ## Multiple-choice questions use selection controls
 Multiple-choice questions must display their options as radio-style selections. Never
 show a freeform text box or tell a learner to copy, paste, type, or "enter the full
-option."
+option." Never run GPTZero or any other authorship detector on a multiple-choice
+selection.
 
 **Why:** Requiring transcription makes a familiar question format idiosyncratic and
-creates unnecessary confusion about how the learner should respond.
+creates unnecessary confusion; detector scoring is categorically invalid because the
+selected text was supplied by the course rather than authored by the learner.
 **How to apply:** Keep the scenario and options visually separate, save the selected
-option in the answer snapshot, and preserve text inputs only for genuinely freeform
-questions. Apply the same behavior to graded and practice versions.
+option in the answer snapshot, exclude it from detection results, clear any detector
+fields, and preserve text inputs/detection only for genuinely freeform questions.
+Apply the same behavior to graded and practice versions.
 
 ## Practice answers follow the exact format mix and are graded one at a time
 Across each rolling 50-question bank: 60% are multiple choice, 30% require exactly

@@ -22,6 +22,10 @@ import { detect } from "../lib/detection";
 
 const router: IRouter = Router();
 
+function isMultipleChoicePrompt(prompt: string): boolean {
+  return /\bA\).+\bB\).+\bC\).+\bD\)/s.test(prompt);
+}
+
 type AnswerSnapshot = {
   problemId: number;
   answer: string;
@@ -365,6 +369,7 @@ router.post("/assignments/attempts/:attemptId/submit", async (req, res): Promise
   for (const p of problems) {
     const a = byProblem.get(p.id);
     const userAnswer = a?.answer ?? "";
+    const multipleChoice = isMultipleChoicePrompt(p.prompt);
     const graded = await gradeAnswer({
       prompt: p.prompt,
       correctAnswer: p.correctAnswer,
@@ -379,7 +384,12 @@ router.post("/assignments/attempts/:attemptId/submit", async (req, res): Promise
       explanation: graded.explanation || p.explanation,
     });
 
-    if (a && userAnswer.trim().length > 0 && !skipDetection) {
+    if (
+      a &&
+      userAnswer.trim().length > 0 &&
+      !skipDetection &&
+      !multipleChoice
+    ) {
       const det = await detect(userAnswer, {
         keystrokeCount: a.keystrokeCount,
         eraseCount: a.eraseCount,
@@ -403,7 +413,18 @@ router.post("/assignments/attempts/:attemptId/submit", async (req, res): Promise
     } else if (a) {
       await db
         .update(answersTable)
-        .set({ correct: graded.correct })
+        .set({
+          correct: graded.correct,
+          ...(multipleChoice
+            ? {
+                aiScore: null,
+                aiFlagged: null,
+                diachronicScore: null,
+                diachronicFlagged: null,
+                detectionRationale: null,
+              }
+            : {}),
+        })
         .where(eq(answersTable.id, a.id));
     }
   }
