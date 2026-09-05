@@ -61,3 +61,9 @@ Operator and synthetic diagnostics are part of the course format, not exempt tes
 **Why:** A retained five-paragraph diagnostic contradicted a one-paragraph course mandate and failed because the model correctly resisted the obsolete format.
 
 **How to apply:** Sweep diagnostic API prompts, validators, OpenAPI summaries, and visible labels whenever answer-length rules change; verify generation, exact persistence, grading, and cleanup with a real request.
+
+## Lectures open with highlights and lead directly to coursework
+Every lecture must offer a concise bullet-point Highlights preset immediately left of Short, and Highlights is the default reading view. Every lecture must also link directly to its related assignments.
+
+**Why:** Most learners, including the owner, want the essential points without reading the full lecture before beginning applicable work.
+**How to apply:** Preserve Short, Medium, Long, and custom versions; derive a scannable Highlights view from the short lecture and keep assignment links visible below the reading.

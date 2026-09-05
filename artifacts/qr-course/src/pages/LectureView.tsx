@@ -26,6 +26,36 @@ import { ArrowLeft, ArrowRight, MessageSquare, Sparkles, Send, X, RefreshCw, Che
 
 type ChatMsg = { role: "user" | "tutor"; text: string };
 
+function buildHighlightsMarkdown(body: string): string {
+  const sections = body
+    .split(/\n(?=##\s+)/)
+    .map((section) => section.trim())
+    .filter(Boolean);
+  const bullets: string[] = [];
+
+  for (const section of sections) {
+    const lines = section.split("\n");
+    const heading =
+      lines.find((line) => /^##\s+/.test(line))?.replace(/^##\s+/, "").trim() ??
+      "Core idea";
+    const prose = lines
+      .filter((line) => !/^#{1,6}\s+/.test(line))
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+    const sentences =
+      prose.match(/[^.!?]+[.!?]+(?:\s|$)/g)?.map((sentence) => sentence.trim()) ??
+      (prose ? [prose] : []);
+    for (const sentence of sentences.slice(0, 2)) {
+      bullets.push(`- **${heading}:** ${sentence}`);
+      if (bullets.length >= 12) break;
+    }
+    if (bullets.length >= 12) break;
+  }
+
+  return `# Highlights\n\n${bullets.join("\n")}`;
+}
+
 export default function LectureView() {
   const params = useParams();
   const lectureId = Number(params.lectureId);
@@ -70,7 +100,9 @@ export default function LectureView() {
   }, []);
 
   const [tab, setTab] = useState<"tutor" | "practice">("tutor");
-  const [level, setLevel] = useState<"short" | "medium" | "long" | "custom">("short");
+  const [level, setLevel] = useState<
+    "highlights" | "short" | "medium" | "long" | "custom"
+  >("highlights");
   const qc = useQueryClient();
   const [generating, setGenerating] = useState<"medium" | "long" | null>(null);
   const [genError, setGenError] = useState<string | null>(null);
@@ -88,7 +120,7 @@ export default function LectureView() {
   const [examplesError, setExamplesError] = useState<string | null>(null);
   // The base length the examples toggle applies to (custom has no examples mode).
   const examplesLevel: "short" | "medium" | "long" | null =
-    level === "custom" ? null : level;
+    level === "custom" || level === "highlights" ? null : level;
   const examplesField =
     examplesLevel === "long"
       ? "bodyLongExamples"
@@ -153,7 +185,10 @@ export default function LectureView() {
     try {
       await rewrite.mutateAsync({
         lectureId: lecture.id,
-        data: { instruction, baseLevel: level },
+        data: {
+          instruction,
+          baseLevel: level === "highlights" ? "short" : level,
+        },
       });
       await qc.invalidateQueries();
       setLevel("custom");
@@ -180,7 +215,9 @@ export default function LectureView() {
   }
 
   const availableLevels = useMemo(() => {
-    const out: Array<"short" | "medium" | "long" | "custom"> = ["short"];
+    const out: Array<
+      "highlights" | "short" | "medium" | "long" | "custom"
+    > = ["highlights", "short"];
     if (lecture?.bodyMedium) out.push("medium");
     if (lecture?.bodyLong) out.push("long");
     if (lecture?.bodyCustom) out.push("custom");
@@ -225,7 +262,9 @@ export default function LectureView() {
   }, [level]);
 
   const baseBody =
-    level === "custom" && lecture?.bodyCustom
+    level === "highlights"
+      ? buildHighlightsMarkdown(lecture?.body ?? "")
+      : level === "custom" && lecture?.bodyCustom
       ? lecture.bodyCustom
       : level === "long" && lecture?.bodyLong
         ? lecture.bodyLong
@@ -272,7 +311,7 @@ export default function LectureView() {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="inline-flex rounded-md border border-border overflow-hidden text-xs">
-                      {(["short", "medium", "long", "custom"] as const).map((lvl) => {
+                      {(["highlights", "short", "medium", "long", "custom"] as const).map((lvl) => {
                         // The custom pill only exists once a rewrite has been made.
                         if (lvl === "custom" && !lecture.bodyCustom) return null;
                         const enabled = availableLevels.includes(lvl);
@@ -305,7 +344,7 @@ export default function LectureView() {
                                 : enabled
                                   ? "bg-background hover:bg-secondary text-foreground"
                                   : "bg-background hover:bg-secondary text-muted-foreground"
-                            }`}
+                            } border-r border-border last:border-r-0`}
                             data-testid={`button-level-${lvl}`}
                           >
                             {isGenerating ? (
@@ -528,6 +567,39 @@ export default function LectureView() {
                   Tip: highlight any passage above to ask the tutor about it, or to generate practice problems specifically on what you selected.
                 </div>
               </div>
+
+              {!!week?.assignments.length && (
+                <section
+                  className="mt-6 rounded-lg border border-primary/30 bg-primary/5 p-4"
+                  data-testid="section-related-assignments"
+                >
+                  <h2 className="font-serif text-lg font-bold text-primary">
+                    Related assignments
+                  </h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Go straight from this lecture to the course work that applies it.
+                  </p>
+                  <div className="mt-3 flex flex-col gap-2">
+                    {week.assignments.map((assignment) => (
+                      <Link
+                        key={assignment.id}
+                        href={`/assignments/${assignment.id}`}
+                        data-testid={`link-related-assignment-${assignment.id}`}
+                      >
+                        <div className="flex items-center justify-between gap-3 rounded-md border border-border bg-background px-3 py-2 text-sm transition-colors hover:border-primary/60 hover:bg-secondary">
+                          <span>
+                            <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                              {assignment.kind}
+                            </span>
+                            {assignment.title}
+                          </span>
+                          <ArrowRight className="h-4 w-4 shrink-0 text-primary" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {(prevLecture || nextLecture) && (
                 <nav className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
