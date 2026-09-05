@@ -1,17 +1,19 @@
 ---
 name: Stripe live-mode boundary
-description: Why a live Price ID cannot be verified through the development Stripe connector.
+description: Live-only checkout and webhook requirements for this course.
 ---
 
-Never replace the configured live Stripe Price ID with a sandbox price merely to
-make development checkout work. Checkout must verify that the price is live,
-active, recurring, and monthly before creating a session.
+Never replace the configured live Stripe Price ID with a sandbox price. Checkout
+must verify that the price is live, active, recurring, and monthly before creating
+a session. Use the securely configured live Stripe key when the Replit connector
+cannot access the production account, and verify webhook signatures before
+processing purchase events.
 
-**Why:** Replit's development Stripe connection is sandbox-only and cannot see a
-live Price ID. Production live payments require Replit Integrated Payments from
-the Stripe Marketplace; development returning “No such price” for a live ID is an
-environment boundary, not evidence that the live ID should be replaced.
+**Why:** The deployed connector could not retrieve the configured live price. The
+owner supplied production credentials through Replit Secrets; direct live price
+retrieval, live Checkout Session creation, and signed webhook processing were then
+verified successfully.
 
-**How to apply:** Keep the live ID configured. Fail clearly without opening
-checkout when the connector cannot confirm live mode. Validate in production only
-after Integrated Payments is attached to the live Stripe account.
+**How to apply:** Keep all credentials in Replit Secrets. Prefer the direct live
+client when configured, reject non-live prices, process only signature-verified
+webhooks, and never print or persist credentials in code or logs.
