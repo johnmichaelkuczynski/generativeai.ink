@@ -1,4 +1,5 @@
 import { ReplitConnectors } from "@replit/connectors-sdk";
+import Stripe from "stripe";
 
 type StripeSubscription = { id: string; status: string };
 type StripeList<T> = { data: T[] };
@@ -139,6 +140,70 @@ class ConnectorStripeClient {
   };
 }
 
+class DirectStripeClient extends ConnectorStripeClient {
+  constructor(secretKey: string) {
+    super();
+    const stripe = new Stripe(secretKey);
+
+    this.prices = {
+      retrieve: async (priceId) => {
+        const price = await stripe.prices.retrieve(priceId);
+        return {
+          id: price.id,
+          active: price.active,
+          livemode: price.livemode,
+          type: price.type,
+          recurring: price.recurring
+            ? { interval: price.recurring.interval }
+            : null,
+        };
+      },
+    };
+
+    this.subscriptions = {
+      list: async (input) => {
+        const subscriptions = await stripe.subscriptions.list(input);
+        return {
+          data: subscriptions.data.map((subscription) => ({
+            id: subscription.id,
+            status: subscription.status,
+          })),
+        };
+      },
+    };
+
+    this.customers = {
+      create: async (input) => {
+        const customer = await stripe.customers.create(input);
+        return { id: customer.id };
+      },
+    };
+
+    this.checkout = {
+      sessions: {
+        create: async (input) => {
+          const session = await stripe.checkout.sessions.create({
+            ...input,
+            mode: "subscription",
+          });
+          return { url: session.url };
+        },
+      },
+    };
+
+    this.billingPortal = {
+      sessions: {
+        create: async (input) => {
+          const session = await stripe.billingPortal.sessions.create(input);
+          return { url: session.url };
+        },
+      },
+    };
+  }
+}
+
 export async function getUncachableStripeClient(): Promise<ConnectorStripeClient> {
+  const liveSecretKey = process.env.STRIPE_SECRET_KEY;
+  if (liveSecretKey) return new DirectStripeClient(liveSecretKey);
   return new ConnectorStripeClient();
 }
