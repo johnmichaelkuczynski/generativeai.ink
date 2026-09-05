@@ -14,6 +14,10 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AnswerInput } from "@/components/AnswerInput";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import {
+  MultipleChoiceInput,
+  parseMultipleChoicePrompt,
+} from "@/components/MultipleChoiceInput";
 import { isAdminMode } from "@/lib/adminMode";
 
 export default function AssignmentRunner() {
@@ -192,6 +196,9 @@ export default function AssignmentRunner() {
   }
 
   const currentProblem = assignment.problems[currentProblemIdx];
+  const multipleChoice = currentProblem
+    ? parseMultipleChoicePrompt(currentProblem.prompt)
+    : null;
 
   return (
     <Layout>
@@ -224,16 +231,31 @@ export default function AssignmentRunner() {
         {currentProblem ? (
           <div className="flex flex-col gap-8">
             <div className="prose prose-slate dark:prose-invert max-w-none text-lg">
-              <MarkdownRenderer content={currentProblem.prompt} />
+              <MarkdownRenderer
+                content={multipleChoice?.stem ?? currentProblem.prompt}
+              />
             </div>
             
             <div className="flex flex-col gap-4">
-              <AnswerInput 
-                key={currentProblem.id}
-                value={answers[currentProblem.id] || ""}
-                onChange={(val, trace) => handleAnswerChange(currentProblem.id, val, trace)}
-                initialTrace={tracesRef.current[currentProblem.id]}
-              />
+              {multipleChoice ? (
+                <MultipleChoiceInput
+                  key={currentProblem.id}
+                  options={multipleChoice.options}
+                  value={answers[currentProblem.id] || ""}
+                  onChange={(val, trace) =>
+                    handleAnswerChange(currentProblem.id, val, trace)
+                  }
+                />
+              ) : (
+                <AnswerInput
+                  key={currentProblem.id}
+                  value={answers[currentProblem.id] || ""}
+                  onChange={(val, trace) =>
+                    handleAnswerChange(currentProblem.id, val, trace)
+                  }
+                  initialTrace={tracesRef.current[currentProblem.id]}
+                />
+              )}
             </div>
 
             {actionError && (

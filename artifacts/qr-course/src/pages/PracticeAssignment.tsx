@@ -12,6 +12,10 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AnswerInput } from "@/components/AnswerInput";
+import {
+  MultipleChoiceInput,
+  parseMultipleChoicePrompt,
+} from "@/components/MultipleChoiceInput";
 import { MathKeyboard, insertAtTextareaCursor } from "@/components/MathKeyboard";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import {
@@ -172,6 +176,7 @@ export default function PracticeAssignment() {
 
               {set.problems.map((p, idx) => {
                 const r = resultById.get(p.id);
+                const multipleChoice = parseMultipleChoicePrompt(p.prompt);
                 return (
                   <div
                     key={p.id}
@@ -203,17 +208,29 @@ export default function PracticeAssignment() {
                     </div>
 
                     <div className="prose prose-slate dark:prose-invert max-w-none">
-                      <MarkdownRenderer content={p.prompt} />
+                      <MarkdownRenderer content={multipleChoice?.stem ?? p.prompt} />
                     </div>
 
-                    <AnswerInput
-                      value={answers[p.id] ?? ""}
-                      onChange={(val, trace) => {
-                        setAnswers((prev) => ({ ...prev, [p.id]: val }));
-                        setTraces((prev) => ({ ...prev, [p.id]: trace }));
-                      }}
-                      disabled={!!results}
-                    />
+                    {multipleChoice ? (
+                      <MultipleChoiceInput
+                        options={multipleChoice.options}
+                        value={answers[p.id] ?? ""}
+                        onChange={(val, trace) => {
+                          setAnswers((prev) => ({ ...prev, [p.id]: val }));
+                          setTraces((prev) => ({ ...prev, [p.id]: trace }));
+                        }}
+                        disabled={!!results}
+                      />
+                    ) : (
+                      <AnswerInput
+                        value={answers[p.id] ?? ""}
+                        onChange={(val, trace) => {
+                          setAnswers((prev) => ({ ...prev, [p.id]: val }));
+                          setTraces((prev) => ({ ...prev, [p.id]: trace }));
+                        }}
+                        disabled={!!results}
+                      />
+                    )}
 
                     {r && (
                       <div

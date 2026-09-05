@@ -1,5 +1,5 @@
 ---
-name: Course design mandates (Data Detective)
+name: Course design mandates
 description: Non-obvious user mandates about the AI course UX that look removable but are intentional and must be preserved.
 ---
 
@@ -21,9 +21,9 @@ trace, or legitimate symbol use false-flags the AI-authorship detector.
 
 ## Questions must require operational reasoning, never recitation
 ALL questions — homeworks, unit test, final, practice assignments, AND the adaptive
-topic drill — must pose a specific concrete scenario and require a multi-sentence
-reasoned answer. Never a one-word/single-term/"yes-no" answer, never "define X" or
-"recite the abstract formulation from the text."
+topic drill — must pose a specific concrete scenario and require reasoning. Freeform
+answers must be multi-sentence rather than one-word/single-term/"yes-no" responses.
+Never ask learners to define or recite an abstract formulation.
 
 **Why:** Repeated, emphatic user mandate — answers must be "hard to share" and prove
 operational understanding, not memorization. The adaptive drill previously generated
@@ -31,6 +31,17 @@ single-word concept-ID questions and was the one place that violated this.
 **How to apply:** Any new question-generation prompt must forbid definitions/one-word
 answers and demand a concrete case + reasoned answer. The semantic `gradeAnswer` grader
 already handles reasoned answers, so longer answers are safe to grade.
+
+## Multiple-choice questions use selection controls
+Multiple-choice questions must display their options as radio-style selections. Never
+show a freeform text box or tell a learner to copy, paste, type, or "enter the full
+option."
+
+**Why:** Requiring transcription makes a familiar question format idiosyncratic and
+creates unnecessary confusion about how the learner should respond.
+**How to apply:** Keep the scenario and options visually separate, save the selected
+option in the answer snapshot, and preserve text inputs only for genuinely freeform
+questions. Apply the same behavior to graded and practice versions.
 
 ## Answer-length diagnostics must match the active course
 Operator and synthetic diagnostics are part of the course format, not exempt test fixtures. If the course caps answers at one paragraph, no diagnostic may generate, require, or advertise a multi-paragraph proof.

@@ -14,7 +14,7 @@ import { logger } from "./logger";
 // the value stored in seed_meta; a mismatch forces a full re-seed, so content
 // edits self-heal in every environment (including a republished production)
 // without a manual database wipe.
-const SEED_CONTENT_VERSION = "2026-08-26-nano-evolutionary-psychology-v1";
+const SEED_CONTENT_VERSION = "2026-09-05-nano-evolutionary-psychology-v2";
 
 type SeedTopic = {
   slug: string;
@@ -236,12 +236,12 @@ const ASSIGNMENTS: SeedAssignment[] = [
     isTimed: false,
     timeLimitMinutes: null,
     instructions:
-      "Untimed Session 1 practice. Enter the full best option for multiple choice; answer the short item in 1–2 sentences. Every item requires reasoning from a scenario.",
+      "Untimed Session 1 practice. Select one answer for multiple choice; answer the short item in 1–2 sentences. Every item requires reasoning from a scenario.",
     problems: [
       {
         topicSlug: "evolutionary-foundations",
         prompt:
-          "A researcher finds that people in one city prefer sweet foods and concludes, “This preference is an adaptation, so culture and learning are irrelevant.” Which response is best? A) Current usefulness proves adaptation. B) The pattern fits several hypotheses; test design specificity, development, cultures, and learning before inferring adaptation. C) Any cultural effect disproves evolution. D) The EEA was one fixed place that determines every modern choice. Enter the full option.",
+          "A researcher finds that people in one city prefer sweet foods and concludes, “This preference is an adaptation, so culture and learning are irrelevant.” Which response is best? A) Current usefulness proves adaptation. B) The pattern fits several hypotheses; test design specificity, development, cultures, and learning before inferring adaptation. C) Any cultural effect disproves evolution. D) The EEA was one fixed place that determines every modern choice.",
         correctAnswer:
           "B) The pattern fits several hypotheses; test design specificity, development, cultures, and learning before inferring adaptation.",
         explanation:
@@ -266,12 +266,12 @@ const ASSIGNMENTS: SeedAssignment[] = [
     isTimed: false,
     timeLimitMinutes: null,
     instructions:
-      "Untimed Session 2 practice. Enter the full best option for each multiple-choice scenario.",
+      "Untimed Session 2 practice. Select one answer for each multiple-choice scenario.",
     problems: [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A child performs poorly on a verbally complex false-belief task, and a commentator concludes that the child has no theory of mind. Which evaluation is best? A) One task proves the entire capacity is absent. B) Theory of mind is only cultural. C) Compare simpler tasks and control language and executive demands before drawing that conclusion. D) False-belief performance is unrelated to development. Enter the full option.",
+          "A child performs poorly on a verbally complex false-belief task, and a commentator concludes that the child has no theory of mind. Which evaluation is best? A) One task proves the entire capacity is absent. B) Theory of mind is only cultural. C) Compare simpler tasks and control language and executive demands before drawing that conclusion. D) False-belief performance is unrelated to development.",
         correctAnswer:
           "C) Compare simpler tasks and control language and executive demands before drawing that conclusion.",
         explanation:
@@ -280,7 +280,7 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A social-media app supplies unpredictable likes and endless novel clips. A writer calls it a supernormal stimulus and says that label proves it causes a mental disorder. Which response is best? A) The label proves diagnosis. B) Exaggerated reward cues support a mismatch hypothesis, but causal effects, impairment, dose, and alternatives still require evidence. C) Modern stimuli cannot engage evolved systems. D) Any strong preference is a disorder. Enter the full option.",
+          "A social-media app supplies unpredictable likes and endless novel clips. A writer calls it a supernormal stimulus and says that label proves it causes a mental disorder. Which response is best? A) The label proves diagnosis. B) Exaggerated reward cues support a mismatch hypothesis, but causal effects, impairment, dose, and alternatives still require evidence. C) Modern stimuli cannot engage evolved systems. D) Any strong preference is a disorder.",
         correctAnswer:
           "B) Exaggerated reward cues support a mismatch hypothesis, but causal effects, impairment, dose, and alternatives still require evidence.",
         explanation:
@@ -295,12 +295,12 @@ const ASSIGNMENTS: SeedAssignment[] = [
     isTimed: true,
     timeLimitMinutes: 15,
     instructions:
-      "Timed. 15 minutes. Enter the full best option for multiple choice; answer the short item in 1–3 sentences. Pasting is disabled; keystrokes are screened for AI use.",
+      "Timed. 15 minutes. Select one answer for multiple choice; answer the short item in 1–3 sentences. Keystrokes are screened for AI use.",
     problems: [
       {
         topicSlug: "evolutionary-foundations",
         prompt:
-          "In a society where both parents provide intensive infant care and women control substantial resources, a student predicts all men will seek only short-term mates because males always invest less. Which answer best evaluates the prediction? A) It follows inevitably from sex. B) Parental investment predicts context-sensitive average tradeoffs; biparental care, ecology, institutions, and overlapping strategies make the absolute prediction unsupported. C) Sexual selection cannot apply to humans. D) Culture erases every evolved influence. Enter the full option.",
+          "In a society where both parents provide intensive infant care and women control substantial resources, a student predicts all men will seek only short-term mates because males always invest less. Which answer best evaluates the prediction? A) It follows inevitably from sex. B) Parental investment predicts context-sensitive average tradeoffs; biparental care, ecology, institutions, and overlapping strategies make the absolute prediction unsupported. C) Sexual selection cannot apply to humans. D) Culture erases every evolved influence.",
         correctAnswer:
           "B) Parental investment predicts context-sensitive average tradeoffs; biparental care, ecology, institutions, and overlapping strategies make the absolute prediction unsupported.",
         explanation:
@@ -309,7 +309,7 @@ const ASSIGNMENTS: SeedAssignment[] = [
       {
         topicSlug: "evolutionary-foundations",
         prompt:
-          "Participants solve a social-contract Wason task better than an abstract task, and investigators claim a dedicated cheater-detection adaptation. Which follow-up most directly strengthens that claim? A) Repeat only the same wording. B) Compare matched familiar and deontic controls while preserving logical structure, showing a selective advantage for benefit-without-cost violations. C) Ask whether participants like cooperation. D) Treat any correct answer as proof of tribalism. Enter the full option.",
+          "Participants solve a social-contract Wason task better than an abstract task, and investigators claim a dedicated cheater-detection adaptation. Which follow-up most directly strengthens that claim? A) Repeat only the same wording. B) Compare matched familiar and deontic controls while preserving logical structure, showing a selective advantage for benefit-without-cost violations. C) Ask whether participants like cooperation. D) Treat any correct answer as proof of tribalism.",
         correctAnswer:
           "B) Compare matched familiar and deontic controls while preserving logical structure, showing a selective advantage for benefit-without-cost violations.",
         explanation:
@@ -333,12 +333,12 @@ const ASSIGNMENTS: SeedAssignment[] = [
     isTimed: true,
     timeLimitMinutes: 25,
     instructions:
-      "Timed cumulative final. 25 minutes. Enter the full best option for multiple choice; answer the short item in 1–3 sentences. Pasting is disabled; keystrokes are screened for AI use.",
+      "Timed cumulative final. 25 minutes. Select one answer for multiple choice; answer the short item in 1–3 sentences. Keystrokes are screened for AI use.",
     problems: [
       {
         topicSlug: "minds-development-mismatch",
         prompt:
-          "A manager says employees who react angrily to unfair allocations, feel jealous about partners, and seek promotion are obeying fixed adaptations, so workplace rules cannot change them. Which answer is best? A) Evolved emotions compel behavior and excuse it. B) Anger, jealousy, and status hypotheses concern context-sensitive responses; appraisal, learning, norms, and institutions shape expression, and explanation does not justify conduct. C) Emotions have no evolutionary history. D) Happiness requires winning every status contest. Enter the full option.",
+          "A manager says employees who react angrily to unfair allocations, feel jealous about partners, and seek promotion are obeying fixed adaptations, so workplace rules cannot change them. Which answer is best? A) Evolved emotions compel behavior and excuse it. B) Anger, jealousy, and status hypotheses concern context-sensitive responses; appraisal, learning, norms, and institutions shape expression, and explanation does not justify conduct. C) Emotions have no evolutionary history. D) Happiness requires winning every status contest.",
         correctAnswer:
           "B) Anger, jealousy, and status hypotheses concern context-sensitive responses; appraisal, learning, norms, and institutions shape expression, and explanation does not justify conduct.",
         explanation:
