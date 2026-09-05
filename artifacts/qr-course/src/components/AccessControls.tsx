@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAuth, useClerk, useUser } from "@clerk/react";
 import { useLocation } from "wouter";
+import { toast } from "@/hooks/use-toast";
 import {
   getGetAccessStatusQueryKey,
   useCreateBillingPortal,
@@ -9,6 +10,21 @@ import {
 } from "@workspace/api-client-react";
 
 const PENDING_CHECKOUT = "nano_pending_checkout";
+
+function paymentErrorMessage(error: unknown): string {
+  const data = (error as { data?: { error?: unknown } } | null)?.data;
+  if (typeof data?.error === "string") return data.error;
+  if (error instanceof Error) return error.message;
+  return "Payment checkout is temporarily unavailable.";
+}
+
+function showPaymentError(error: unknown) {
+  toast({
+    title: "Payment checkout unavailable",
+    description: paymentErrorMessage(error),
+    variant: "destructive",
+  });
+}
 
 export function PendingCheckout() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -28,9 +44,9 @@ export function PendingCheckout() {
     localStorage.removeItem(PENDING_CHECKOUT);
     checkout.mutate(undefined, {
       onSuccess: ({ url }) => window.location.assign(url),
-      onError: () => {
+      onError: (error) => {
         started.current = false;
-        localStorage.setItem(PENDING_CHECKOUT, "1");
+        showPaymentError(error);
       },
     });
   }, [checkout, isLoaded, isSignedIn]);
@@ -61,12 +77,14 @@ export function AccessControls({ compact = false }: { compact?: boolean }) {
     }
     checkout.mutate(undefined, {
       onSuccess: ({ url }) => window.location.assign(url),
+      onError: showPaymentError,
     });
   };
 
   const openPortal = () => {
     portal.mutate(undefined, {
       onSuccess: ({ url }) => window.location.assign(url),
+      onError: showPaymentError,
     });
   };
 
