@@ -1,12 +1,20 @@
 ---
 name: App access model
-description: Owner mandate that the course has no login system, account controls, auth prompts, or AI usage gate.
+description: Current Google-login, metered AI-use, and recurring-subscription access policy.
 ---
 
 # App access model
 
-The course must have no login system at all. Every page and every AI-powered feature is public. Do not add sign-in/sign-out controls, account UI, authentication routes, login prompts, token allowances, or usage-based login gates.
+Course reading and navigation remain public. Anonymous visitors receive two total
+learner-facing AI feedback/tutor actions. Google sign-in is always available and
+adds exactly three signed-in actions. After those actions, a recurring monthly
+Stripe subscription unlocks unlimited app use. Google login and the payment button
+must remain directly visible without a questionnaire or forced multi-step prompt.
 
-**Why:** On 2026-08-22, the owner explicitly reversed the earlier metered Google-login policy and required all login to be removed.
+**Why:** On 2026-09-05, the owner explicitly reinstated Google-only login and
+recurring paid access with these exact free-use allowances.
 
-**How to apply:** New pages and AI endpoints must work anonymously without authentication middleware. Keep public PDF/TXT downloads available. The PDF library must stay external in the server bundle or its font pipeline breaks at runtime.
+**How to apply:** Keep ordinary course content public. Enforce AI-use limits on the
+server, keep anonymous and signed-in allowances separate, and treat only active or
+trialing live Stripe subscriptions as unlimited. Keep public PDF/TXT downloads
+available.

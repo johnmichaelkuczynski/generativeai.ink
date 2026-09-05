@@ -1,5 +1,5 @@
 - [Course answer-key QC diagnostic](course-qc-diagnostic.md) — LLM key-legitimacy checks must judge against the course's own lecture text (not generic knowledge), or correct course-specific keys false-flag.
-- [App access model](api-auth-model.md) — Owner removed all login on 2026-08-22: every page and AI feature stays public with no accounts, auth prompts, or usage gate.
+- [App access model](api-auth-model.md) — Public reading; 2 anonymous AI actions + exactly 3 after Google login; live monthly Stripe subscription unlocks unlimited use.
 - [Tutor starter-question style](tutor-starter-questions.md) — lecture starter questions must ALWAYS be concrete-case application; never definition/abstract/comparison questions (user mandate).
 - [Course content reseed](course-content-reseed.md) — seeded data migrations must self-heal via a content marker + replace-in-transaction; "seed if empty" strands old content in existing/prod DBs (prod writes are read-only).
 - [DATABASE_URL override](database-url-override.md) — app DB resolves to platform `helium/heliumdb`, which overrides a user-set DATABASE_URL secret; checkDatabase() can report "not provisioned" while the app still has a working DB.
@@ -12,3 +12,4 @@
 - [OpenAPI adjacent-op edits](openapi-adjacent-op-edits.md) — inserting an op before another can orphan its response `content` block & flip a generated client return type; include the full responses block in old_string and verify generated Promise<…> after codegen.
 - [Video content verification](video-content-verification.md) — screenshots reload a video-js artifact to scene 0; verify multi-scene walkthroughs by grepping Scene*.tsx for required real copy, not screenshots.
 - [Authoritative answer submission](authoritative-answer-submission.md) — assignment submit must carry and persist the final full-answer snapshot before grading; autosave is never grading truth.
+- [Stripe live-mode boundary](stripe-live-mode.md) — Never replace the live Price ID with a sandbox one; live checkout requires Replit Integrated Payments in production.

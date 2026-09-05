@@ -6,8 +6,12 @@ export const usersTable = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull(),
   googleId: text("google_id").unique(),
+  clerkId: text("clerk_id").unique(),
   email: text("email"),
   displayName: text("display_name"),
+  stripeCustomerId: text("stripe_customer_id").unique(),
+  stripeSubscriptionId: text("stripe_subscription_id"),
+  aiActions: integer("ai_actions").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
@@ -39,6 +43,7 @@ export const uniqueVisitorsTable = pgTable("unique_visitors", {
     .notNull()
     .defaultNow(),
   hits: integer("hits").notNull().default(1),
+  aiActions: integer("ai_actions").notNull().default(0),
 });
 
 export type UniqueVisitor = typeof uniqueVisitorsTable.$inferSelect;

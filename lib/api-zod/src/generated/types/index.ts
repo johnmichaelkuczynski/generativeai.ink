@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from './accessStatus';
 export * from './activityItem';
 export * from './activityItemKind';
 export * from './analyticsReport';
@@ -80,6 +81,7 @@ export * from './reasoningMetric';
 export * from './reasoningResponseInput';
 export * from './reasoningResult';
 export * from './reasoningReviewItem';
+export * from './redirectTarget';
 export * from './rewriteLectureInput';
 export * from './rewriteLectureInputBaseLevel';
 export * from './savedAnswer';

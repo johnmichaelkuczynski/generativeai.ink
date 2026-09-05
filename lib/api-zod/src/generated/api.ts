@@ -930,3 +930,35 @@ export const GetGradebookResponse = zod.object({
 })
 
 
+/**
+ * @summary Get server-verified authentication, quota, and subscription access
+ */
+export const GetAccessStatusResponse = zod.object({
+  "signedIn": zod.boolean(),
+  "paid": zod.boolean(),
+  "unlimited": zod.boolean(),
+  "anonymousUsed": zod.number(),
+  "anonymousLimit": zod.number(),
+  "signedInUsed": zod.number(),
+  "signedInLimit": zod.number(),
+  "remaining": zod.number().nullable(),
+  "subscriptionStatus": zod.string().nullish()
+})
+
+
+/**
+ * @summary Start live recurring monthly checkout for unlimited app use
+ */
+export const CreateSubscriptionCheckoutResponse = zod.object({
+  "url": zod.string().url()
+})
+
+
+/**
+ * @summary Open the subscriber billing portal
+ */
+export const CreateBillingPortalResponse = zod.object({
+  "url": zod.string().url()
+})
+
+

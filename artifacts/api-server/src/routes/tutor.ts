@@ -139,8 +139,10 @@ router.post("/tutor/ask", async (req, res): Promise<void> => {
   try {
     text = await chatText(sys, user);
   } catch {
-    text =
-      "I'm having trouble reaching the tutor service right now. Try again in a moment, and consider re-reading the relevant section of the lecture.";
+    res.status(503).json({
+      error: "The tutor service is temporarily unavailable. Your AI action was refunded.",
+    });
+    return;
   }
   res.json(AskTutorResponse.parse({ text, audioUrl: null }));
 });

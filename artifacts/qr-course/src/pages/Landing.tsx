@@ -9,6 +9,7 @@ import {
   Download,
 } from "lucide-react";
 import TopicsRail, { pdfUrl, txtUrl } from "@/components/TopicsRail";
+import { AccessControls } from "@/components/AccessControls";
 
 const features = [
   {
@@ -117,6 +118,7 @@ export default function Landing() {
           </span>
         </div>
         <div className="flex items-center gap-2">
+          <AccessControls compact />
           <a
             href="mailto:johnmichaelkuczynski@gmail.com"
             className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium border border-border hover:bg-secondary transition-colors"
@@ -141,6 +143,7 @@ export default function Landing() {
             A rigorous 4–6 hour foundational evolutionary psychology certification.
           </h1>
           <div className="flex flex-wrap items-center justify-center gap-3">
+            <AccessControls />
             <CourseEntryButton
               label="Start the course"
               className="inline-flex items-center px-6 py-3 rounded-md text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"

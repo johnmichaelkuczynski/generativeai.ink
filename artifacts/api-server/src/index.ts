@@ -18,11 +18,7 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-storage
-  .ensureUniqueVisitorsTable()
-  .catch((err) =>
-    logger.error({ err }, "Failed to provision unique_visitors table"),
-  );
+await storage.ensureUniqueVisitorsTable();
 
 seedIfEmpty()
   .then(() => seedReasoningPrimersIfMissing())

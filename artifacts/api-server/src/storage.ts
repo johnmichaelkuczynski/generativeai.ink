@@ -92,6 +92,23 @@ export const storage = {
       alter table unique_visitors
         add column if not exists ai_tokens integer not null default 0
     `);
+    await db.execute(sql`
+      alter table unique_visitors
+        add column if not exists ai_actions integer not null default 0
+    `);
+    await db.execute(sql`
+      alter table users
+        add column if not exists clerk_id text,
+        add column if not exists stripe_customer_id text,
+        add column if not exists stripe_subscription_id text,
+        add column if not exists ai_actions integer not null default 0
+    `);
+    await db.execute(sql`
+      create unique index if not exists users_clerk_id_unique on users (clerk_id)
+    `);
+    await db.execute(sql`
+      create unique index if not exists users_stripe_customer_id_unique on users (stripe_customer_id)
+    `);
   },
 
   // --- Anonymous AI usage metering (free preview before forced login) ---

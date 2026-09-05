@@ -5,6 +5,24 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface AccessStatus {
+  signedIn: boolean;
+  paid: boolean;
+  unlimited: boolean;
+  anonymousUsed: number;
+  anonymousLimit: number;
+  signedInUsed: number;
+  signedInLimit: number;
+  /** @nullable */
+  remaining: number | null;
+  /** @nullable */
+  subscriptionStatus?: string | null;
+}
+
+export interface RedirectTarget {
+  url: string;
+}
+
 export interface HealthStatus {
   status: string;
 }
