@@ -1,145 +1,183 @@
-# Nano Evolutionary Psychology
+<div align="center">
 
-## Understand the evolutionary forces that help shape human behavior
+# 🧠 NANO EVOLUTIONARY PSYCHOLOGY
 
-**Nano Evolutionary Psychology** is a rigorous, self-paced online course from **ZHI Systems**. In approximately **4–6 hours**, learners explore how evolutionary principles can inform careful, evidence-based explanations of cooperation, competition, attraction, family relationships, status, conflict, and social behavior.
+## Why do humans compete, cooperate, fall in love, protect family, and chase status?
 
-The course goes beyond memorizing definitions. Learners apply ideas to realistic situations, compare competing explanations, and practice recognizing what the available evidence does—and does not—support.
+**Discover the evolutionary forces that help shape human behavior in one focused, fascinating 4–6 hour experience.**
 
-### Start learning at [evopsychfourhour.xyz](https://evopsychfourhour.xyz)
+[![Start Learning](https://img.shields.io/badge/START_LEARNING-evopsychfourhour.xyz-2563EB?style=for-the-badge)](https://evopsychfourhour.xyz)
+[![Duration](https://img.shields.io/badge/DURATION-4–6_HOURS-7C3AED?style=for-the-badge)](https://evopsychfourhour.xyz)
+[![Certificate](https://img.shields.io/badge/CERTIFICATE-LEVEL_1-F59E0B?style=for-the-badge)](https://evopsychfourhour.xyz)
 
----
+### A ZHI Systems Certification Course
 
-## Why take this course?
-
-Human behavior is complex. Evolutionary psychology provides a powerful set of tools for investigating that complexity, but those tools must be used carefully.
-
-Nano Evolutionary Psychology helps learners:
-
-- Connect evolutionary principles to recognizable human behavior
-- Distinguish testable explanations from unsupported storytelling
-- Compare evolutionary, developmental, cultural, and situational explanations
-- Reason carefully about variation across individuals and environments
-- Evaluate evidence without treating behavioral patterns as fixed or universal
-- Communicate conclusions with appropriate confidence and restraint
-
-The result is a focused introduction designed to build practical reasoning—not just vocabulary.
+</div>
 
 ---
 
-## What you will explore
+## 🔥 Human behavior is not random
 
-### Evolutionary foundations
+Why do people help strangers—but compete fiercely with rivals?
 
-Learn how natural selection, variation, inheritance, reproductive outcomes, and environmental pressures contribute to evolutionary change.
+Why do attraction, jealousy, loyalty, status, parenting, and conflict appear across societies while taking different forms in different environments?
 
-### Adaptation and evidence
+**Nano Evolutionary Psychology** gives you a practical framework for investigating these questions without reducing people to simple instincts or memorizing endless terminology.
 
-Examine how researchers distinguish adaptations from by-products and chance effects, develop competing hypotheses, and identify evidence that could support or challenge an explanation.
+You will learn to build explanations, test predictions, compare alternatives, and ask the most important question:
 
-### Sexual selection and mating strategies
-
-Explore mate preferences, competition, attraction, trade-offs, relationship strategies, and the importance of individual and contextual variation.
-
-### Parenting, families, and kin selection
-
-Investigate parental investment, parent–offspring conflict, caregiving decisions, relatedness, inclusive fitness, and conditional helping.
-
-### Cooperation and social exchange
-
-Study reciprocity, reputation, trust, punishment, partner choice, collective action, and the conditions that can support cooperation.
-
-### Aggression, conflict, and warfare
-
-Consider how competition, perceived threats, coalitions, incentives, and social environments may contribute to conflict while avoiding simplistic or deterministic conclusions.
-
-### Status, prestige, and dominance
-
-Analyze how people pursue influence, recognition, resources, and social position through different strategies.
-
-### Evolutionary cognitive psychology
-
-Explore how attention, learning, judgment, memory, emotion, and decision-making can be studied through an evolutionary lens.
+> **What does the evidence actually prove?**
 
 ---
 
-## A learning experience built around active reasoning
+## 🚀 One course. Eight fascinating areas of human behavior.
 
-### Choose your depth
-
-Select **Short, Medium, or Long** lessons based on your available time and desired level of detail.
-
-### Ask a course-grounded tutor
-
-Get help with the material through an AI tutor focused on the lesson you are studying.
-
-### Practice with realistic scenarios
-
-Apply course principles to fresh situations rather than relying on definition-only questions.
-
-### Receive immediate feedback
-
-Practice and graded work receive prompt scoring and written feedback to help learners understand both strengths and mistakes.
-
-### Track your progress
-
-Follow your performance across the course and identify areas that deserve additional attention.
+| | Explore | Discover |
+|---|---|---|
+| 🧬 | **Natural Selection** | How evolutionary pressures can shape behavioral tendencies over time |
+| ❤️ | **Mating Strategies** | Why attraction, competition, preferences, and relationship decisions vary |
+| 👨‍👩‍👧 | **Parenting and Families** | How investment, conflict, relatedness, and environment influence family behavior |
+| 🤝 | **Cooperation** | How trust, reciprocity, reputation, and punishment can sustain cooperation |
+| ⚔️ | **Aggression and Warfare** | How threats, incentives, coalitions, and competition can contribute to conflict |
+| 🏆 | **Status and Prestige** | Why people pursue influence, recognition, dominance, and social position |
+| 🧠 | **Evolutionary Cognition** | How learning, attention, memory, emotion, and judgment can be investigated |
+| 🔎 | **Evidence and Inference** | How to distinguish a testable explanation from a convincing-sounding story |
 
 ---
 
-## Earn an Evolutionary Psychology Level 1 certificate
+<div align="center">
 
-Learners who submit all required coursework and earn a passing overall result can download a personalized **Evolutionary Psychology Level 1 certificate** issued by **ZHI Systems**.
+## ✨ Choose your own learning depth
 
-The certificate recognizes successful completion of a focused program in evolutionary-psychology principles, evidence evaluation, and scenario-based reasoning.
+### ⚡ SHORT &nbsp;&nbsp; | &nbsp;&nbsp; 🎯 MEDIUM &nbsp;&nbsp; | &nbsp;&nbsp; 🔬 LONG
 
----
+**Move quickly, explore the essentials, or go deeper—the choice is yours.**
 
-## Designed for curious and ambitious learners
-
-Nano Evolutionary Psychology is well suited for:
-
-- College and university students
-- Educators and curriculum designers
-- Researchers entering the field
-- Psychology and behavioral-science enthusiasts
-- Professionals interested in human decision-making
-- Interdisciplinary teams studying behavior, incentives, and social systems
-- Independent learners seeking a substantial introduction without committing to a semester-long course
-
-No specialized background in evolutionary biology or psychology is required.
+</div>
 
 ---
 
-## Focused enough for one day. Substantial enough to matter.
+## 💡 This is not a passive reading course
 
-Many introductions are either too brief to build real understanding or too long for busy learners to finish. Nano Evolutionary Psychology is designed to occupy the useful middle ground:
+### 📚 Learn through clear, focused lessons
 
-- Approximately **4–6 hours**
-- Flexible lesson depth
-- Concrete examples
-- Scenario-based practice
-- Immediate grading and feedback
-- A downloadable certificate for successful learners
+Build a strong foundation without committing to a semester-long program.
 
-Start in the morning, work at your own pace, and finish with a stronger framework for evaluating evolutionary explanations of behavior.
+### 💬 Ask a lesson-grounded AI tutor
+
+Get help with the material you are currently studying when an idea needs clarification.
+
+### 🧩 Apply principles to realistic situations
+
+Work through fresh behavioral scenarios that require reasoning—not one-word recall.
+
+### 🎯 Practice adaptively
+
+Strengthen your understanding through practice that responds to your recent performance.
+
+### ⚡ Receive immediate grades and feedback
+
+See your percentage and written feedback while the reasoning process is still fresh.
+
+### 📈 Track your progress
+
+Identify strong areas, revisit weak areas, and keep moving toward completion.
 
 ---
 
-## About ZHI Systems
+## 🏅 Earn your Evolutionary Psychology Level 1 certificate
+
+Complete all required coursework and achieve a passing overall result to earn a personalized:
+
+<div align="center">
+
+### **ZHI SYSTEMS CERTIFICATION**
+
+# EVOLUTIONARY PSYCHOLOGY  
+## LEVEL 1
+
+**A downloadable credential recognizing successful course completion**
+
+</div>
+
+Your certificate provides a clear record of your work in evolutionary principles, behavioral reasoning, and evidence evaluation.
+
+---
+
+## 🎓 Who is this course for?
+
+| Audience | Why it fits |
+|---|---|
+| 🎓 **Students** | Build a serious foundation before or alongside formal study |
+| 🧑‍🏫 **Educators** | Explore an engaging model for focused, scenario-based instruction |
+| 🔬 **Researchers entering the field** | Develop a practical framework for hypotheses, predictions, and evidence |
+| 💼 **Professionals** | Gain new ways to think about incentives, decisions, groups, and behavior |
+| 🧠 **Psychology enthusiasts** | Go beyond popular summaries and engage with careful reasoning |
+| 🌍 **Independent learners** | Complete a substantial course on your own schedule |
+
+**No specialized background in psychology or evolutionary biology is required.**
+
+---
+
+## ⏱️ Focused enough for one day. Substantial enough to matter.
+
+You do not need a semester to begin thinking more carefully about human behavior.
+
+In approximately **4–6 hours**, Nano Evolutionary Psychology combines:
+
+- ✅ Eight compelling areas of study
+- ✅ Three lesson-depth options
+- ✅ Grounded AI tutoring
+- ✅ Adaptive scenario practice
+- ✅ Immediate percentage grades
+- ✅ Written feedback
+- ✅ Progress tracking
+- ✅ Four graded checkpoints
+- ✅ A downloadable Level 1 certificate for successful learners
+
+---
+
+## 🌟 What will change after the course?
+
+You will be better prepared to:
+
+- Recognize the difference between an observation and an explanation
+- Translate evolutionary ideas into predictions that can be examined
+- Compare evolutionary accounts with cultural, developmental, and situational alternatives
+- Avoid treating probabilistic patterns as fixed rules
+- Explain behavior with greater precision and intellectual caution
+- Ask sharper questions about evidence, incentives, trade-offs, and context
+
+> **Do not merely accept a plausible story. Learn how to challenge it.**
+
+---
+
+<div align="center">
+
+# Ready to see human behavior differently?
+
+## Start Nano Evolutionary Psychology today.
+
+[![Enter the Course](https://img.shields.io/badge/ENTER_THE_COURSE-EVOPSYCHFOURHOUR.XYZ-2563EB?style=for-the-badge)](https://evopsychfourhour.xyz)
+
+### Learn the principles. Test the explanations. Follow the evidence.
+
+</div>
+
+---
+
+## 🏢 About ZHI Systems
 
 **ZHI Systems** creates customized certifications, courses, and applications for colleges, individuals, banks, and other organizations.
 
-Our educational products are designed to make serious learning more accessible, focused, and engaging while preserving clear standards for completion.
+We turn complex subjects into focused, engaging learning experiences with clear completion standards.
 
-Organizations interested in a custom course, certification program, or educational application can contact ZHI Systems at **CONTACT@ZHISYSTEMS.AI**.
+### Interested in a custom certification, course, or educational application?
 
----
+**CONTACT@ZHISYSTEMS.AI**
 
-## Begin Nano Evolutionary Psychology
+<div align="center">
 
-Discover why humans compete, cooperate, form relationships, protect family, pursue status, and navigate complex social worlds.
+### [evopsychfourhour.xyz](https://evopsychfourhour.xyz)
 
-### [Visit evopsychfourhour.xyz](https://evopsychfourhour.xyz)
-
-**Learn the principles. Test the explanations. Follow the evidence.**
+</div>
