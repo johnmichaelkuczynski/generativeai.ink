@@ -17,14 +17,14 @@ logical_id = "7fa675a3-3100-496a-8c42-57bef36936da"
 id = "gBlmXbiu3K5FNCNv2fX9f"
 uri = "file://README.md"
 type = "text"
-title = "README"
-description = "Vibrant public marketing README for Nano Evolutionary Psychology and ZHI Systems."
+title = "Four Hour Evolutionary Psychology — README"
+description = "Vibrant public marketing README for Four Hour Evolutionary Psychology by ZHI Systems."
 logical_id = "d7272a71-ecf3-4b8a-b9c6-45410ce4e7a4"
-content_hash = "sha256:d76a311d091ffb0f5ea27061d6f094a57700c89d0aa0e1b8fd7b57092d82ce95"
-size = 6525
-mtime_ms = 1788664039790
-storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/d7272a71-ecf3-4b8a-b9c6-45410ce4e7a4/661ca01b-6ba6-47c0-a8bb-177f220702a0"
-storage_version_token = "1788664386569914"
+content_hash = "sha256:10d4afb6adba3027b1c51aada89c73f77dba26c7b99ce70e3007a767b39b0816"
+size = 6545
+mtime_ms = 1788664454419
+storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/d7272a71-ecf3-4b8a-b9c6-45410ce4e7a4/24f54501-1c46-47d5-a15f-4b65e0c3d824"
+storage_version_token = "1788664461701718"
 content_type = "text/markdown"
 
 [[outputs]]

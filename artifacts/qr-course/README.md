@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 NANO EVOLUTIONARY PSYCHOLOGY
+# 🧠 FOUR HOUR EVOLUTIONARY PSYCHOLOGY
 
 ## Why do humans compete, cooperate, fall in love, protect family, and chase status?
 
@@ -22,7 +22,7 @@ Why do people help strangers—but compete fiercely with rivals?
 
 Why do attraction, jealousy, loyalty, status, parenting, and conflict appear across societies while taking different forms in different environments?
 
-**Nano Evolutionary Psychology** gives you a practical framework for investigating these questions without reducing people to simple instincts or memorizing endless terminology.
+**Four Hour Evolutionary Psychology** gives you a practical framework for investigating these questions without reducing people to simple instincts or memorizing endless terminology.
 
 You will learn to build explanations, test predictions, compare alternatives, and ask the most important question:
 
@@ -119,7 +119,7 @@ Complete all required coursework and achieve a passing overall result to earn a 
 
 ## ⏱️ Focused enough for one day. Substantial enough to matter.
 
-In approximately **4–6 hours**, Nano Evolutionary Psychology combines:
+In approximately **4–6 hours**, Four Hour Evolutionary Psychology combines:
 
 - ✅ Eight compelling areas of study
 - ✅ Three lesson-depth options
@@ -137,7 +137,7 @@ In approximately **4–6 hours**, Nano Evolutionary Psychology combines:
 
 # Ready to see human behavior differently?
 
-## Start Nano Evolutionary Psychology today.
+## Start Four Hour Evolutionary Psychology today.
 
 [![Enter the Course](https://img.shields.io/badge/ENTER_THE_COURSE-EVOPSYCHFOURHOUR.XYZ-2563EB?style=for-the-badge)](https://evopsychfourhour.xyz)
 
