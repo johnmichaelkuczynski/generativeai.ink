@@ -103,3 +103,10 @@ uri = "file://artifacts/course-video/public/audio/narration-final.mp3"
 type = "audio"
 title = "concise warm male TikTok narration"
 description = "Text-to-speech audio: Evopsychfourhour dot X Y Z. Ever wonder why humans compete, cooperate, pair up, protect family, and chase status? Nano Evolutionary Psychology is a rigorous four-to-six-hour cou…"
+
+[[outputs]]
+id = "h_idgtTLtQjD7U_ggYg5H"
+uri = "file://artifacts/course-video/public/audio/narration-replacement.mp3"
+type = "audio"
+title = "alert professional male course promotion"
+description = "Text-to-speech audio: Evopsychfourhour dot X Y Z. Ever wonder why humans compete, cooperate, pair up, protect family, and chase status? Nano Evolutionary Psychology is a rigorous four-to-six-hour cou…"
