@@ -17,8 +17,15 @@ logical_id = "7fa675a3-3100-496a-8c42-57bef36936da"
 id = "gBlmXbiu3K5FNCNv2fX9f"
 uri = "file://README.md"
 type = "text"
-title = "README — Baby AI Math"
+title = "README"
+description = "Vibrant public marketing README for Nano Evolutionary Psychology and ZHI Systems."
 logical_id = "d7272a71-ecf3-4b8a-b9c6-45410ce4e7a4"
+content_hash = "sha256:d76a311d091ffb0f5ea27061d6f094a57700c89d0aa0e1b8fd7b57092d82ce95"
+size = 6525
+mtime_ms = 1788664039790
+storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:b388645e-29c0-414f-b0d2-b10cdf10e8c2/d7272a71-ecf3-4b8a-b9c6-45410ce4e7a4/661ca01b-6ba6-47c0-a8bb-177f220702a0"
+storage_version_token = "1788664386569914"
+content_type = "text/markdown"
 
 [[outputs]]
 id = "IhlBFpvwhqNicclr5C_QR"
@@ -96,6 +103,7 @@ uri = "file://artifacts/course-video/public/audio/narration_2.mp3"
 type = "audio"
 title = "warm conversational male TikTok narration"
 description = "Text-to-speech audio: Evopsychfourhour dot X Y Z. Curious why humans compete, cooperate, choose partners, protect family, and chase status? Nano Evolutionary Psychology turns those questions into a r…"
+logical_id = "e1db337e-1bac-46bd-abc9-c26a06fa37df"
 
 [[outputs]]
 id = "E5lMze0pgbTE0bDJg_hzN"
@@ -103,6 +111,7 @@ uri = "file://artifacts/course-video/public/audio/narration-final.mp3"
 type = "audio"
 title = "concise warm male TikTok narration"
 description = "Text-to-speech audio: Evopsychfourhour dot X Y Z. Ever wonder why humans compete, cooperate, pair up, protect family, and chase status? Nano Evolutionary Psychology is a rigorous four-to-six-hour cou…"
+logical_id = "b9dc5fe9-5395-4cf1-8390-d5dc1a1a3ae0"
 
 [[outputs]]
 id = "h_idgtTLtQjD7U_ggYg5H"
@@ -110,3 +119,4 @@ uri = "file://artifacts/course-video/public/audio/narration-replacement.mp3"
 type = "audio"
 title = "alert professional male course promotion"
 description = "Text-to-speech audio: Evopsychfourhour dot X Y Z. Ever wonder why humans compete, cooperate, pair up, protect family, and chase status? Nano Evolutionary Psychology is a rigorous four-to-six-hour cou…"
+logical_id = "d125b402-c1a1-49d1-9d8e-a376afd6bb78"
