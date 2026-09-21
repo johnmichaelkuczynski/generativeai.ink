@@ -37,6 +37,11 @@ app.use(
   }),
 );
 
+// Deployment probes must not depend on Clerk, cookies, or database access.
+app.get(["/api", "/api/healthz"], (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
 
 app.post(
