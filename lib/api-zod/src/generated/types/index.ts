@@ -22,6 +22,7 @@ export * from './assignmentSummaryStatus';
 export * from './attemptResult';
 export * from './attemptState';
 export * from './attemptStateStatus';
+export * from './certificateStatus';
 export * from './courseComment';
 export * from './courseCommentInput';
 export * from './courseOverview';

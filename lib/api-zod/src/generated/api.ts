@@ -943,6 +943,21 @@ export const GetGradebookResponse = zod.object({
 
 
 /**
+ * @summary Certificate eligibility and personalized display details
+ */
+export const GetCertificateStatusResponse = zod.object({
+  "signedIn": zod.boolean(),
+  "complete": zod.boolean(),
+  "passed": zod.boolean(),
+  "requiredPercent": zod.number(),
+  "overallPercent": zod.number(),
+  "recipientName": zod.string().nullish(),
+  "certificateNumber": zod.string().nullish(),
+  "issuedDate": zod.coerce.date().nullish()
+})
+
+
+/**
  * @summary Get server-verified authentication, quota, and subscription access
  */
 export const GetAccessStatusResponse = zod.object({

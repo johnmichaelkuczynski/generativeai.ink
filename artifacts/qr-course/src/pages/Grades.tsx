@@ -1,10 +1,13 @@
 import React from "react";
-import { useGetGradebook } from "@workspace/api-client-react";
+import {
+  useGetCertificateStatus,
+  useGetGradebook,
+} from "@workspace/api-client-react";
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
-import { useAuth } from "@clerk/react";
+import { Award, Download } from "lucide-react";
 
 const PHASE_SHORT: Record<string, string> = {
   before: "Before the course",
@@ -31,11 +34,18 @@ function statusPill(status: string) {
 
 export default function Grades() {
   const { data: gb, isLoading } = useGetGradebook();
-  const { isSignedIn } = useAuth();
-  const courseComplete =
-    Boolean(gb?.coursework.length) &&
-    gb!.coursework.every((assignment) => assignment.status === "submitted");
-  const certificatePassed = courseComplete && (gb?.overallPercent ?? 0) >= 60;
+  const { data: certificate, isLoading: certificateLoading } =
+    useGetCertificateStatus();
+  const courseComplete = certificate?.complete ?? false;
+  const certificatePassed = certificate?.passed ?? false;
+  const issuedDate = certificate?.issuedDate
+    ? new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        timeZone: "UTC",
+      }).format(new Date(`${certificate.issuedDate}T00:00:00.000Z`))
+    : null;
 
   return (
     <Layout>
@@ -71,7 +81,9 @@ export default function Grades() {
               </CardContent>
             </Card>
 
-            {courseComplete && (
+            {certificateLoading ? (
+              <Skeleton className="h-72 w-full" />
+            ) : courseComplete ? (
               <Card className={certificatePassed ? "border-primary/30" : "border-destructive/30"}>
                 <CardHeader>
                   <CardTitle>
@@ -79,27 +91,64 @@ export default function Grades() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-3">
-                  <p className="text-sm text-muted-foreground">
-                    {certificatePassed
-                      ? "Your personalized Evolutionary Psychology Level 1 certificate is ready."
-                      : "A coursework average of at least 60% is required for the certificate."}
-                  </p>
-                  {certificatePassed && isSignedIn ? (
-                    <a
-                      href="/api/certificate/download"
-                      className="inline-flex w-fit items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-                      data-testid="button-download-certificate"
-                    >
-                      Download certificate
-                    </a>
+                  {certificatePassed && certificate?.signedIn ? (
+                    <>
+                      <div
+                        className="relative overflow-hidden rounded-lg border-4 border-double border-primary/70 bg-[radial-gradient(circle_at_top,#ffffff_0%,#faf7ef_58%,#f2ead8_100%)] px-6 py-9 text-center text-slate-900 shadow-sm sm:px-12"
+                        data-testid="certificate-display"
+                      >
+                        <div className="pointer-events-none absolute inset-3 border border-amber-600/40" />
+                        <div className="relative flex flex-col items-center">
+                          <Award className="mb-3 h-10 w-10 text-amber-700" aria-hidden="true" />
+                          <div className="text-sm font-bold tracking-[0.3em] text-amber-800">
+                            ZHI SYSTEMS
+                          </div>
+                          <div className="mt-3 font-serif text-3xl font-bold uppercase tracking-wide text-primary sm:text-4xl">
+                            Certificate of Completion
+                          </div>
+                          <div className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                            This certificate is awarded to
+                          </div>
+                          <div className="mt-3 border-b border-amber-700/50 px-8 pb-2 font-serif text-2xl font-bold text-primary sm:text-3xl">
+                            {certificate.recipientName}
+                          </div>
+                          <div className="mt-5 text-base font-semibold uppercase tracking-wide sm:text-lg">
+                            In Evolutionary Psychology Series 1
+                          </div>
+                          <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-1 text-xs text-slate-600">
+                            {issuedDate && <span>Issued {issuedDate}</span>}
+                            <span>Final grade {Math.round(certificate.overallPercent)}%</span>
+                          </div>
+                          <div className="mt-2 font-mono text-[11px] tracking-wide text-slate-500">
+                            Certificate No. {certificate.certificateNumber}
+                          </div>
+                        </div>
+                      </div>
+
+                      <a
+                        href="/api/certificate/download"
+                        className="mt-2 inline-flex w-fit items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                        data-testid="button-download-certificate"
+                      >
+                        <Download className="h-4 w-4" aria-hidden="true" />
+                        Download certificate (PDF)
+                      </a>
+                    </>
                   ) : certificatePassed ? (
                     <p className="text-sm font-medium">
-                      Sign in with Google to download your named certificate.
+                      Sign in with Google to display and download your named certificate.
                     </p>
-                  ) : null}
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      A coursework average of at least{" "}
+                      {certificate?.requiredPercent ?? 70}% (a grade of C or
+                      better) is required for the certificate. Your current
+                      average is {Math.round(certificate?.overallPercent ?? 0)}%.
+                    </p>
+                  )}
                 </CardContent>
               </Card>
-            )}
+            ) : null}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {gb.components.map((c) => (

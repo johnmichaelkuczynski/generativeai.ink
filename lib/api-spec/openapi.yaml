@@ -713,6 +713,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/Gradebook"
 
+  /certificate/status:
+    get:
+      operationId: getCertificateStatus
+      tags: [reasoning]
+      summary: Certificate eligibility and personalized display details
+      responses:
+        "200":
+          description: Current certificate status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CertificateStatus"
+
   /access/status:
     get:
       operationId: getAccessStatus
@@ -1645,3 +1658,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/GradebookReasoningItem"
+
+    CertificateStatus:
+      type: object
+      required:
+        [signedIn, complete, passed, requiredPercent, overallPercent]
+      properties:
+        signedIn: { type: boolean }
+        complete: { type: boolean }
+        passed: { type: boolean }
+        requiredPercent: { type: integer }
+        overallPercent: { type: number }
+        recipientName: { type: ["string", "null"] }
+        certificateNumber: { type: ["string", "null"] }
+        issuedDate: { type: ["string", "null"], format: date }

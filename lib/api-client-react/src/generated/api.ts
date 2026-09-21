@@ -31,6 +31,7 @@ import type {
   AssignmentSummary,
   AttemptResult,
   AttemptState,
+  CertificateStatus,
   CourseComment,
   CourseCommentInput,
   CourseOverview,
@@ -2802,6 +2803,83 @@ export function useGetGradebook<TData = Awaited<ReturnType<typeof getGradebook>>
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetGradebookQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetCertificateStatusUrl = () => {
+
+
+
+
+  return `/api/certificate/status`
+}
+
+/**
+ * @summary Certificate eligibility and personalized display details
+ */
+export const getCertificateStatus = async ( options?: RequestInit): Promise<CertificateStatus> => {
+
+  return customFetch<CertificateStatus>(getGetCertificateStatusUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetCertificateStatusQueryKey = () => {
+    return [
+    `/api/certificate/status`
+    ] as const;
+    }
+
+
+export const getGetCertificateStatusQueryOptions = <TData = Awaited<ReturnType<typeof getCertificateStatus>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCertificateStatus>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCertificateStatusQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCertificateStatus>>> = ({ signal }) => getCertificateStatus({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCertificateStatus>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetCertificateStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getCertificateStatus>>>
+export type GetCertificateStatusQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Certificate eligibility and personalized display details
+ */
+
+export function useGetCertificateStatus<TData = Awaited<ReturnType<typeof getCertificateStatus>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCertificateStatus>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetCertificateStatusQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

@@ -926,3 +926,17 @@ export interface Gradebook {
   reasoning: GradebookReasoningItem[];
 }
 
+export interface CertificateStatus {
+  signedIn: boolean;
+  complete: boolean;
+  passed: boolean;
+  requiredPercent: number;
+  overallPercent: number;
+  /** @nullable */
+  recipientName?: string | null;
+  /** @nullable */
+  certificateNumber?: string | null;
+  /** @nullable */
+  issuedDate?: string | null;
+}
+
