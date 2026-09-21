@@ -12,8 +12,10 @@ import {
   GetTopicAnalyticsResponse,
   GetRecentActivityResponse,
   GenerateReportResponse,
+  GetVisitorCountResponse,
 } from "@workspace/api-zod";
 import { chatJson } from "../lib/ai";
+import { storage } from "../storage";
 
 const router: IRouter = Router();
 
@@ -157,6 +159,11 @@ router.get("/analytics/activity", async (_req, res) => {
   ].sort((x, y) => y.at.localeCompare(x.at));
 
   res.json(GetRecentActivityResponse.parse(items.slice(0, 30)));
+});
+
+router.get("/analytics/visitors", async (_req, res) => {
+  const visitors = await storage.countUniqueVisitors();
+  res.json(GetVisitorCountResponse.parse({ allTime: visitors.allTime }));
 });
 
 router.post("/analytics/report", async (_req, res) => {

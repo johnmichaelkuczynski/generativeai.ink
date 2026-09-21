@@ -593,6 +593,19 @@ paths:
                 items:
                   $ref: "#/components/schemas/ActivityItem"
 
+  /analytics/visitors:
+    get:
+      operationId: getVisitorCount
+      tags: [analytics]
+      summary: Public all-time unique visitor count
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisitorCount"
+
   /analytics/report:
     post:
       operationId: generateReport
@@ -1269,6 +1282,14 @@ components:
         streakDays: { type: integer }
         strongestTopic: { type: ["string", "null"] }
         weakestTopic: { type: ["string", "null"] }
+
+    VisitorCount:
+      type: object
+      required: [allTime]
+      properties:
+        allTime:
+          type: integer
+          minimum: 0
 
     TopicAnalytics:
       type: object

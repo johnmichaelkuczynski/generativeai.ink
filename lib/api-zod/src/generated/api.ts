@@ -761,6 +761,18 @@ export const GetRecentActivityResponse = zod.array(GetRecentActivityResponseItem
 
 
 /**
+ * @summary Public all-time unique visitor count
+ */
+export const getVisitorCountResponseAllTimeMin = 0;
+
+
+
+export const GetVisitorCountResponse = zod.object({
+  "allTime": zod.number().min(getVisitorCountResponseAllTimeMin)
+})
+
+
+/**
  * @summary Generate a narrative strengths/weaknesses report
  */
 export const GenerateReportResponse = zod.object({

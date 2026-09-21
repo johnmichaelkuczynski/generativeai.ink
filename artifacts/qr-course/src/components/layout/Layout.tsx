@@ -4,6 +4,7 @@ import { LayoutDashboard, PenTool, BarChart3, Activity, RotateCcw, Sparkles, Sca
 import { useQueryClient } from "@tanstack/react-query";
 import { useAdminMode } from "@/lib/adminMode";
 import { AccessControls } from "@/components/AccessControls";
+import { VisitorCounter } from "@/components/VisitorCounter";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -150,7 +151,8 @@ function TopBar() {
   }
 
   return (
-    <div className="sticky top-0 z-10 flex items-center justify-end gap-2 px-6 py-3 border-b border-border bg-background/80 backdrop-blur">
+    <div className="sticky top-0 z-10 flex items-center gap-2 px-6 py-3 border-b border-border bg-background/80 backdrop-blur">
+      <VisitorCounter className="mr-auto" />
       <AccessControls compact />
       <button
         onClick={handleExpandLectures}

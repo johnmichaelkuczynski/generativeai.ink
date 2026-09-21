@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import TopicsRail, { pdfUrl, txtUrl } from "@/components/TopicsRail";
 import { AccessControls } from "@/components/AccessControls";
+import { VisitorCounter } from "@/components/VisitorCounter";
 
 const features = [
   {
@@ -101,21 +102,24 @@ export default function Landing() {
   return (
     <div className="min-h-[100dvh] bg-background text-foreground flex flex-col">
       <header className="flex items-center justify-between px-6 py-4 border-b border-border">
-        <div className="flex items-center gap-3">
-          <a
-            href="https://zhisystems.ai/"
-            aria-label="Visit ZHI Systems"
-            className="shrink-0 rounded-md ring-1 ring-border shadow-sm transition-transform hover:scale-105"
-          >
-            <img
-              src={`${import.meta.env.BASE_URL}zhi-logo.png`}
-              alt="ZHI Systems logo"
-              className="w-8 h-8 rounded-md object-cover"
-            />
-          </a>
-          <span className="font-serif font-semibold text-lg tracking-tight">
-            Nano Evolutionary Psychology
-          </span>
+        <div className="flex items-center gap-4">
+          <VisitorCounter />
+          <div className="flex items-center gap-3">
+            <a
+              href="https://zhisystems.ai/"
+              aria-label="Visit ZHI Systems"
+              className="shrink-0 rounded-md ring-1 ring-border shadow-sm transition-transform hover:scale-105"
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}zhi-logo.png`}
+                alt="ZHI Systems logo"
+                className="w-8 h-8 rounded-md object-cover"
+              />
+            </a>
+            <span className="font-serif font-semibold text-lg tracking-tight">
+              Nano Evolutionary Psychology
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <AccessControls compact />

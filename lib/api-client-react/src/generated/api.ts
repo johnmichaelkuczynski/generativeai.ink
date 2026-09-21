@@ -68,6 +68,7 @@ import type {
   TopicAnalytics,
   TutorAskInput,
   TutorReply,
+  VisitorCount,
   Week
 } from './api.schemas';
 
@@ -2279,6 +2280,83 @@ export function useGetRecentActivity<TData = Awaited<ReturnType<typeof getRecent
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetRecentActivityQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetVisitorCountUrl = () => {
+
+
+
+
+  return `/api/analytics/visitors`
+}
+
+/**
+ * @summary Public all-time unique visitor count
+ */
+export const getVisitorCount = async ( options?: RequestInit): Promise<VisitorCount> => {
+
+  return customFetch<VisitorCount>(getGetVisitorCountUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetVisitorCountQueryKey = () => {
+    return [
+    `/api/analytics/visitors`
+    ] as const;
+    }
+
+
+export const getGetVisitorCountQueryOptions = <TData = Awaited<ReturnType<typeof getVisitorCount>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getVisitorCount>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetVisitorCountQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getVisitorCount>>> = ({ signal }) => getVisitorCount({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getVisitorCount>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetVisitorCountQueryResult = NonNullable<Awaited<ReturnType<typeof getVisitorCount>>>
+export type GetVisitorCountQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Public all-time unique visitor count
+ */
+
+export function useGetVisitorCount<TData = Awaited<ReturnType<typeof getVisitorCount>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getVisitorCount>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetVisitorCountQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

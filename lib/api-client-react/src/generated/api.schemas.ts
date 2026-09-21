@@ -477,6 +477,11 @@ export interface AnalyticsSummary {
   weakestTopic?: string | null;
 }
 
+export interface VisitorCount {
+  /** @minimum 0 */
+  allTime: number;
+}
+
 export type TopicAnalyticsStrengthLabel = typeof TopicAnalyticsStrengthLabel[keyof typeof TopicAnalyticsStrengthLabel];
 
 
